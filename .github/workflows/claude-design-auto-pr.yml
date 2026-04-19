@@ -1,0 +1,62 @@
+name: Claude Design Auto PR
+on:
+  workflow_dispatch:  # 允许手动触发
+  schedule:
+    - cron: "0 * * * *"  # 每小时自动同步
+
+jobs:
+  auto-pr:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      # 配置 Git
+      - name: Setup Git
+        run: |
+          git config --global user.name "Claude Design Bot"
+          git config --global user.email "bot@claude.ai"
+
+      # ==============================================
+      # 这里是你从 Claude Design 导出文件到项目的逻辑
+      # ==============================================
+      - name: Sync Claude Design files
+        run: |
+          echo "Syncing latest design files from Claude..."
+          
+          # 示例：你可以在这里下载/替换 Claude 导出的文件
+          # 例如：curl -o src/design/button.tsx https://...
+          
+          # 如果你只是测试，可以先创建一个测试文件
+          echo "// Updated from Claude Design" > src/design/updated.txt
+      
+      # 检查是否有变更
+      - name: Check changes
+        id: changes
+        run: |
+          git diff --quiet || echo "changed=true" >> $GITHUB_OUTPUT
+
+      # 有变更 → 自动创建 PR
+      - name: Create PR
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          BRANCH="claude-design/update-$(date +%Y%m%d-%H%M)"
+          git checkout -b $BRANCH
+          
+          git add .
+          git commit -m "Auto-update design from Claude Design"
+          git push origin $BRANCH
+          
+          gh pr create \
+            --base main \
+            --head $BRANCH \
+            --title "🎨 Auto PR: Design update from Claude Design" \
+            --body "This PR was automatically created by Claude Design sync."
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}

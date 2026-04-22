@@ -1,0 +1,160 @@
+/* ============================================================
+   Make · 设计系统 Tokens
+   以「满意度分析」模块为基准
+   ============================================================ */
+
+:root {
+  /* —— 品牌 / 主色 —— */
+  --brand-50:  #EFF6FF;
+  --brand-100: #DBEAFE;
+  --brand-200: #BFDBFE;
+  --brand-400: #60A5FA;
+  --brand-500: #3B82F6;   /* 主色 · 链接 · 选中态 */
+  --brand-600: #2563EB;
+  --brand-700: #1D4ED8;
+
+  /* —— 中性色（背景 / 文字 / 描边） —— */
+  --neutral-0:   #FFFFFF;
+  --neutral-25:  #FAFBFC;  /* 页面底色 */
+  --neutral-50:  #F5F7FA;  /* 次级容器 */
+  --neutral-100: #EEF0F2;  /* 分隔线 · 描边 */
+  --neutral-200: #E1E4E8;  /* 输入描边 */
+  --neutral-300: #C9CED6;
+  --neutral-400: #9AA1AD;  /* 辅助文字 */
+  --neutral-500: #6B7280;  /* 次要文字 */
+  --neutral-700: #374151;  /* 正文 */
+  --neutral-900: #1F2328;  /* 标题 */
+
+  /* —— 语义色（每色 4 阶：浅底 / 边 / 主 / 深文字） —— */
+  --success-bg:    #E8F6EF;
+  --success-border:#BCE3CD;
+  --success-500:   #2BA471;
+  --success-700:   #1B7A52;
+
+  --warning-bg:    #FEF5E7;
+  --warning-border:#F5D79A;
+  --warning-500:   #F5A623;
+  --warning-700:   #B5740F;
+
+  --danger-bg:     #FDECEC;
+  --danger-border: #F5B9BB;
+  --danger-500:    #E5484D;
+  --danger-700:    #AD1F24;
+
+  --info-bg:       #EAF3FE;   /* Callout 信息条底色 */
+  --info-border:   #BBD6F7;
+  --info-500:      #3B82F6;
+  --info-700:      #1F5EC0;
+
+  /* 严重度（专用，略带橙调，与 warning 区分） */
+  --severity-high-bg:     #FFF1E6;
+  --severity-high-border: #FFD4B0;
+  --severity-high-text:   #D9722A;
+
+  /* —— 图表色序列（5 档满意度：1–5 分） —— */
+  --chart-1: #E5484D;   /* 1–2 分 */
+  --chart-2: #F5A623;   /* 3 分 */
+  --chart-3: #C9CED6;   /* 4 分 */
+  --chart-4: #5DB9A1;   /* 4.x 过渡 */
+  --chart-5: #2BA471;   /* 5 分 */
+  /* 对比维度序列（折线 / 多条柱） */
+  --series-1: #3B82F6;
+  --series-2: #2BA471;
+  --series-3: #F5A623;
+  --series-4: #8B5CF6;
+  --series-5: #EC4899;
+  --series-6: #14B8A6;
+
+  /* —— 字体 —— */
+  --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+  --font-num:  "SF Pro Display", -apple-system, "Helvetica Neue", sans-serif;
+
+  /* —— 字号层级 —— */
+  --fs-11: 11px;   /* 辅助 / 角标 */
+  --fs-12: 12px;   /* 图例 · 元信息 */
+  --fs-13: 13px;   /* 次要正文 */
+  --fs-14: 14px;   /* 正文 · 按钮 */
+  --fs-16: 16px;   /* 小节标题 */
+  --fs-18: 18px;   /* 模块标题 */
+  --fs-20: 20px;   /* 页面标题 */
+  --fs-24: 24px;   /* 关键数字 */
+  --fs-32: 32px;   /* 大指标 */
+
+  /* 行高 */
+  --lh-tight: 1.25;
+  --lh-base:  1.5;
+  --lh-loose: 1.7;
+
+  /* 字重 */
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semibold:600;
+
+  /* —— 间距（4px 基础单位） —— */
+  --sp-0:  0;
+  --sp-1:  4px;
+  --sp-2:  8px;
+  --sp-3:  12px;
+  --sp-4:  16px;
+  --sp-5:  20px;
+  --sp-6:  24px;
+  --sp-8:  32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+  --sp-16: 64px;
+
+  /* —— 圆角 —— */
+  --radius-xs: 2px;
+  --radius-sm: 4px;   /* Tag / Chip */
+  --radius-md: 6px;   /* 按钮 / 输入框 */
+  --radius-lg: 8px;   /* 卡片 */
+  --radius-xl: 12px;  /* 弹层 */
+  --radius-full: 999px;
+
+  /* —— 阴影（克制使用） —— */
+  --shadow-none: none;
+  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-pop:  0 6px 16px -4px rgba(15, 23, 42, 0.12), 0 2px 4px rgba(15, 23, 42, 0.06);
+  --shadow-modal:0 20px 48px -8px rgba(15, 23, 42, 0.18);
+
+  /* —— 描边 —— */
+  --border-subtle: 1px solid var(--neutral-100);
+  --border-default:1px solid var(--neutral-200);
+  --border-strong: 1px solid var(--neutral-300);
+
+  /* —— 过渡 —— */
+  --ease-out: cubic-bezier(.16,.84,.44,1);
+  --ease-std: cubic-bezier(.4,0,.2,1);
+  --dur-fast: 120ms;
+  --dur-base: 180ms;
+  --dur-slow: 240ms;
+
+  /* —— Z-Index 层级 —— */
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-drawer:   400;
+  --z-modal:    500;
+  --z-toast:    600;
+}
+
+/* ============================================================
+   基础复位 + 全局排版
+   ============================================================ */
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-14);
+  line-height: var(--lh-base);
+  color: var(--neutral-900);
+  background: var(--neutral-25);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* 数字常用 tabular */
+.num { font-variant-numeric: tabular-nums; font-family: var(--font-num); }

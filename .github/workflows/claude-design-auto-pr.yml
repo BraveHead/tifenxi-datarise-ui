@@ -3,8 +3,8 @@ name: Claude Design Auto PR
 on:
   workflow_dispatch:
     inputs:
-      patch_url:
-        description: '由 Claude 提供的 patch.zip 下载 URL（1 小时内有效）'
+      manifest_url:
+        description: '由 Claude 提供的 patch-manifest.json 下载 URL'
         required: true
         type: string
       pr_title:
@@ -13,12 +13,10 @@ on:
         default: '🎨 chore(design): sync from Claude Design'
         type: string
       pr_body:
-        description: 'PR 描述（可贴 changelog）'
+        description: 'PR 描述'
         required: false
         default: 'This PR was automatically created by Claude Design sync.'
         type: string
-  schedule:
-    - cron: "0 * * * *"   # 每小时自动同步（需要在 Secrets 里配 CLAUDE_PATCH_URL）
 
 jobs:
   auto-pr:
@@ -39,34 +37,25 @@ jobs:
           git config --global user.name "Claude Design Bot"
           git config --global user.email "bot@claude.ai"
 
-      # ============== 拿到 patch URL（手动优先，cron 回落到 secret） ==============
-      - name: Resolve patch URL
-        id: resolve
-        run: |
-          URL="${{ github.event.inputs.patch_url }}"
-          if [ -z "$URL" ]; then
-            URL="${{ secrets.CLAUDE_PATCH_URL }}"
-          fi
-          if [ -z "$URL" ]; then
-            echo "❌ 没有可用的 patch_url（既没有手动输入，也没在 secrets.CLAUDE_PATCH_URL 配置）"
-            exit 78   # neutral：cron 场景跳过而不失败
-          fi
-          echo "patch_url=$URL" >> $GITHUB_OUTPUT
+      - name: Install jq
+        run: sudo apt-get update && sudo apt-get install -y jq
 
-      # ============== 下载并解包 Claude Design patch ==============
-      - name: Download Claude Design patch
+      - name: Download manifest & files
         run: |
-          echo "Downloading patch..."
-          curl -sSL --fail -o patch.zip "${{ steps.resolve.outputs.patch_url }}"
-          unzip -o patch.zip -d ./_patch_tmp
-          echo "Patch contents:"
-          find ./_patch_tmp -maxdepth 3 -print
+          set -e
+          curl -sSL --fail -o manifest.json "${{ github.event.inputs.manifest_url }}"
+          BASE=$(jq -r '.base_url' manifest.json)
+          TOKEN=$(jq -r '.token' manifest.json)
+          jq -r '.files[]' manifest.json | while read -r rel; do
+            echo "→ $rel"
+            mkdir -p "./_patch_tmp/$(dirname "$rel")"
+            curl -sSL --fail -o "./_patch_tmp/$rel" "${BASE}${rel}${TOKEN}"
+          done
+          find ./_patch_tmp -maxdepth 4 -print
 
-      # ============== 按目录映射到仓库结构 ==============
       - name: Apply patch to repo
         run: |
-          SRC="./_patch_tmp/patch"
-          [ -d "./_patch_tmp/patch" ] || SRC="./_patch_tmp"
+          SRC="./_patch_tmp"
 
           # design-system -> src/design-system
           if [ -d "$SRC/design-system" ]; then
@@ -80,7 +69,7 @@ jobs:
             cp -R "$SRC/docs/"* docs/
           fi
 
-          # CHANGELOG 追加到根目录
+          # CHANGELOG 追加到仓库根
           if [ -f "$SRC/CHANGELOG.md" ]; then
             if [ -f "CHANGELOG.md" ]; then
               echo "" >> CHANGELOG.md
@@ -90,39 +79,30 @@ jobs:
             fi
           fi
 
-          rm -rf ./_patch_tmp patch.zip
+          rm -rf ./_patch_tmp manifest.json
 
-      # ============== 判断是否有真实变更 ==============
       - name: Check changes
         id: changes
         run: |
           git add -A
           if git diff --cached --quiet; then
             echo "changed=false" >> $GITHUB_OUTPUT
-            echo "✅ 无变更，跳过 PR"
+            echo "✅ 无变更"
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
 
-      # ============== 有变更 → 新建分支 + PR ==============
       - name: Create PR
         if: steps.changes.outputs.changed == 'true'
         run: |
           BRANCH="claude-design/update-$(date +%Y%m%d-%H%M%S)"
           git checkout -b $BRANCH
-
-          TITLE="${{ github.event.inputs.pr_title }}"
-          BODY="${{ github.event.inputs.pr_body }}"
-          [ -z "$TITLE" ] && TITLE="🎨 chore(design): sync from Claude Design"
-          [ -z "$BODY" ]  && BODY="Auto-update design from Claude Design."
-
-          git commit -m "$TITLE"
+          git commit -m "${{ github.event.inputs.pr_title }}"
           git push origin $BRANCH
-
           gh pr create \
             --base main \
             --head $BRANCH \
-            --title "$TITLE" \
-            --body "$BODY"
+            --title "${{ github.event.inputs.pr_title }}" \
+            --body "${{ github.event.inputs.pr_body }}"
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}

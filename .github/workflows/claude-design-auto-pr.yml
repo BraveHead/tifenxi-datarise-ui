@@ -1,17 +1,16 @@
 name: Claude Design Auto PR
 
 on:
-  # 方式 1：手动触发（GitHub UI 或 gh CLI）
   workflow_dispatch:
     inputs:
-      manifest_url:
-        description: '由 Claude 提供的 patch-manifest.json 下载 URL'
+      patch_url:
+        description: '由 Claude 提供的 patch.zip 下载 URL（1 小时内有效）'
         required: true
         type: string
       pr_title:
         description: 'PR 标题'
         required: false
-        default: '🎨 chore(design): sync from Claude Design'
+        default: 'chore(design): sync from Claude Design'
         type: string
       pr_body:
         description: 'PR 描述'
@@ -19,9 +18,11 @@ on:
         default: 'This PR was automatically created by Claude Design sync.'
         type: string
 
-  # 方式 2：API 触发（Claude Design webhook / curl）
   repository_dispatch:
     types: [claude-design-sync]
+
+  schedule:
+    - cron: "0 * * * *"   # 每小时自动同步（需在 Secrets 配 CLAUDE_PATCH_URL）
 
 jobs:
   auto-pr:
@@ -31,26 +32,20 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Resolve inputs
-        id: inputs
+      - name: Resolve patch URL
+        id: resolve
         env:
-          WD_MANIFEST: ${{ github.event.inputs.manifest_url }}
-          WD_TITLE: ${{ github.event.inputs.pr_title }}
-          WD_BODY: ${{ github.event.inputs.pr_body }}
-          RD_MANIFEST: ${{ github.event.client_payload.manifest_url }}
-          RD_TITLE: ${{ github.event.client_payload.pr_title }}
-          RD_BODY: ${{ github.event.client_payload.pr_body }}
+          WD_URL: ${{ github.event.inputs.patch_url }}
+          RD_URL: ${{ github.event.client_payload.patch_url }}
+          SECRET_URL: ${{ secrets.CLAUDE_PATCH_URL }}
         run: |
-          MANIFEST_URL="${WD_MANIFEST:-$RD_MANIFEST}"
-          PR_TITLE="${WD_TITLE:-${RD_TITLE:-chore(design): sync from Claude Design}}"
-          PR_BODY="${WD_BODY:-${RD_BODY:-This PR was automatically created by Claude Design sync.}}"
-          if [ -z "$MANIFEST_URL" ]; then
-            echo "manifest_url is required"
-            exit 1
+          # 优先级：workflow_dispatch > repository_dispatch > secret(定时)
+          URL="${WD_URL:-${RD_URL:-$SECRET_URL}}"
+          if [ -z "$URL" ]; then
+            echo "No patch_url available, skipping."
+            exit 78
           fi
-          echo "manifest_url=$MANIFEST_URL" >> "$GITHUB_OUTPUT"
-          echo "pr_title=$PR_TITLE" >> "$GITHUB_OUTPUT"
-          echo "pr_body=$PR_BODY" >> "$GITHUB_OUTPUT"
+          echo "patch_url=$URL" >> "$GITHUB_OUTPUT"
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -63,41 +58,27 @@ jobs:
           git config --global user.name "Claude Design Bot"
           git config --global user.email "bot@claude.ai"
 
-      - name: Install jq
-        run: sudo apt-get update && sudo apt-get install -y jq
-
-      - name: Download manifest & files
-        env:
-          MANIFEST_URL: ${{ steps.inputs.outputs.manifest_url }}
+      - name: Download Claude Design patch
         run: |
-          set -e
-          curl -sSL --fail -o manifest.json "$MANIFEST_URL"
-          BASE=$(jq -r '.base_url' manifest.json)
-          TOKEN=$(jq -r '.token' manifest.json)
-          jq -r '.files[]' manifest.json | while read -r rel; do
-            echo "→ $rel"
-            mkdir -p "./_patch_tmp/$(dirname "$rel")"
-            curl -sSL --fail -o "./_patch_tmp/$rel" "${BASE}${rel}${TOKEN}"
-          done
-          find ./_patch_tmp -maxdepth 4 -print
+          curl -sSL --fail -o patch.zip "${{ steps.resolve.outputs.patch_url }}"
+          unzip -o patch.zip -d ./_patch_tmp
+          find ./_patch_tmp -maxdepth 3 -print
 
       - name: Apply patch to repo
         run: |
-          SRC="./_patch_tmp"
+          SRC="./_patch_tmp/patch"
+          [ -d "$SRC" ] || SRC="./_patch_tmp"
 
-          # design-system -> src/design-system
           if [ -d "$SRC/design-system" ]; then
             mkdir -p src/design-system
             cp -R "$SRC/design-system/"* src/design-system/
           fi
 
-          # docs -> docs
           if [ -d "$SRC/docs" ]; then
             mkdir -p docs
             cp -R "$SRC/docs/"* docs/
           fi
 
-          # CHANGELOG 追加到仓库根
           if [ -f "$SRC/CHANGELOG.md" ]; then
             if [ -f "CHANGELOG.md" ]; then
               echo "" >> CHANGELOG.md
@@ -107,7 +88,7 @@ jobs:
             fi
           fi
 
-          rm -rf ./_patch_tmp manifest.json
+          rm -rf ./_patch_tmp patch.zip
 
       - name: Check changes
         id: changes
@@ -115,7 +96,7 @@ jobs:
           git add -A
           if git diff --cached --quiet; then
             echo "changed=false" >> $GITHUB_OUTPUT
-            echo "✅ 无变更"
+            echo "No changes, skipping PR."
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
@@ -124,15 +105,19 @@ jobs:
         if: steps.changes.outputs.changed == 'true'
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}
-          PR_TITLE: ${{ steps.inputs.outputs.pr_title }}
-          PR_BODY: ${{ steps.inputs.outputs.pr_body }}
         run: |
           BRANCH="claude-design/update-$(date +%Y%m%d-%H%M%S)"
           git checkout -b $BRANCH
-          git commit -m "$PR_TITLE"
+
+          TITLE="${{ github.event.inputs.pr_title }}"
+          [ -z "$TITLE" ] && TITLE="chore(design): sync from Claude Design"
+          BODY="${{ github.event.inputs.pr_body }}"
+          [ -z "$BODY" ] && BODY="Auto-update design from Claude Design."
+
+          git commit -m "$TITLE"
           git push origin $BRANCH
           gh pr create \
             --base main \
             --head $BRANCH \
-            --title "$PR_TITLE" \
-            --body "$PR_BODY"
+            --title "$TITLE" \
+            --body "$BODY"

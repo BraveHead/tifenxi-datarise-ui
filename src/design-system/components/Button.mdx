@@ -1,0 +1,92 @@
+import { Meta, Canvas, Controls, Story, Subtitle, Title } from '@storybook/blocks';
+import * as ButtonStories from './Button.stories';
+
+<Meta of={ButtonStories} />
+
+<Title />
+
+基于 Make 设计系统的 Button 组件。4 种变体 × 3 种尺寸，支持 loading / disabled / block / icon 插槽。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 变体 Variants
+
+同区域内 `primary` 最多一个，其余用 `default` / `ghost`。破坏性操作用 `danger`。
+
+<Canvas of={ButtonStories.AllVariants} />
+
+### Primary — 主操作
+
+<Canvas of={ButtonStories.Primary} />
+
+### Default — 次要操作
+
+<Canvas of={ButtonStories.Default} />
+
+### Ghost — 文字链接
+
+<Canvas of={ButtonStories.Ghost} />
+
+### Danger — 危险操作
+
+<Canvas of={ButtonStories.Danger} />
+
+---
+
+## 尺寸 Sizes
+
+`sm`(28px) 表格行内 · `md`(32px) 表单主操作 · `lg`(40px) 抽屉底部 / 空状态 CTA。
+
+<Canvas of={ButtonStories.AllSizes} />
+
+### Small
+
+<Canvas of={ButtonStories.Small} />
+
+### Large
+
+<Canvas of={ButtonStories.Large} />
+
+---
+
+## 状态 States
+
+### Loading — 加载中
+
+自动禁用交互，左侧替换为 spinner，设置 `aria-busy`。
+
+<Canvas of={ButtonStories.Loading} />
+
+### Disabled — 禁用
+
+<Canvas of={ButtonStories.Disabled} />
+
+### Block — 全宽
+
+<Canvas of={ButtonStories.Block} />
+
+---
+
+## 图标 Icons
+
+使用 `iconLeft` / `iconRight` 插槽。Loading 时 spinner 替换 iconLeft，iconRight 隐藏。
+
+### Icon Left
+
+<Canvas of={ButtonStories.WithIconLeft} />
+
+### Icon Right
+
+<Canvas of={ButtonStories.WithIconRight} />
+
+### Icon Only
+
+icon-only 按钮必须提供 `aria-label` 保证可访问性。
+
+<Canvas of={ButtonStories.IconOnly} />

@@ -15,23 +15,22 @@ export interface ButtonProps
   children?: React.ReactNode;
 }
 
-/* 配置表：colors 与 tailwind.config 中扩展的 brand/neutral/danger 色阶对齐。
-   如果还没扩展，可直接用 blue/slate/red 系列等价替换。 */
+/* 所有视觉值来自 styles.css @theme inline 映射的 tokens.css 设计变量 */
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    'bg-brand-500 text-white hover:bg-brand-600 active:bg-brand-700 border-transparent',
+    'bg-brand-500 text-neutral-0 hover:bg-brand-600 active:bg-brand-700 border-transparent',
   default:
-    'bg-white text-neutral-700 border-neutral-200 hover:bg-neutral-50 hover:border-neutral-300 active:bg-neutral-100',
+    'bg-neutral-0 text-neutral-700 border-neutral-200 hover:bg-neutral-50 hover:border-neutral-300 active:bg-neutral-100',
   ghost:
     'bg-transparent text-brand-600 border-transparent hover:bg-brand-50 active:bg-brand-100',
   danger:
-    'bg-danger-500 text-white hover:bg-danger-700 border-transparent',
+    'bg-danger-500 text-neutral-0 hover:bg-danger-700 border-transparent',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
-  sm: 'h-7 text-[13px] px-2.5',
-  md: 'h-8 text-sm px-3.5',
-  lg: 'h-10 text-sm px-5',
+  sm: 'h-7 text-fs-13 px-sp-3',
+  md: 'h-8 text-fs-14 px-sp-4',
+  lg: 'h-10 text-fs-14 px-sp-5',
 };
 
 function cx(...cls: Array<string | false | undefined>) {
@@ -64,7 +63,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={cx(
           // base
           'inline-flex items-center justify-center gap-1.5 font-medium leading-none whitespace-nowrap select-none',
-          'rounded-md border transition-colors duration-100',
+          'rounded-md border transition-colors duration-fast',
           'focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-500',
           'disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none',
           loading && 'cursor-progress',

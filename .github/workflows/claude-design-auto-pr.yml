@@ -1,8 +1,24 @@
 name: Claude Design Auto PR
+
 on:
-  workflow_dispatch:  # 允许手动触发
+  workflow_dispatch:
+    inputs:
+      patch_url:
+        description: '由 Claude 提供的 patch.zip 下载 URL（1 小时内有效）'
+        required: true
+        type: string
+      pr_title:
+        description: 'PR 标题'
+        required: false
+        default: '🎨 chore(design): sync from Claude Design'
+        type: string
+      pr_body:
+        description: 'PR 描述（可贴 changelog）'
+        required: false
+        default: 'This PR was automatically created by Claude Design sync.'
+        type: string
   schedule:
-    - cron: "0 * * * *"  # 每小时自动同步
+    - cron: "0 * * * *"   # 每小时自动同步（需要在 Secrets 里配 CLAUDE_PATCH_URL）
 
 jobs:
   auto-pr:
@@ -10,53 +26,103 @@ jobs:
     permissions:
       contents: write
       pull-requests: write
-      
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.GH_PAT }}
+          fetch-depth: 0
 
-      # 配置 Git
       - name: Setup Git
         run: |
           git config --global user.name "Claude Design Bot"
           git config --global user.email "bot@claude.ai"
 
-      # ==============================================
-      # 这里是你从 Claude Design 导出文件到项目的逻辑
-      # ==============================================
-      - name: Sync Claude Design files
+      # ============== 拿到 patch URL（手动优先，cron 回落到 secret） ==============
+      - name: Resolve patch URL
+        id: resolve
         run: |
-          echo "Syncing latest design files from Claude..."
-          
-          # 示例：你可以在这里下载/替换 Claude 导出的文件
-          # 例如：curl -o src/design/button.tsx https://...
-          
-          # 如果你只是测试，可以先创建一个测试文件
-          echo "// Updated from Claude Design" > src/design/updated.txt
-      
-      # 检查是否有变更
+          URL="${{ github.event.inputs.patch_url }}"
+          if [ -z "$URL" ]; then
+            URL="${{ secrets.CLAUDE_PATCH_URL }}"
+          fi
+          if [ -z "$URL" ]; then
+            echo "❌ 没有可用的 patch_url（既没有手动输入，也没在 secrets.CLAUDE_PATCH_URL 配置）"
+            exit 78   # neutral：cron 场景跳过而不失败
+          fi
+          echo "patch_url=$URL" >> $GITHUB_OUTPUT
+
+      # ============== 下载并解包 Claude Design patch ==============
+      - name: Download Claude Design patch
+        run: |
+          echo "Downloading patch..."
+          curl -sSL --fail -o patch.zip "${{ steps.resolve.outputs.patch_url }}"
+          unzip -o patch.zip -d ./_patch_tmp
+          echo "Patch contents:"
+          find ./_patch_tmp -maxdepth 3 -print
+
+      # ============== 按目录映射到仓库结构 ==============
+      - name: Apply patch to repo
+        run: |
+          SRC="./_patch_tmp/patch"
+          [ -d "./_patch_tmp/patch" ] || SRC="./_patch_tmp"
+
+          # design-system -> src/design-system
+          if [ -d "$SRC/design-system" ]; then
+            mkdir -p src/design-system
+            cp -R "$SRC/design-system/"* src/design-system/
+          fi
+
+          # docs -> docs
+          if [ -d "$SRC/docs" ]; then
+            mkdir -p docs
+            cp -R "$SRC/docs/"* docs/
+          fi
+
+          # CHANGELOG 追加到根目录
+          if [ -f "$SRC/CHANGELOG.md" ]; then
+            if [ -f "CHANGELOG.md" ]; then
+              echo "" >> CHANGELOG.md
+              cat "$SRC/CHANGELOG.md" >> CHANGELOG.md
+            else
+              cp "$SRC/CHANGELOG.md" CHANGELOG.md
+            fi
+          fi
+
+          rm -rf ./_patch_tmp patch.zip
+
+      # ============== 判断是否有真实变更 ==============
       - name: Check changes
         id: changes
         run: |
-          git diff --quiet || echo "changed=true" >> $GITHUB_OUTPUT
+          git add -A
+          if git diff --cached --quiet; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+            echo "✅ 无变更，跳过 PR"
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
 
-      # 有变更 → 自动创建 PR
+      # ============== 有变更 → 新建分支 + PR ==============
       - name: Create PR
         if: steps.changes.outputs.changed == 'true'
         run: |
-          BRANCH="claude-design/update-$(date +%Y%m%d-%H%M)"
+          BRANCH="claude-design/update-$(date +%Y%m%d-%H%M%S)"
           git checkout -b $BRANCH
-          
-          git add .
-          git commit -m "Auto-update design from Claude Design"
+
+          TITLE="${{ github.event.inputs.pr_title }}"
+          BODY="${{ github.event.inputs.pr_body }}"
+          [ -z "$TITLE" ] && TITLE="🎨 chore(design): sync from Claude Design"
+          [ -z "$BODY" ]  && BODY="Auto-update design from Claude Design."
+
+          git commit -m "$TITLE"
           git push origin $BRANCH
-          
+
           gh pr create \
             --base main \
             --head $BRANCH \
-            --title "🎨 Auto PR: Design update from Claude Design" \
-            --body "This PR was automatically created by Claude Design sync."
+            --title "$TITLE" \
+            --body "$BODY"
         env:
           GH_TOKEN: ${{ secrets.GH_PAT }}

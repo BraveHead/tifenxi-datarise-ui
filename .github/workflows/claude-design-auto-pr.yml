@@ -30,19 +30,27 @@ jobs:
       contents: write
       pull-requests: write
 
-    env:
-      MANIFEST_URL: ${{ github.event.inputs.manifest_url || github.event.client_payload.manifest_url }}
-      PR_TITLE: ${{ github.event.inputs.pr_title || github.event.client_payload.pr_title || '🎨 chore(design): sync from Claude Design' }}
-      PR_BODY: ${{ github.event.inputs.pr_body || github.event.client_payload.pr_body || 'This PR was automatically created by Claude Design sync.' }}
-
     steps:
-      - name: Validate manifest URL
+      - name: Resolve inputs
+        id: inputs
+        env:
+          WD_MANIFEST: ${{ github.event.inputs.manifest_url }}
+          WD_TITLE: ${{ github.event.inputs.pr_title }}
+          WD_BODY: ${{ github.event.inputs.pr_body }}
+          RD_MANIFEST: ${{ github.event.client_payload.manifest_url }}
+          RD_TITLE: ${{ github.event.client_payload.pr_title }}
+          RD_BODY: ${{ github.event.client_payload.pr_body }}
         run: |
+          MANIFEST_URL="${WD_MANIFEST:-$RD_MANIFEST}"
+          PR_TITLE="${WD_TITLE:-${RD_TITLE:-chore(design): sync from Claude Design}}"
+          PR_BODY="${WD_BODY:-${RD_BODY:-This PR was automatically created by Claude Design sync.}}"
           if [ -z "$MANIFEST_URL" ]; then
-            echo "❌ manifest_url is required"
+            echo "manifest_url is required"
             exit 1
           fi
-          echo "📦 Manifest URL: $MANIFEST_URL"
+          echo "manifest_url=$MANIFEST_URL" >> "$GITHUB_OUTPUT"
+          echo "pr_title=$PR_TITLE" >> "$GITHUB_OUTPUT"
+          echo "pr_body=$PR_BODY" >> "$GITHUB_OUTPUT"
 
       - name: Checkout code
         uses: actions/checkout@v4
@@ -59,6 +67,8 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y jq
 
       - name: Download manifest & files
+        env:
+          MANIFEST_URL: ${{ steps.inputs.outputs.manifest_url }}
         run: |
           set -e
           curl -sSL --fail -o manifest.json "$MANIFEST_URL"
@@ -112,6 +122,10 @@ jobs:
 
       - name: Create PR
         if: steps.changes.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+          PR_TITLE: ${{ steps.inputs.outputs.pr_title }}
+          PR_BODY: ${{ steps.inputs.outputs.pr_body }}
         run: |
           BRANCH="claude-design/update-$(date +%Y%m%d-%H%M%S)"
           git checkout -b $BRANCH
@@ -122,5 +136,3 @@ jobs:
             --head $BRANCH \
             --title "$PR_TITLE" \
             --body "$PR_BODY"
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}

@@ -1,7 +1,6 @@
 name: Claude Design Auto PR
 
 on:
-  # 方式 1：手动触发（GitHub UI 或 gh CLI）
   workflow_dispatch:
     inputs:
       manifest_url:
@@ -19,10 +18,6 @@ on:
         default: 'This PR was automatically created by Claude Design sync.'
         type: string
 
-  # 方式 2：API 触发（Claude Design webhook / curl）
-  repository_dispatch:
-    types: [claude-design-sync]
-
 jobs:
   auto-pr:
     runs-on: ubuntu-latest
@@ -31,27 +26,6 @@ jobs:
       pull-requests: write
 
     steps:
-      - name: Resolve inputs
-        id: inputs
-        env:
-          WD_MANIFEST: ${{ github.event.inputs.manifest_url }}
-          WD_TITLE: ${{ github.event.inputs.pr_title }}
-          WD_BODY: ${{ github.event.inputs.pr_body }}
-          RD_MANIFEST: ${{ github.event.client_payload.manifest_url }}
-          RD_TITLE: ${{ github.event.client_payload.pr_title }}
-          RD_BODY: ${{ github.event.client_payload.pr_body }}
-        run: |
-          MANIFEST_URL="${WD_MANIFEST:-$RD_MANIFEST}"
-          PR_TITLE="${WD_TITLE:-${RD_TITLE:-chore(design): sync from Claude Design}}"
-          PR_BODY="${WD_BODY:-${RD_BODY:-This PR was automatically created by Claude Design sync.}}"
-          if [ -z "$MANIFEST_URL" ]; then
-            echo "manifest_url is required"
-            exit 1
-          fi
-          echo "manifest_url=$MANIFEST_URL" >> "$GITHUB_OUTPUT"
-          echo "pr_title=$PR_TITLE" >> "$GITHUB_OUTPUT"
-          echo "pr_body=$PR_BODY" >> "$GITHUB_OUTPUT"
-
       - name: Checkout code
         uses: actions/checkout@v4
         with:
@@ -67,11 +41,9 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y jq
 
       - name: Download manifest & files
-        env:
-          MANIFEST_URL: ${{ steps.inputs.outputs.manifest_url }}
         run: |
           set -e
-          curl -sSL --fail -o manifest.json "$MANIFEST_URL"
+          curl -sSL --fail -o manifest.json "${{ github.event.inputs.manifest_url }}"
           BASE=$(jq -r '.base_url' manifest.json)
           TOKEN=$(jq -r '.token' manifest.json)
           jq -r '.files[]' manifest.json | while read -r rel; do
@@ -122,17 +94,15 @@ jobs:
 
       - name: Create PR
         if: steps.changes.outputs.changed == 'true'
-        env:
-          GH_TOKEN: ${{ secrets.GH_PAT }}
-          PR_TITLE: ${{ steps.inputs.outputs.pr_title }}
-          PR_BODY: ${{ steps.inputs.outputs.pr_body }}
         run: |
           BRANCH="claude-design/update-$(date +%Y%m%d-%H%M%S)"
           git checkout -b $BRANCH
-          git commit -m "$PR_TITLE"
+          git commit -m "${{ github.event.inputs.pr_title }}"
           git push origin $BRANCH
           gh pr create \
             --base main \
             --head $BRANCH \
-            --title "$PR_TITLE" \
-            --body "$PR_BODY"
+            --title "${{ github.event.inputs.pr_title }}" \
+            --body "${{ github.event.inputs.pr_body }}"
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}

@@ -42,7 +42,7 @@ export const WithSparkline: Story = {
       { label: '环比', value: '0.5%', direction: 'down', sentiment: 'bad' },
     ],
     sparkline: (
-      <svg viewBox="0 0 200 36" className="w-full h-full">
+      <svg viewBox="0 0 200 36" preserveAspectRatio="none" className="w-full h-full">
         <polyline
           points="0,30 30,28 60,25 90,20 120,22 150,18 180,15 200,12"
           fill="none"
@@ -78,7 +78,7 @@ export const HighlightCard: Story = {
       { label: '环比', value: '0.5%', direction: 'down', sentiment: 'bad' },
     ],
     sparkline: (
-      <svg viewBox="0 0 200 36" className="w-full h-full">
+      <svg viewBox="0 0 200 36" preserveAspectRatio="none" className="w-full h-full">
         <polyline
           points="0,30 25,28 50,32 75,26 100,24 125,28 150,20 175,18 200,16"
           fill="none"
@@ -118,7 +118,7 @@ export const KpiRow: Story = {
           { label: '环比', value: '0.5%', direction: 'down', sentiment: 'bad' },
         ]}
         sparkline={
-          <svg viewBox="0 0 200 36" className="w-full h-full">
+          <svg viewBox="0 0 200 36" preserveAspectRatio="none" className="w-full h-full">
             <polyline points="0,30 25,28 50,32 75,26 100,24 125,28 150,20 175,18 200,16" fill="none" stroke="var(--brand-500)" strokeWidth="1.5" />
           </svg>
         }
@@ -134,7 +134,7 @@ export const KpiRow: Story = {
           { label: '环比', value: '1.9%', direction: 'down', sentiment: 'bad' },
         ]}
         sparkline={
-          <svg viewBox="0 0 200 36" className="w-full h-full">
+          <svg viewBox="0 0 200 36" preserveAspectRatio="none" className="w-full h-full">
             <polyline points="0,28 30,26 60,30 90,22 120,20 150,24 180,16 200,14" fill="none" stroke="var(--brand-500)" strokeWidth="1.5" />
           </svg>
         }
@@ -150,7 +150,7 @@ export const KpiRow: Story = {
           { label: '环比', value: '7.4%', direction: 'up', sentiment: 'bad' },
         ]}
         sparkline={
-          <svg viewBox="0 0 200 36" className="w-full h-full">
+          <svg viewBox="0 0 200 36" preserveAspectRatio="none" className="w-full h-full">
             <polyline points="0,20 30,22 60,18 90,24 120,22 150,26 180,28 200,30" fill="none" stroke="var(--brand-500)" strokeWidth="1.5" />
           </svg>
         }
@@ -165,7 +165,7 @@ export const KpiRow: Story = {
           { label: '环比', value: '3.8%', direction: 'down', sentiment: 'bad' },
         ]}
         sparkline={
-          <svg viewBox="0 0 200 36" className="w-full h-full">
+          <svg viewBox="0 0 200 36" preserveAspectRatio="none" className="w-full h-full">
             <polyline points="0,16 30,18 60,14 90,20 120,22 150,18 180,24 200,26" fill="none" stroke="var(--brand-500)" strokeWidth="1.5" />
           </svg>
         }

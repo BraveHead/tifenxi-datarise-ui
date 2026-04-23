@@ -1,9 +1,18 @@
+import React from 'react';
 import type { Meta, StoryObj } from '@storybook/react';
 import { KpiCard } from './KpiCard';
+
+/** 单卡预览宽度，模拟 4 列网格中的单列（≈320px） */
+const singleCardDecorator = (Story: React.ComponentType) => (
+  <div style={{ maxWidth: 320 }}>
+    <Story />
+  </div>
+);
 
 const meta = {
   title: 'Components/KpiCard',
   component: KpiCard,
+  decorators: [singleCardDecorator],
 } satisfies Meta<typeof KpiCard>;
 
 export default meta;
@@ -93,8 +102,9 @@ export const MultiDelta: Story = {
   },
 };
 
-/** 模拟满意度分析 KPI 行 */
+/** 模拟满意度分析 KPI 行（全宽，不受单卡 decorator 约束） */
 export const KpiRow: Story = {
+  decorators: [(Story) => <Story />],
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
       <KpiCard

@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/react';
 function DesignSpec() {
   return (
     <iframe
-      src="/design-system.html"
+      src="./design-system.html"
       title="Make 设计系统规范"
       style={{
         width: '100%',

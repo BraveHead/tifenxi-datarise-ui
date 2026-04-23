@@ -76,6 +76,49 @@ Currently via **monorepo direct import** from `ti-datarise-frontend`:
 1. Import `styles.css` as global styles (includes Tailwind + token mapping)
 2. Import components from `src/design-system/components/`
 
+## 从 Claude Design 同步设计产物
+
+设计规范由 Claude Design 在线维护，通过下载包同步到本仓库。
+
+### 同步流程
+
+1. 在 Claude Design 项目页点击右上角 **下载按钮 (↓)** 下载整个项目包
+2. 解压后将路径告知 Claude Code，例如：`/Users/zhangshun/Downloads/make-design (1)/`
+3. Claude Code 会自动识别包结构、对比差异、更新仓库文件
+
+### 下载包结构与文件映射
+
+```
+make-design/
+  Make 设计系统规范.html    ← 最新版规范 HTML（必须用这个，不要用 patch/ 下的旧版）
+  tokens.css               ← 设计变量源（与 patch/design-system/tokens.css 一致）
+  components.css           ← CSS 组件样式参考（仓库已切 Tailwind-only，仅做参考）
+  components/              ← React 组件参考（仓库组件已优化过，仅做参考对比）
+  export/                  ← Claude Design 导出产物（忽略）
+  patch/                   ← 旧版快照（⚠️ 可能滞后于根目录文件，不要用 patch/docs/ 下的 HTML）
+    design-system/         ← tokens.css + components + README
+    docs/design-system.html ← ⚠️ 旧版规范 HTML，非最新
+  scraps/                  ← 草稿（忽略）
+  uploads/                 ← 截图素材（忽略，HTML 不引用）
+  deck-stage.js            ← 演示引擎脚本（忽略）
+```
+
+### 映射规则
+
+| 下载包文件 | 仓库目标 | 说明 |
+|---|---|---|
+| `Make 设计系统规范.html` (根目录) | `docs/design-system.html` | **最新版规范，必须用根目录的** |
+| `tokens.css` (根目录或 patch/) | `src/design-system/tokens.css` | 设计变量，对比后更新 |
+| `patch/design-system/react-tailwind/Button.tsx` | 对比参考 | 仓库组件已优化（token 类名），不直接覆盖 |
+| `components.css` | 不入库 | 仓库已切 Tailwind-only |
+| `patch/docs/design-system.html` | **不要用** | 旧版快照，可能缺少最新内容 |
+
+### 注意事项
+
+- **根目录的 `Make 设计系统规范.html` 才是最新版**，`patch/docs/` 下的是旧快照，可能缺少后续更新（如色阶阶梯等）
+- `tokens.css` 是设计变量唯一源，更新后需同步检查 `styles.css` 的 `@theme inline` 映射是否覆盖新增变量
+- 仓库组件使用 token 类名（如 `bg-neutral-0` 而非 `bg-white`），不要直接用 patch 中的组件代码覆盖
+
 ## GitHub Actions Workflows
 
 | Workflow | Trigger | Purpose |

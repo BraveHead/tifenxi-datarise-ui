@@ -1,0 +1,68 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as TagStories from './Tag.stories';
+
+<Meta of={TagStories} />
+
+<Title />
+
+标签/徽标组件。高度 22px，圆角 `radius-sm`，字号 `fs-12`。支持 7 种变体 + 可选圆点。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 所有变体
+
+<Canvas of={TagStories.AllVariants} />
+
+---
+
+## 严重度 Severity
+
+严重度专用色系 `--severity-high-*`（橙调），与 warning 区分。同列表内 Tag 需统一高度与字号。
+
+### 高影响
+
+<Canvas of={TagStories.SeverityHigh} />
+
+### 中影响
+
+<Canvas of={TagStories.SeverityMid} />
+
+### 低影响
+
+<Canvas of={TagStories.SeverityLow} />
+
+---
+
+## 语义状态
+
+状态用语义色：Callout / Tag / Dot 使用 `浅底 + 边 + 深文字` 组合。
+
+### Danger — 风险
+
+<Canvas of={TagStories.Danger} />
+
+### Success — 正向
+
+<Canvas of={TagStories.Success} />
+
+### Info — 信息
+
+<Canvas of={TagStories.Info} />
+
+### Neutral — 中性
+
+<Canvas of={TagStories.Neutral} />
+
+---
+
+## 带圆点 Dot
+
+`dot` 属性在文字前渲染 8px 实心圆，用于状态指示。
+
+<Canvas of={TagStories.WithDot} />

@@ -1,0 +1,38 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as TabsStories from './Tabs.stories';
+
+<Meta of={TabsStories} />
+
+<Title />
+
+两种 Tab 切换组件：下划线式（模块内切换）和胶囊式（页面级切换）。
+
+---
+
+## 对比
+
+<Canvas of={TabsStories.Both} />
+
+---
+
+## 下划线 Tabs
+
+底部 `border-subtle` 分隔，active tab 下方 2px `brand-500` 指示线。用于模块内同数据多视图切换。
+
+<Canvas of={TabsStories.Default} />
+
+### Props
+
+| prop | 类型 | 说明 |
+|---|---|---|
+| `items` | `TabItem[]` | `{ key, label }` 数组 |
+| `activeKey` | `string` | 当前激活项 |
+| `onChange` | `(key: string) => void` | 切换回调 |
+
+---
+
+## 胶囊 SegTabs
+
+`neutral-50` 容器背景，active tab 白底 + 微阴影。用于页面级筛选维度切换。
+
+<Canvas of={TabsStories.Capsule} />

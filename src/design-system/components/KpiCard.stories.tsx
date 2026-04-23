@@ -12,13 +12,13 @@ const singleCardDecorator = (Story: React.ComponentType) => (
 const meta = {
   title: 'Components/KpiCard',
   component: KpiCard,
-  decorators: [singleCardDecorator],
 } satisfies Meta<typeof KpiCard>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
+  decorators: [singleCardDecorator],
   args: {
     name: '总样本量',
     value: '2,090',
@@ -31,6 +31,7 @@ export const Default: Story = {
 };
 
 export const WithSparkline: Story = {
+  decorators: [singleCardDecorator],
   args: {
     name: '整体满意度',
     value: '96.8',
@@ -55,6 +56,7 @@ export const WithSparkline: Story = {
 };
 
 export const DangerCard: Story = {
+  decorators: [singleCardDecorator],
   args: {
     name: '低分占比',
     value: '3.0',
@@ -67,6 +69,7 @@ export const DangerCard: Story = {
 };
 
 export const HighlightCard: Story = {
+  decorators: [singleCardDecorator],
   args: {
     name: '门诊患者满意度',
     value: '97.2',
@@ -91,6 +94,7 @@ export const HighlightCard: Story = {
 };
 
 export const MultiDelta: Story = {
+  decorators: [singleCardDecorator],
   args: {
     name: '主动评价率',
     value: '57',
@@ -102,9 +106,8 @@ export const MultiDelta: Story = {
   },
 };
 
-/** 模拟满意度分析 KPI 行（全宽，不受单卡 decorator 约束） */
+/** 模拟满意度分析 KPI 行（全宽） */
 export const KpiRow: Story = {
-  decorators: [(Story) => <Story />],
   render: () => (
     <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16 }}>
       <KpiCard

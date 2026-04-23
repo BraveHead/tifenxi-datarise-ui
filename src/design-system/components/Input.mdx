@@ -1,0 +1,58 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as InputStories from './Input.stories';
+
+<Meta of={InputStories} />
+
+<Title />
+
+文本输入框。支持 label、help 提示、error 错误态、disabled 禁用态。高度 32px，圆角 `radius-md`。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 所有状态
+
+<Canvas of={InputStories.AllStates} />
+
+---
+
+## 默认态
+
+`neutral-200` 描边，hover 时加深至 `neutral-300`。
+
+<Canvas of={InputStories.Default} />
+
+## 带标签
+
+`label` 自动关联 `htmlFor`，字号 `fs-13`，字重 `medium`。
+
+<Canvas of={InputStories.WithLabel} />
+
+## 聚焦态
+
+`brand-500` 描边 + 3px `brand-500/12` 外发光。
+
+<Canvas of={InputStories.Focus} />
+
+## 错误态
+
+`danger-500` 描边 + 红色外发光。`help` 文案变为 `danger-500` 色。
+
+<Canvas of={InputStories.Error} />
+
+## 禁用态
+
+`neutral-50` 背景，`neutral-400` 文字，`cursor-not-allowed`。
+
+<Canvas of={InputStories.Disabled} />
+
+## 帮助文字
+
+非错误时为 `neutral-400` 辅助说明。
+
+<Canvas of={InputStories.WithHelp} />

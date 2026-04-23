@@ -1,0 +1,46 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as CalloutStories from './Callout.stories';
+
+<Meta of={CalloutStories} />
+
+<Title />
+
+信息条 / 提示条组件。用于承载上下文信息、警告、错误、成功反馈。圆角 `radius-md`，字号 `fs-13`。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 所有变体
+
+<Canvas of={CalloutStories.AllVariants} />
+
+---
+
+## Info — 信息提示
+
+默认变体。`info-bg` 背景，常用于 KV 行展示上下文元数据，最多 5 组 KV。
+
+<Canvas of={CalloutStories.Info} />
+
+## Warning — 警告
+
+`warning-bg` 背景。数据量不足、统计偏差等非致命提醒。
+
+<Canvas of={CalloutStories.Warning} />
+
+## Danger — 错误
+
+`danger-bg` 背景。指标异常、系统错误等需立即关注。
+
+<Canvas of={CalloutStories.DangerCallout} />
+
+## Success — 成功
+
+`success-bg` 背景。正向趋势、操作成功确认。
+
+<Canvas of={CalloutStories.Success} />

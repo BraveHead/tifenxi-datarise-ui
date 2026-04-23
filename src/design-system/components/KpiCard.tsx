@@ -27,6 +27,10 @@ export interface KpiCardProps extends React.HTMLAttributes<HTMLDivElement> {
   sparkline?: React.ReactNode;
   /** 是否为危险卡 */
   danger?: boolean;
+  /** 是否显示左侧强调边框 */
+  highlight?: boolean;
+  /** 指标名称额外类名（用于自定义颜色等） */
+  nameClassName?: string;
 }
 
 const iconBadgeClasses: Record<IconBadgeVariant, string> = {
@@ -51,6 +55,8 @@ export function KpiCard({
   deltas,
   sparkline,
   danger = false,
+  highlight = false,
+  nameClassName,
   className,
   ...rest
 }: KpiCardProps) {
@@ -66,14 +72,17 @@ export function KpiCard({
       style={{ padding: '16px 18px 0' }}
       {...rest}
     >
-      {/* 危险卡左侧红条 */}
+      {/* 左侧强调条：危险=红，高亮=品牌色 */}
       {danger && (
         <span className="absolute left-0 top-0 bottom-0 w-[3px] bg-danger-500" />
+      )}
+      {highlight && !danger && (
+        <span className="absolute left-0 top-0 bottom-0 w-[3px] bg-brand-500" />
       )}
 
       {/* 头部：名称 + 图标 */}
       <div className="flex items-start justify-between gap-sp-3">
-        <span className="text-fs-13 text-neutral-500 leading-snug">{name}</span>
+        <span className={cx('text-fs-13 leading-snug', nameClassName || 'text-neutral-500')}>{name}</span>
         {icon && (
           <span className={cx(
             'flex-none w-7 h-7 rounded-lg inline-flex items-center justify-center',
@@ -106,13 +115,8 @@ export function KpiCard({
               )}
             >
               <span className="text-[10px] leading-none">{d.direction === 'up' ? '▲' : '▼'}</span>
+              <span className="font-sans">{d.label}</span>
               <span>{d.value}</span>
-              <span className={cx(
-                'font-sans',
-                d.sentiment === 'good' ? 'text-success-500' : 'text-danger-500',
-              )}>
-                {d.label}
-              </span>
             </span>
           ))}
         </div>

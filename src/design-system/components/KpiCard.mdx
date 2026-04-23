@@ -5,9 +5,11 @@ import * as KpiCardStories from './KpiCard.stories';
 
 <Title />
 
-KPI 指标卡。5 个槽位：名称 → 图标徽章 → 数值 → 同环比 delta → sparkline。支持 danger 危险变体。
+KPI 指标卡。5 个槽位：名称 → 图标徽章 → 数值 → 同环比 delta → sparkline。支持 `danger` 危险变体和 `highlight` 强调变体。
 
 **布局规则**：每行 4–5 张卡片。Sparkline 全宽贴底，统一 `brand-500`。
+
+**Delta 顺序**：`▲ 标签 数值`（如 `▲ 同比 0.8%`），标签在前、数值在后。
 
 ---
 
@@ -33,9 +35,15 @@ Sparkline 贴底全宽，统一 `brand-500` stroke，不使用多色。
 
 <Canvas of={KpiCardStories.WithSparkline} />
 
+## 强调卡片
+
+左侧 3px 品牌色条 (`brand-500`)，用于突出核心指标（如"门诊患者满意度"）。可通过 `nameClassName` 自定义名称颜色。
+
+<Canvas of={KpiCardStories.HighlightCard} />
+
 ## 危险卡片
 
-左侧 3px 红条 + 粉色渐变背景 (`#fff1ea → #fff6f2`)。用于标记异常指标。
+左侧 3px 红条 + 粉色渐变背景 (`#fff1ea → #fff6f2`)。用于标记异常指标。`danger` 优先级高于 `highlight`。
 
 <Canvas of={KpiCardStories.DangerCard} />
 

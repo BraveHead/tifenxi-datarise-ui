@@ -1,0 +1,78 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as EmptyStateStories from './EmptyState.stories';
+
+<Meta of={EmptyStateStories} />
+
+<Title />
+
+空态占位组件。覆盖三种场景：无数据、筛选无结果、加载失败。支持自定义图标、文案和 CTA 按钮。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 功能特性
+
+<table>
+  <thead>
+    <tr><th>#</th><th>特性</th><th>说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>F1</td><td>三种变体</td><td>no-data（默认）/ no-result / error，各有默认图标和文案</td></tr>
+    <tr><td>F2</td><td>默认图标</td><td>no-data =文档图标 / no-result =搜索图标 / error =警告三角</td></tr>
+    <tr><td>F3</td><td>默认文案</td><td>各变体预设标题和描述，无需每次传入</td></tr>
+    <tr><td>F4</td><td>自定义覆盖</td><td>title / description / icon 均可覆盖默认值</td></tr>
+    <tr><td>F5</td><td>CTA 插槽</td><td>action 插槽支持任意 ReactNode（按钮、链接等）</td></tr>
+    <tr><td>F6</td><td>图标背景色</td><td>各变体图标圆形背景色不同：neutral / brand / danger</td></tr>
+    <tr><td>F7</td><td>className 透传</td><td>自定义 className 追加到根元素</td></tr>
+    <tr><td>F8</td><td>HTML 属性透传</td><td>data-*、aria-* 等原生属性支持</td></tr>
+  </tbody>
+</table>
+
+---
+
+## 所有变体
+
+<Canvas of={EmptyStateStories.AllVariants} />
+
+### 无数据
+
+<Canvas of={EmptyStateStories.NoData} />
+
+### 无结果
+
+<Canvas of={EmptyStateStories.NoResult} />
+
+### 加载失败
+
+<Canvas of={EmptyStateStories.Error} />
+
+### 自定义文案
+
+<Canvas of={EmptyStateStories.CustomContent} />
+
+---
+
+## 回归测试用例
+
+<table>
+  <thead>
+    <tr><th>#</th><th>用例</th><th>预期结果</th><th>状态</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>R1</td><td>默认渲染（无 props）</td><td>显示"暂无数据"+默认描述+文档图标</td><td>✅</td></tr>
+    <tr><td>R2</td><td>variant="no-data"</td><td>标题"暂无数据"，rect SVG 图标</td><td>✅</td></tr>
+    <tr><td>R3</td><td>variant="no-result"</td><td>标题"未找到匹配结果"，搜索 SVG 图标</td><td>✅</td></tr>
+    <tr><td>R4</td><td>variant="error"</td><td>标题"数据加载失败"，警告三角 SVG 图标</td><td>✅</td></tr>
+    <tr><td>R5</td><td>title="自定义"</td><td>自定义标题替代默认标题</td><td>✅</td></tr>
+    <tr><td>R6</td><td>description="自定义"</td><td>自定义描述替代默认描述</td><td>✅</td></tr>
+    <tr><td>R7</td><td>icon=自定义图标</td><td>自定义图标替代默认 SVG</td><td>✅</td></tr>
+    <tr><td>R8</td><td>action=Button</td><td>CTA 按钮出现在描述下方</td><td>✅</td></tr>
+    <tr><td>R9</td><td>无 action 时</td><td>不渲染按钮区域</td><td>✅</td></tr>
+    <tr><td>R10</td><td>className / data-* 透传</td><td>属性正确挂载到根元素</td><td>✅</td></tr>
+  </tbody>
+</table>

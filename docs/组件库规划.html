@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>组件库规划 · datarise-design-with-make</title>
+<style>
+  :root {
+    --bg: #F8F9FA;
+    --surface: #FFFFFF;
+    --surface-2: #F3F4F6;
+    --border: #E5E7EB;
+    --border-strong: #D1D5DB;
+    --text-primary: #111827;
+    --text-secondary: #6B7280;
+    --text-tertiary: #9CA3AF;
+    --brand: #1F61E8;
+    --brand-light: #EFF4FF;
+    --brand-border: #BFCFFD;
+    --green: #16A34A;
+    --green-light: #F0FDF4;
+    --green-border: #BBF7D0;
+    --orange: #EA580C;
+    --orange-light: #FFF7ED;
+    --orange-border: #FED7AA;
+    --purple: #7C3AED;
+    --purple-light: #F5F3FF;
+    --purple-border: #DDD6FE;
+    --gray: #374151;
+    --radius-sm: 4px;
+    --radius: 8px;
+    --radius-lg: 12px;
+    --shadow-sm: 0 1px 3px rgba(0,0,0,.08);
+    --shadow: 0 4px 12px rgba(0,0,0,.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'PingFang SC', -apple-system, 'Helvetica Neue', sans-serif;
+    background: var(--bg);
+    color: var(--text-primary);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  /* Layout */
+  .page { max-width: 1200px; margin: 0 auto; padding: 48px 32px 80px; }
+
+  /* Header */
+  .doc-header { margin-bottom: 40px; padding-bottom: 28px; border-bottom: 1px solid var(--border); }
+  .doc-kicker { font-size: 11px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--brand); margin-bottom: 10px; }
+  .doc-title { font-size: 30px; font-weight: 700; color: var(--text-primary); letter-spacing: -.02em; line-height: 1.2; margin-bottom: 10px; }
+  .doc-sub { font-size: 14px; color: var(--text-secondary); line-height: 1.6; max-width: 680px; }
+  .doc-meta { margin-top: 16px; display: flex; gap: 20px; flex-wrap: wrap; }
+  .doc-meta span { font-size: 12px; color: var(--text-tertiary); display: flex; align-items: center; gap: 5px; }
+  .doc-meta b { color: var(--text-secondary); font-weight: 500; }
+
+  /* Stack pills */
+  .stack-row { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px; }
+  .stack-pill { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 500; border: 1px solid; }
+  .stack-pill.blue { background: var(--brand-light); border-color: var(--brand-border); color: var(--brand); }
+  .stack-pill.green { background: var(--green-light); border-color: var(--green-border); color: var(--green); }
+  .stack-pill.purple { background: var(--purple-light); border-color: var(--purple-border); color: var(--purple); }
+  .stack-pill.gray { background: var(--surface-2); border-color: var(--border-strong); color: var(--gray); }
+  .stack-pill.orange { background: var(--orange-light); border-color: var(--orange-border); color: var(--orange); }
+
+  /* Section */
+  .section { margin-bottom: 48px; }
+  .section-header { margin-bottom: 20px; }
+  .section-num { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 4px; }
+  .section-title { font-size: 20px; font-weight: 700; color: var(--text-primary); letter-spacing: -.01em; display: flex; align-items: center; gap: 10px; }
+  .section-title .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
+  .section-desc { font-size: 13px; color: var(--text-secondary); margin-top: 6px; line-height: 1.6; }
+
+  /* Tier labels */
+  .tier { margin-bottom: 24px; }
+  .tier-label { font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--text-tertiary); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+  .tier-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+  /* Component grid */
+  .comp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+  .comp-grid.wide { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+
+  .comp-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    position: relative;
+    transition: box-shadow .15s, border-color .15s;
+  }
+  .comp-card:hover { box-shadow: var(--shadow-sm); border-color: var(--border-strong); }
+  .comp-card .comp-name { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 3px; font-family: 'SF Mono', 'Fira Code', monospace; }
+  .comp-card .comp-desc { font-size: 12px; color: var(--text-secondary); line-height: 1.5; }
+  .comp-card .comp-tags { margin-top: 8px; display: flex; gap: 4px; flex-wrap: wrap; }
+  .comp-card .tag { font-size: 10px; font-weight: 500; padding: 1px 6px; border-radius: 3px; border: 1px solid; }
+  .comp-card .tag.exists { background: var(--green-light); border-color: var(--green-border); color: var(--green); }
+  .comp-card .tag.new { background: var(--brand-light); border-color: var(--brand-border); color: var(--brand); }
+  .comp-card .tag.refactor { background: var(--orange-light); border-color: var(--orange-border); color: var(--orange); }
+  .comp-card .tag.dark { background: var(--purple-light); border-color: var(--purple-border); color: var(--purple); }
+  .comp-card .tag.high { background: #FEF2F2; border-color: #FECACA; color: #DC2626; }
+  .comp-card .tag.med { background: #FFFBEB; border-color: #FDE68A; color: #D97706; }
+  .comp-card .tag.low { background: var(--surface-2); border-color: var(--border-strong); color: var(--text-secondary); }
+
+  /* Dark mode comparison table */
+  .theme-table { width: 100%; border-collapse: collapse; font-size: 13px; background: var(--surface); border-radius: var(--radius-lg); overflow: hidden; border: 1px solid var(--border); }
+  .theme-table th { background: var(--surface-2); padding: 10px 16px; text-align: left; font-weight: 600; font-size: 11px; color: var(--text-secondary); letter-spacing: .05em; text-transform: uppercase; border-bottom: 1px solid var(--border); }
+  .theme-table td { padding: 10px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .theme-table tr:last-child td { border-bottom: none; }
+  .theme-table td:first-child { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 12px; color: var(--text-primary); font-weight: 500; }
+  .swatch-pair { display: flex; align-items: center; gap: 8px; }
+  .swatch { width: 18px; height: 18px; border-radius: 4px; border: 1px solid rgba(0,0,0,.1); flex-shrink: 0; }
+  .arrow { color: var(--text-tertiary); font-size: 12px; }
+
+  /* Priority legend */
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+  .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
+
+  /* Architecture diagram */
+  .arch { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 24px; margin-bottom: 32px; }
+  .arch-title { font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 16px; }
+  .arch-layers { display: flex; flex-direction: column; gap: 0; }
+  .arch-layer { border: 1px solid var(--border); border-radius: var(--radius); padding: 14px 18px; display: flex; align-items: center; gap: 16px; }
+  .arch-layer + .arch-layer { margin-top: 8px; }
+  .arch-layer.l1 { background: #EFF4FF; border-color: var(--brand-border); }
+  .arch-layer.l2 { background: #F0FDF4; border-color: var(--green-border); }
+  .arch-layer.l3 { background: var(--surface-2); border-color: var(--border-strong); }
+  .arch-layer.l4 { background: var(--purple-light); border-color: var(--purple-border); }
+  .arch-layer-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; width: 110px; flex-shrink: 0; }
+  .l1 .arch-layer-label { color: var(--brand); }
+  .l2 .arch-layer-label { color: var(--green); }
+  .l3 .arch-layer-label { color: var(--gray); }
+  .l4 .arch-layer-label { color: var(--purple); }
+  .arch-items { display: flex; flex-wrap: wrap; gap: 6px; }
+  .arch-chip { font-size: 11px; padding: 2px 8px; border-radius: 4px; border: 1px solid; font-family: monospace; }
+  .l1 .arch-chip { background: white; border-color: var(--brand-border); color: var(--brand); }
+  .l2 .arch-chip { background: white; border-color: var(--green-border); color: var(--green); }
+  .l3 .arch-chip { background: white; border-color: var(--border-strong); color: var(--gray); }
+  .l4 .arch-chip { background: white; border-color: var(--purple-border); color: var(--purple); }
+
+  /* Info box */
+  .info-box { background: var(--brand-light); border: 1px solid var(--brand-border); border-radius: var(--radius); padding: 14px 16px; margin-bottom: 20px; font-size: 13px; color: var(--brand); line-height: 1.6; }
+  .info-box b { font-weight: 600; }
+
+  /* Dark mode showcase */
+  .dark-showcase { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+  .dark-panel { border-radius: var(--radius); padding: 16px; font-size: 12px; }
+  .dark-panel.light { background: #FFFFFF; border: 1px solid var(--border); }
+  .dark-panel.dark { background: #1A1A1A; border: 1px solid #333; }
+  .dark-panel .panel-label { font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; margin-bottom: 10px; }
+  .light .panel-label { color: #9CA3AF; }
+  .dark .panel-label { color: #6B7280; }
+  .token-row { display: flex; align-items: center; justify-content: space-between; padding: 5px 0; border-bottom: 1px solid; }
+  .light .token-row { border-color: #F3F4F6; color: #374151; }
+  .dark .token-row { border-color: #2A2A2A; color: #D1D5DB; }
+  .token-row:last-child { border-bottom: none; }
+  .token-row .token-name { font-family: monospace; font-size: 11px; }
+  .token-row .token-val { font-size: 11px; display: flex; align-items: center; gap: 6px; }
+  .dot { width: 12px; height: 12px; border-radius: 2px; border: 1px solid rgba(255,255,255,.15); flex-shrink: 0; }
+
+  hr { border: none; border-top: 1px solid var(--border); margin: 36px 0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- Header -->
+  <div class="doc-header">
+    <div class="doc-kicker">datarise-design-with-make · 组件库规划</div>
+    <h1 class="doc-title">公共组件库 & 业务组件库拆分方案</h1>
+    <p class="doc-sub">基于现有代码库扫描，梳理哪些 UI 模式应抽象为<b>可跨项目复用的公共组件</b>，哪些属于<b>本业务域的专用组件</b>，并给出 Light / Dark 两套主题的适配要求。</p>
+    <div class="doc-meta">
+      <span><b>框架</b> React 18 + TypeScript</span>
+      <span><b>样式</b> Tailwind v4 + CSS Variables</span>
+      <span><b>基础层</b> shadcn/ui (Radix UI)</span>
+      <span><b>图表</b> Recharts</span>
+      <span><b>图标</b> lucide-react</span>
+    </div>
+    <div class="stack-row">
+      <span class="stack-pill blue">● 已有 · 需暗色审计</span>
+      <span class="stack-pill green">● 已有 · 可直接复用</span>
+      <span class="stack-pill purple">● 需新建</span>
+      <span class="stack-pill orange">● 需重构拆分</span>
+    </div>
+  </div>
+
+  <!-- Architecture Overview -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">00 · 架构总览</div>
+      <div class="section-title">分层架构</div>
+      <div class="section-desc">四层结构，从下往上依赖，禁止反向依赖。</div>
+    </div>
+    <div class="arch">
+      <div class="arch-layers">
+        <div class="arch-layer l4">
+          <div class="arch-layer-label">业务页面层</div>
+          <div class="arch-items">
+            <span class="arch-chip">Dashboard.tsx</span>
+            <span class="arch-chip">PatientProfileDashboard</span>
+            <span class="arch-chip">ModuleOverview</span>
+            <span class="arch-chip">PanoramaDashboard</span>
+            <span class="arch-chip">各业务页面 ...</span>
+          </div>
+        </div>
+        <div class="arch-layer l2">
+          <div class="arch-layer-label">业务组件层</div>
+          <div class="arch-items">
+            <span class="arch-chip">KPICard / CoreKPICard</span>
+            <span class="arch-chip">InsightCard</span>
+            <span class="arch-chip">ActionCard</span>
+            <span class="arch-chip">CompactHeader</span>
+            <span class="arch-chip">ScopePill</span>
+            <span class="arch-chip">DrawerShell</span>
+            <span class="arch-chip">各 XxxDrawer ...</span>
+          </div>
+        </div>
+        <div class="arch-layer l1">
+          <div class="arch-layer-label">公共组件层</div>
+          <div class="arch-items">
+            <span class="arch-chip">Button</span>
+            <span class="arch-chip">Card</span>
+            <span class="arch-chip">Badge</span>
+            <span class="arch-chip">Dialog / Sheet / Drawer</span>
+            <span class="arch-chip">Table</span>
+            <span class="arch-chip">Tabs</span>
+            <span class="arch-chip">DeltaBadge*</span>
+            <span class="arch-chip">EmptyState*</span>
+            <span class="arch-chip">FilterBar*</span>
+            <span class="arch-chip">... 共 47 + 9 个</span>
+          </div>
+        </div>
+        <div class="arch-layer l3">
+          <div class="arch-layer-label">Token 层</div>
+          <div class="arch-items">
+            <span class="arch-chip">globals.css</span>
+            <span class="arch-chip">--primary / --background / --card / --border ...</span>
+            <span class="arch-chip">.dark {} 覆盖</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 1: Common UI -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">01 · 公共基础组件库</div>
+      <div class="section-title">
+        @datarise/ui
+        <span class="badge" style="background:#EFF4FF;color:var(--brand);border:1px solid var(--brand-border);">shadcn 基础 + 扩展</span>
+      </div>
+      <div class="section-desc">这一层完全不感知业务域，可跨产品（数启、Make 等）共享。现有 <code>/src/components/ui/</code> 中的 47 个 shadcn 组件构成基础，另需新建 9 个高频复用的扩展组件。所有组件必须同时支持 Light / Dark。</div>
+    </div>
+
+    <div class="info-box">
+      <b>Dark Mode 实现方式：</b>globals.css 已定义完整的 .dark {} token 覆盖（background / card / border / primary 等）。公共组件只需使用 CSS 变量（<code>var(--background)</code>、<code>var(--border)</code>），不应硬编码任何颜色值，即可自动适配。需重点审计的是<b>图表颜色</b>（--chart-1~5 在 dark 下已调亮）和<b>阴影</b>（--elevation-sm dark 下加深至 0.3 透明度）。
+    </div>
+
+    <div class="tier">
+      <div class="tier-label">Tier 1 · 已有 shadcn 原语（需暗色 token 审计）</div>
+      <div class="comp-grid">
+        <div class="comp-card">
+          <div class="comp-name">Button</div>
+          <div class="comp-desc">variants: default / secondary / ghost / destructive / outline / link</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span><span class="tag high">高频</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Card</div>
+          <div class="comp-desc">CardHeader / CardContent / CardFooter / CardTitle</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span><span class="tag high">高频</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Badge</div>
+          <div class="comp-desc">variants: default / secondary / destructive / outline</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span><span class="tag high">高频</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Input / Textarea</div>
+          <div class="comp-desc">基础输入框，含 focus-ring (--ring)</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Select</div>
+          <div class="comp-desc">Radix Select，支持 Trigger / Content / Item</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span><span class="tag high">高频</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Dialog</div>
+          <div class="comp-desc">模态弹层，含 Header / Footer / Description</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Sheet</div>
+          <div class="comp-desc">侧滑面板，side: left / right / top / bottom</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Drawer</div>
+          <div class="comp-desc">底部抽屉（vaul），移动端优先</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Tabs</div>
+          <div class="comp-desc">TabsList / TabsTrigger / TabsContent</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span><span class="tag high">高频</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Table</div>
+          <div class="comp-desc">语义化表格，含 Header / Body / Row / Cell</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Tooltip</div>
+          <div class="comp-desc">悬浮提示，dark 模式需调整背景</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Popover</div>
+          <div class="comp-desc">浮层定位容器，含 Trigger / Content</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">DropdownMenu</div>
+          <div class="comp-desc">下拉菜单，含 Item / Sub / CheckboxItem</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Progress</div>
+          <div class="comp-desc">进度条，dark 下 track 需调整</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Skeleton</div>
+          <div class="comp-desc">骨架屏，dark 下 shimmer 颜色需调整</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Avatar</div>
+          <div class="comp-desc">头像，含 fallback 文字占位</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Checkbox / Switch / RadioGroup</div>
+          <div class="comp-desc">表单控件三件套</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Slider</div>
+          <div class="comp-desc">滑块输入，含 track / thumb</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">ScrollArea</div>
+          <div class="comp-desc">自定义滚动条样式</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Separator</div>
+          <div class="comp-desc">水平 / 垂直分割线</div>
+          <div class="comp-tags"><span class="tag exists">已有</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Alert</div>
+          <div class="comp-desc">内联提醒，variants: default / destructive</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Sonner (Toast)</div>
+          <div class="comp-desc">轻提示通知，支持 success / error / info</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Pagination / Breadcrumb</div>
+          <div class="comp-desc">分页与路径导航</div>
+          <div class="comp-tags"><span class="tag exists">已有</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Accordion / Collapsible</div>
+          <div class="comp-desc">折叠展开，含动画</div>
+          <div class="comp-tags"><span class="tag exists">已有</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Command (cmdk)</div>
+          <div class="comp-desc">命令面板 / 搜索框</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Sidebar</div>
+          <div class="comp-desc">侧边栏骨架，含 collapse 状态</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">Chart (Recharts wrapper)</div>
+          <div class="comp-desc">统一图表容器，注入 --chart-1~5 色板</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色审计</span><span class="tag high">高频</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier">
+      <div class="tier-label">Tier 2 · 需新建的公共扩展组件</div>
+      <div class="comp-grid wide">
+        <div class="comp-card">
+          <div class="comp-name">DeltaBadge</div>
+          <div class="comp-desc">涨跌徽章：↑↓ 箭头 + 百分比 + 颜色逻辑（正/负/持平）。当前散落在 KPICard、InsightCard 等多处，逻辑不一致。</div>
+          <div class="comp-tags"><span class="tag new">新建</span><span class="tag high">高优先</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">EmptyState</div>
+          <div class="comp-desc">空态占位：图示 + 标题 + 描述 + 可选 CTA。目前各模块自行实现样式不统一。</div>
+          <div class="comp-tags"><span class="tag new">新建</span><span class="tag high">高优先</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">ErrorState</div>
+          <div class="comp-desc">错误态：加载失败 / 无权限 / 接口报错。复用 ErrorBoundary 的展示逻辑。</div>
+          <div class="comp-tags"><span class="tag new">新建</span><span class="tag med">中优先</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">SectionTitle</div>
+          <div class="comp-desc">模块区块标题：编号 + 标题 + 副标题 + 可选操作区。对应代码中 OcSectionTitle 的通用版。</div>
+          <div class="comp-tags"><span class="tag new">新建</span><span class="tag high">高优先</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">FilterBar</div>
+          <div class="comp-desc">横向筛选条：时间选择 + 维度 Select 组合。抽象自 DashboardHeader / CompactHeader 的筛选区，去除业务耦合。</div>
+          <div class="comp-tags"><span class="tag new">新建</span><span class="tag high">高优先</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">DateRangePicker</div>
+          <div class="comp-desc">日期范围选择器：基于现有 Calendar 封装，含预设快捷项（今日 / 7天 / 30天 / 自定义）。</div>
+          <div class="comp-tags"><span class="tag new">新建</span><span class="tag med">中优先</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">DrawerShell</div>
+          <div class="comp-desc">抽屉壳：统一 Header（标题 + 关闭按钮）/ 滚动 Body / 固定 Footer。所有业务 Drawer 依赖此壳。</div>
+          <div class="comp-tags"><span class="tag new">新建</span><span class="tag high">高优先</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">DataTable</div>
+          <div class="comp-desc">带排序 / 分页 / 筛选的增强表格。基于 Table 封装，提供统一的 column 定义接口。</div>
+          <div class="comp-tags"><span class="tag new">新建</span><span class="tag med">中优先</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">LoadingOverlay</div>
+          <div class="comp-desc">全屏或局部加载遮罩，含 Skeleton 预占位模式与 spinner 模式。</div>
+          <div class="comp-tags"><span class="tag new">新建</span><span class="tag low">低优先</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- Section 2: Business Components -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">02 · 业务组件库</div>
+      <div class="section-title">
+        @datarise/components
+        <span class="badge" style="background:#F0FDF4;color:var(--green);border:1px solid var(--green-border);">医疗数据分析域</span>
+      </div>
+      <div class="section-desc">感知医疗分析业务语义，但不依赖特定页面数据。组件接收 props 驱动，可在不同模块复用。分为：导航层、数据展示、洞察 & 行动、图表封装、抽屉模式、筛选 & 口径六大分组。</div>
+    </div>
+
+    <div class="tier">
+      <div class="tier-label">导航层 Navigation</div>
+      <div class="comp-grid wide">
+        <div class="comp-card">
+          <div class="comp-name">TopNavBar</div>
+          <div class="comp-desc">全局顶栏：Logo + 模块切换 + 用户信息 + 通知 + 主题切换。dark 模式目前硬编码 bg-slate-900，需改用 --background。</div>
+          <div class="comp-tags"><span class="tag refactor">需重构</span><span class="tag dark">暗色适配</span><span class="tag high">高优先</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">DashboardNavBar</div>
+          <div class="comp-desc">模块内二级导航：场景 Tab 切换 + 当前模块标识。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">CompactHeader</div>
+          <div class="comp-desc">紧凑模块头：模块名 + 场景名 + 时间/院区/科室筛选 + 口径选择。已高度抽象，Props 丰富，需补 dark token。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span><span class="tag high">高优先</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">UnifiedNavBar</div>
+          <div class="comp-desc">混合导航方案：横向顶栏 + 纵向侧边栏可切换，适配不同布局偏好。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier">
+      <div class="tier-label">数据展示 Data Display</div>
+      <div class="comp-grid wide">
+        <div class="comp-card">
+          <div class="comp-name">KPICard</div>
+          <div class="comp-desc">核心指标卡：图标 + 指标名 + 数值 + DeltaBadge + 趋势线（可选）。存在 KPICard / CoreKPICard / CompactKPICard / ModuleKPICard 四个变体，<b>需合并为单一组件 + size/variant prop</b>。</div>
+          <div class="comp-tags"><span class="tag refactor">需合并重构</span><span class="tag dark">暗色适配</span><span class="tag high">高优先</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">ScenarioCard</div>
+          <div class="comp-desc">场景入口卡：图标 + 场景名 + 描述 + KPI 摘要 + 进入按钮。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">ModuleNavigationCard</div>
+          <div class="comp-desc">模块导航卡：模块图标 + 名称 + 简介，用于 Hub 页索引。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">UserInfoCard</div>
+          <div class="comp-desc">患者信息摘要卡：头像 + 基本信息 + 标签。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">ScenarioKPISummary</div>
+          <div class="comp-desc">场景 KPI 横向汇总行，多指标并排展示。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">SolarTermsHeatmap</div>
+          <div class="comp-desc">节气热力图：按时间维度展示患者行为密度。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier">
+      <div class="tier-label">洞察 & 行动 Insights & Actions</div>
+      <div class="comp-grid wide">
+        <div class="comp-card">
+          <div class="comp-name">InsightCard</div>
+          <div class="comp-desc">洞察卡：type (positive/negative/warning/neutral) + 标题 + 描述 + 指标 + 影响度。左侧色边 + 语义图标。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span><span class="tag high">高优先</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">ActionCard</div>
+          <div class="comp-desc">行动建议卡：优先级 (high/medium/low) + 类别 + 步骤列表 + 执行按钮。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span><span class="tag high">高优先</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">ProcessFaultInsightCard</div>
+          <div class="comp-desc">流程断层洞察：节点 + 断层类型 + 影响量化。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">LowScoreRiskCard</div>
+          <div class="comp-desc">低分风险卡：风险等级 + 触发指标 + 建议行动。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">InsightArchitectureCard</div>
+          <div class="comp-desc">洞察体系卡：多层次洞察结构展示，含模块间关联。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">ActionSuggestions / LifecycleActionSuggestions</div>
+          <div class="comp-desc">行动建议列表容器：聚合多个 ActionCard，含过滤排序。<b>可合并为 ActionSuggestions + context prop</b>。</div>
+          <div class="comp-tags"><span class="tag refactor">需合并</span><span class="tag dark">暗色适配</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier">
+      <div class="tier-label">图表封装 Chart Wrappers</div>
+      <div class="comp-grid wide">
+        <div class="comp-card">
+          <div class="comp-name">BidirectionalBarChart</div>
+          <div class="comp-desc">双向条形图：正负向对比（满意/不满意）。图表色使用 --chart-1/2，dark 下已调亮。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">VisitTrafficTrendChart</div>
+          <div class="comp-desc">访次流量趋势折线图：含多系列 + 参考线。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">RegistrationConversionMatrix</div>
+          <div class="comp-desc">挂号转化矩阵：热力色表格，dark 模式需重映射热力色。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">⚠ 热力色需特殊处理</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">DepartmentConversionMatrix</div>
+          <div class="comp-desc">科室转化率矩阵，同上。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">⚠ 热力色需特殊处理</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier">
+      <div class="tier-label">抽屉模式 Drawer Patterns</div>
+      <div class="comp-grid wide">
+        <div class="comp-card">
+          <div class="comp-name">KPIDetailDrawer</div>
+          <div class="comp-desc">KPI 指标详情抽屉：趋势图 + 分解维度 + 对比。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">DepartmentDetailDrawer</div>
+          <div class="comp-desc">科室详情抽屉：综合指标 + 下钻分析。含 SatisfactionDepartmentDetailDrawer / ServiceFaultlineDepartmentDetailDrawer 等多个子类，<b>建议统一 DrawerShell + 插槽内容</b>。</div>
+          <div class="comp-tags"><span class="tag refactor">需统一</span><span class="tag dark">暗色适配</span><span class="tag high">高优先</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">DoctorDetailDrawer</div>
+          <div class="comp-desc">医生详情抽屉：DoctorDetailBody 复用，含脱敏显示逻辑。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">ProcessNodeDetailDrawer</div>
+          <div class="comp-desc">流程节点详情：节点指标 + 关联问题 + 改善建议。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">PrescriptionDetailDrawer / ConversionDrawer 系列</div>
+          <div class="comp-desc">处方/转化详情抽屉族群（约 8 个），结构相似，均可基于 DrawerShell 重构。</div>
+          <div class="comp-tags"><span class="tag refactor">可基于 DrawerShell 重构</span><span class="tag dark">暗色适配</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tier">
+      <div class="tier-label">筛选 & 口径 Filters & Scope</div>
+      <div class="comp-grid wide">
+        <div class="comp-card">
+          <div class="comp-name">ScopePill</div>
+          <div class="comp-desc">口径胶囊：主动评价 / 全部评价切换 + 主动占比显示 + 低覆盖警告。逻辑复杂，Props 完善，可直接纳入业务组件库。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span><span class="tag high">高优先</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">SatisfactionPeriodPicker</div>
+          <div class="comp-desc">满意度专用时间段选择器：周/月/季/年 + 自定义范围，内含业务日历规则。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+        <div class="comp-card">
+          <div class="comp-name">NotificationPanel</div>
+          <div class="comp-desc">通知面板：告警列表 + 已读/未读 + 跳转。</div>
+          <div class="comp-tags"><span class="tag exists">已有</span><span class="tag dark">暗色适配</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- Section 3: Dark Mode -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">03 · Dark Mode 适配要点</div>
+      <div class="section-title">主题切换机制 & 审计重点</div>
+      <div class="section-desc">globals.css 已定义完整双主题 token，切换机制为在 &lt;html&gt; 上切换 .dark class（next-themes 管理）。以下是需要特别关注的适配差异。</div>
+    </div>
+
+    <div class="dark-showcase">
+      <div class="dark-panel light">
+        <div class="panel-label">Light Mode tokens</div>
+        <div class="token-row"><span class="token-name">--background</span><span class="token-val"><span class="dot" style="background:#fff;border-color:#e5e7eb"></span>#FFFFFF</span></div>
+        <div class="token-row"><span class="token-name">--card</span><span class="token-val"><span class="dot" style="background:#fff;border-color:#e5e7eb"></span>#FFFFFF</span></div>
+        <div class="token-row"><span class="token-name">--primary</span><span class="token-val"><span class="dot" style="background:#1F61E8"></span>#1F61E8</span></div>
+        <div class="token-row"><span class="token-name">--border</span><span class="token-val"><span class="dot" style="background:#E4E5E8"></span>#E4E5E8</span></div>
+        <div class="token-row"><span class="token-name">--muted-foreground</span><span class="token-val"><span class="dot" style="background:rgba(2,8,19,.7)"></span>rgba(2,8,19,.7)</span></div>
+        <div class="token-row"><span class="token-name">--chart-1</span><span class="token-val"><span class="dot" style="background:#1F61E8"></span>#1F61E8</span></div>
+        <div class="token-row"><span class="token-name">--elevation-sm</span><span class="token-val">rgba(0,0,0, .10)</span></div>
+      </div>
+      <div class="dark-panel dark">
+        <div class="panel-label" style="color:#555">Dark Mode tokens</div>
+        <div class="token-row"><span class="token-name" style="color:#aaa">--background</span><span class="token-val" style="color:#ccc"><span class="dot" style="background:#121212"></span>#121212</span></div>
+        <div class="token-row"><span class="token-name" style="color:#aaa">--card</span><span class="token-val" style="color:#ccc"><span class="dot" style="background:#262626"></span>#262626</span></div>
+        <div class="token-row"><span class="token-name" style="color:#aaa">--primary</span><span class="token-val" style="color:#ccc"><span class="dot" style="background:#4F8CFF"></span>#4F8CFF ↑调亮</span></div>
+        <div class="token-row"><span class="token-name" style="color:#aaa">--border</span><span class="token-val" style="color:#ccc"><span class="dot" style="background:#404040"></span>#404040</span></div>
+        <div class="token-row"><span class="token-name" style="color:#aaa">--muted-foreground</span><span class="token-val" style="color:#ccc"><span class="dot" style="background:rgba(255,255,255,.6)"></span>rgba(255,255,255,.6)</span></div>
+        <div class="token-row"><span class="token-name" style="color:#aaa">--chart-1</span><span class="token-val" style="color:#ccc"><span class="dot" style="background:#4F8CFF"></span>#4F8CFF ↑调亮</span></div>
+        <div class="token-row"><span class="token-name" style="color:#aaa">--elevation-sm</span><span class="token-val" style="color:#ccc">rgba(0,0,0, .30) ↑加深</span></div>
+      </div>
+    </div>
+
+    <div style="margin-top:24px;">
+      <table class="theme-table">
+        <thead>
+          <tr>
+            <th>适配场景</th>
+            <th>风险等级</th>
+            <th>说明 & 建议</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>TopNavBar 硬编码色</td>
+            <td><span class="tag high" style="border-radius:4px;padding:2px 7px;background:#FEF2F2;border-color:#FECACA;color:#DC2626;font-size:11px;">高风险</span></td>
+            <td>TopNavBar 当前写死 <code>bg-slate-900</code>，dark 模式下与 --background: #121212 不一致。应改为 <code>bg-[var(--sidebar)]</code> 或 <code>bg-background</code>。</td>
+          </tr>
+          <tr>
+            <td>热力图矩阵色</td>
+            <td><span class="tag high" style="border-radius:4px;padding:2px 7px;background:#FEF2F2;border-color:#FECACA;color:#DC2626;font-size:11px;">高风险</span></td>
+            <td>RegistrationConversionMatrix / DepartmentConversionMatrix 的热力色（红→绿渐变）在 dark 背景下对比度不足，需单独定义 .dark 下的色阶变量。</td>
+          </tr>
+          <tr>
+            <td>涨跌颜色语义</td>
+            <td><span class="tag med" style="border-radius:4px;padding:2px 7px;background:#FFFBEB;border-color:#FDE68A;color:#D97706;font-size:11px;">中风险</span></td>
+            <td>代码中涨用 <code>--chart-2</code>（橙红）、跌用 <code>--chart-3</code>（绿），但 dark 下两者均已调整。需要 DeltaBadge 统一封装后统一验证。</td>
+          </tr>
+          <tr>
+            <td>Skeleton shimmer</td>
+            <td><span class="tag med" style="border-radius:4px;padding:2px 7px;background:#FFFBEB;border-color:#FDE68A;color:#D97706;font-size:11px;">中风险</span></td>
+            <td>Skeleton 的 shimmer 动画在 dark 下 from/to 颜色需从 gray-200/300 改为 neutral-700/600。</td>
+          </tr>
+          <tr>
+            <td>图表 tooltip 背景</td>
+            <td><span class="tag med" style="border-radius:4px;padding:2px 7px;background:#FFFBEB;border-color:#FDE68A;color:#D97706;font-size:11px;">中风险</span></td>
+            <td>Recharts 默认 tooltip 背景为白色，dark 模式应覆盖为 <code>var(--popover)</code>（#262626）。</td>
+          </tr>
+          <tr>
+            <td>阴影强度</td>
+            <td><span class="tag low" style="border-radius:4px;padding:2px 7px;background:#F3F4F6;border-color:#D1D5DB;color:#6B7280;font-size:11px;">低风险</span></td>
+            <td>dark 下 --elevation-sm 已从 0.1 调至 0.3，只要组件使用 <code>shadow-[var(--elevation-sm)]</code> 即可自动适配。</td>
+          </tr>
+          <tr>
+            <td>CompactHeader 下拉菜单</td>
+            <td><span class="tag low" style="border-radius:4px;padding:2px 7px;background:#F3F4F6;border-color:#D1D5DB;color:#6B7280;font-size:11px;">低风险</span></td>
+            <td>Select / DropdownMenu 的 Content 使用 <code>--popover</code> token，已自动适配，无需单独处理。</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- Section 4: Priorities -->
+  <div class="section">
+    <div class="section-header">
+      <div class="section-num">04 · 实施优先级</div>
+      <div class="section-title">建议交付顺序</div>
+    </div>
+    <table class="theme-table">
+      <thead>
+        <tr><th>阶段</th><th>交付物</th><th>理由</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>P0 · 立即</td>
+          <td>DrawerShell + DeltaBadge + EmptyState + SectionTitle</td>
+          <td>高频使用，当前实现分散，统一后可减少约 30% 的重复代码</td>
+        </tr>
+        <tr>
+          <td>P0 · 立即</td>
+          <td>KPICard 四合一重构</td>
+          <td>4 个变体逻辑几乎相同，维护成本高，合并为 size/variant prop</td>
+        </tr>
+        <tr>
+          <td>P0 · 立即</td>
+          <td>TopNavBar dark token 修复</td>
+          <td>首屏可见，hardcode slate-900 是最明显的 dark 模式 bug</td>
+        </tr>
+        <tr>
+          <td>P1 · 本迭代</td>
+          <td>FilterBar + DateRangePicker</td>
+          <td>CompactHeader 内筛选逻辑复杂，拆出后可独立测试</td>
+        </tr>
+        <tr>
+          <td>P1 · 本迭代</td>
+          <td>热力图 dark 色阶方案</td>
+          <td>矩阵图是高信息密度核心视图，dark 对比度问题影响可用性</td>
+        </tr>
+        <tr>
+          <td>P1 · 本迭代</td>
+          <td>全量 shadcn 组件暗色 token 审计</td>
+          <td>系统性扫描 /ui 目录，确认无 hardcode 色值</td>
+        </tr>
+        <tr>
+          <td>P2 · 下一迭代</td>
+          <td>各 Drawer 统一到 DrawerShell</td>
+          <td>约 15 个 Drawer 结构一致，迁移后可大幅减少重复 header/footer 代码</td>
+        </tr>
+        <tr>
+          <td>P2 · 下一迭代</td>
+          <td>ActionSuggestions 合并 + DataTable</td>
+          <td>中等频率复用，重构收益较明确</td>
+        </tr>
+        <tr>
+          <td>P3 · 后续</td>
+          <td>组件库 monorepo 拆包 (@datarise/ui + @datarise/components)</td>
+          <td>当业务组件稳定后再拆，避免过早抽象</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>

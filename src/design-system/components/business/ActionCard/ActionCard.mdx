@@ -1,0 +1,79 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as ActionCardStories from './ActionCard.stories';
+
+<Meta of={ActionCardStories} />
+
+<Title />
+
+行动建议卡组件。提供可执行的改进步骤，完成"发现 → 行动"闭环。支持三级优先级、步骤列表、验证指标和操作按钮。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 功能特性
+
+<table>
+  <thead>
+    <tr><th>#</th><th>特性</th><th>说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>F1</td><td>三级优先级</td><td>high（红色）/ medium（黄色）/ low（灰色）自动映射徽章文字和颜色</td></tr>
+    <tr><td>F2</td><td>优先级徽章</td><td>自动显示"高优先"/"中优先"/"低优先"文字</td></tr>
+    <tr><td>F3</td><td>图标区域</td><td>36x36 圆角图标，背景色随优先级变化</td></tr>
+    <tr><td>F4</td><td>自定义图标</td><td>icon 插槽覆盖默认闪电图标</td></tr>
+    <tr><td>F5</td><td>步骤列表</td><td>steps 字符串数组，以 › 前缀渲染</td></tr>
+    <tr><td>F6</td><td>验证指标</td><td>verification 文字在灰底区域展示</td></tr>
+    <tr><td>F7</td><td>操作按钮</td><td>actions 插槽，右对齐，最多 2 个按钮</td></tr>
+    <tr><td>F8</td><td>className 透传</td><td>自定义 className 追加到根元素</td></tr>
+    <tr><td>F9</td><td>HTML 属性透传</td><td>data-*、aria-* 等原生属性支持</td></tr>
+  </tbody>
+</table>
+
+---
+
+## 所有优先级
+
+<Canvas of={ActionCardStories.AllPriorities} />
+
+### 高优先
+
+<Canvas of={ActionCardStories.HighPriority} />
+
+### 中优先
+
+<Canvas of={ActionCardStories.MediumPriority} />
+
+### 低优先
+
+<Canvas of={ActionCardStories.LowPriority} />
+
+---
+
+## 回归测试用例
+
+<table>
+  <thead>
+    <tr><th>#</th><th>用例</th><th>预期结果</th><th>状态</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>R1</td><td>基础渲染</td><td>标题正常显示</td><td>✅</td></tr>
+    <tr><td>R2</td><td>priority="high"</td><td>显示"高优先"徽章，danger 色</td><td>✅</td></tr>
+    <tr><td>R3</td><td>priority="medium"</td><td>显示"中优先"徽章，warning 色</td><td>✅</td></tr>
+    <tr><td>R4</td><td>priority="low"</td><td>显示"低优先"徽章，neutral 色</td><td>✅</td></tr>
+    <tr><td>R5</td><td>description</td><td>描述文字正常渲染</td><td>✅</td></tr>
+    <tr><td>R6</td><td>无 description</td><td>不渲染描述区域</td><td>✅</td></tr>
+    <tr><td>R7</td><td>steps=["a","b","c"]</td><td>渲染 3 个步骤项</td><td>✅</td></tr>
+    <tr><td>R8</td><td>无 steps / 空数组</td><td>不渲染步骤列表</td><td>✅</td></tr>
+    <tr><td>R9</td><td>verification</td><td>验证文字在灰底区域显示</td><td>✅</td></tr>
+    <tr><td>R10</td><td>actions=按钮</td><td>按钮右对齐渲染</td><td>✅</td></tr>
+    <tr><td>R11</td><td>无 actions</td><td>不渲染操作区域</td><td>✅</td></tr>
+    <tr><td>R12</td><td>icon=自定义</td><td>自定义图标替代默认</td><td>✅</td></tr>
+    <tr><td>R13</td><td>默认图标</td><td>无 icon 时渲染闪电 SVG</td><td>✅</td></tr>
+    <tr><td>R14</td><td>className / data-* 透传</td><td>属性正确挂载</td><td>✅</td></tr>
+  </tbody>
+</table>

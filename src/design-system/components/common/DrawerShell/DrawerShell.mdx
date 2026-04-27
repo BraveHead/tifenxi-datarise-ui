@@ -1,0 +1,76 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as DrawerShellStories from './DrawerShell.stories';
+
+<Meta of={DrawerShellStories} />
+
+<Title />
+
+统一抽屉壳组件。约 15 个业务 Drawer 迁移后共用此壳。三区固定结构：Header（固定）→ Body（滚动）→ Footer（固定）。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 功能特性
+
+<table>
+  <thead>
+    <tr><th>#</th><th>特性</th><th>说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>F1</td><td>三区结构</td><td>DrawerHeader + DrawerBody + DrawerFooter 组合</td></tr>
+    <tr><td>F2</td><td>三档宽度</td><td>sm=480px · md=640px · lg=800px</td></tr>
+    <tr><td>F3</td><td>Header 结构</td><td>标题（必填）+ 副标题（可选）+ 关闭按钮（可选）</td></tr>
+    <tr><td>F4</td><td>Body 滚动</td><td>flex:1 + overflow-y:auto，内容超高时自动滚动</td></tr>
+    <tr><td>F5</td><td>Footer 固定</td><td>border-top 分隔，按钮右对齐，最多 2 个按钮</td></tr>
+    <tr><td>F6</td><td>关闭回调</td><td>onClose 控制关闭按钮渲染和点击回调</td></tr>
+    <tr><td>F7</td><td>className 透传</td><td>各子组件均支持 className 扩展</td></tr>
+    <tr><td>F8</td><td>HTML 属性透传</td><td>data-*、aria-* 等原生属性支持</td></tr>
+  </tbody>
+</table>
+
+---
+
+## 默认（sm 宽度）
+
+<Canvas of={DrawerShellStories.Default} />
+
+## 中等宽度
+
+<Canvas of={DrawerShellStories.Medium} />
+
+## 大宽度
+
+<Canvas of={DrawerShellStories.Large} />
+
+## 无 Footer
+
+<Canvas of={DrawerShellStories.HeaderOnly} />
+
+---
+
+## 回归测试用例
+
+<table>
+  <thead>
+    <tr><th>#</th><th>用例</th><th>预期结果</th><th>状态</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>R1</td><td>默认渲染</td><td>子组件内容正常显示</td><td>✅</td></tr>
+    <tr><td>R2</td><td>size 默认</td><td>宽度 480px</td><td>✅</td></tr>
+    <tr><td>R3</td><td>size="md"</td><td>宽度 640px</td><td>✅</td></tr>
+    <tr><td>R4</td><td>size="lg"</td><td>宽度 800px</td><td>✅</td></tr>
+    <tr><td>R5</td><td>Header title</td><td>标题文字渲染</td><td>✅</td></tr>
+    <tr><td>R6</td><td>Header subtitle</td><td>副标题渲染</td><td>✅</td></tr>
+    <tr><td>R7</td><td>Header 无 subtitle</td><td>不渲染副标题元素</td><td>✅</td></tr>
+    <tr><td>R8</td><td>Header onClose</td><td>渲染关闭按钮，点击触发回调</td><td>✅</td></tr>
+    <tr><td>R9</td><td>Header 无 onClose</td><td>不渲染关闭按钮</td><td>✅</td></tr>
+    <tr><td>R10</td><td>Body 滚动</td><td>有 overflow-y-auto 类</td><td>✅</td></tr>
+    <tr><td>R11</td><td>Footer 右对齐</td><td>有 justify-end 类</td><td>✅</td></tr>
+    <tr><td>R12</td><td>className 透传</td><td>各子组件的 className 正确追加</td><td>✅</td></tr>
+  </tbody>
+</table>

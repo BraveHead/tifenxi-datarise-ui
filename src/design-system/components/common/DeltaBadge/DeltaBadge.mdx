@@ -19,16 +19,21 @@ import * as DeltaBadgeStories from './DeltaBadge.stories';
 
 ## 功能特性
 
-| # | 特性 | 说明 |
-|---|------|------|
-| F1 | 方向自动推断 | `value > 0` 涨 / `< 0` 跌 / `= 0` 持平，显示对应箭头图标 |
-| F2 | 绝对值显示 | 始终显示绝对值，负号不出现在文案中 |
-| F3 | 语义色逻辑 | 默认：涨=danger、跌=success；`inverse` 翻转 |
-| F4 | 标签前缀 | `label` 前缀（"同比""环比"），无则不显示 |
-| F5 | 自定义单位 | 默认 `%`，可通过 `unit` 改为 `pp`、`分` 等 |
-| F6 | 两档尺寸 | `sm`=11px（KPI 卡内） / `md`=12px（独立展示） |
-| F7 | className 透传 | 自定义 className 追加到根元素 |
-| F8 | HTML 属性透传 | `data-*`、`aria-*` 等原生属性支持 |
+<table>
+  <thead>
+    <tr><th>#</th><th>特性</th><th>说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>F1</td><td>方向自动推断</td><td>value &gt; 0 涨 / &lt; 0 跌 / = 0 持平，显示对应箭头图标</td></tr>
+    <tr><td>F2</td><td>绝对值显示</td><td>始终显示绝对值，负号不出现在文案中</td></tr>
+    <tr><td>F3</td><td>语义色逻辑</td><td>默认：涨=danger、跌=success；inverse 翻转</td></tr>
+    <tr><td>F4</td><td>标签前缀</td><td>label 前缀（"同比""环比"），无则不显示</td></tr>
+    <tr><td>F5</td><td>自定义单位</td><td>默认 %，可通过 unit 改为 pp、分 等</td></tr>
+    <tr><td>F6</td><td>两档尺寸</td><td>sm=11px（KPI 卡内） / md=12px（独立展示）</td></tr>
+    <tr><td>F7</td><td>className 透传</td><td>自定义 className 追加到根元素</td></tr>
+    <tr><td>F8</td><td>HTML 属性透传</td><td>data-*、aria-* 等原生属性支持</td></tr>
+  </tbody>
+</table>
 
 ---
 
@@ -60,15 +65,20 @@ import * as DeltaBadgeStories from './DeltaBadge.stories';
 
 ## 回归测试用例
 
-| # | 用例 | 预期结果 | 状态 |
-|---|------|----------|------|
-| R1 | `value=2.4 label="同比"` | 显示 `↑ 同比 2.4%`，橙红色 | ✅ |
-| R2 | `value=-1.2 label="环比"` | 显示 `↓ 环比 1.2%`，绿色 | ✅ |
-| R3 | `value=0` | 显示 `— 0%`，中性灰色 | ✅ |
-| R4 | `value=3.5 inverse` | 涨=绿色（正向指标语义反转） | ✅ |
-| R5 | `value=-2.1 inverse` | 跌=红色（正向指标语义反转） | ✅ |
-| R6 | `value=4.2 unit="pp"` | 单位显示为 `pp` 而非 `%` | ✅ |
-| R7 | `size="md"` | 字号 12px，间距更宽 | ✅ |
-| R8 | 负值不显示负号 | `value=-5` 显示 `5%` 非 `-5%` | ✅ |
-| R9 | className 透传 | 自定义 class 出现在根元素 | ✅ |
-| R10 | data-testid 透传 | 可通过 testid 查询 | ✅ |
+<table>
+  <thead>
+    <tr><th>#</th><th>用例</th><th>预期结果</th><th>状态</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>R1</td><td>value=2.4 label="同比"</td><td>显示 ↑ 同比 2.4%，橙红色</td><td>✅</td></tr>
+    <tr><td>R2</td><td>value=-1.2 label="环比"</td><td>显示 ↓ 环比 1.2%，绿色</td><td>✅</td></tr>
+    <tr><td>R3</td><td>value=0</td><td>显示 — 0%，中性灰色</td><td>✅</td></tr>
+    <tr><td>R4</td><td>value=3.5 inverse</td><td>涨=绿色（正向指标语义反转）</td><td>✅</td></tr>
+    <tr><td>R5</td><td>value=-2.1 inverse</td><td>跌=红色（正向指标语义反转）</td><td>✅</td></tr>
+    <tr><td>R6</td><td>value=4.2 unit="pp"</td><td>单位显示为 pp 而非 %</td><td>✅</td></tr>
+    <tr><td>R7</td><td>size="md"</td><td>字号 12px，间距更宽</td><td>✅</td></tr>
+    <tr><td>R8</td><td>负值不显示负号</td><td>value=-5 显示 5% 非 -5%</td><td>✅</td></tr>
+    <tr><td>R9</td><td>className 透传</td><td>自定义 class 出现在根元素</td><td>✅</td></tr>
+    <tr><td>R10</td><td>data-testid 透传</td><td>可通过 testid 查询</td><td>✅</td></tr>
+  </tbody>
+</table>

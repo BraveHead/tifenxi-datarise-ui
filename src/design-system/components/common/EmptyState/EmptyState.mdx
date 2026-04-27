@@ -17,16 +17,21 @@ import * as EmptyStateStories from './EmptyState.stories';
 
 ## 功能特性
 
-| # | 特性 | 说明 |
-|---|------|------|
-| F1 | 三种变体 | `no-data`（默认）/ `no-result` / `error`，各有默认图标和文案 |
-| F2 | 默认图标 | `no-data`=文档图标 / `no-result`=搜索图标 / `error`=警告三角 |
-| F3 | 默认文案 | 各变体预设标题和描述，无需每次传入 |
-| F4 | 自定义覆盖 | `title` / `description` / `icon` 均可覆盖默认值 |
-| F5 | CTA 插槽 | `action` 插槽支持任意 ReactNode（按钮、链接等） |
-| F6 | 图标背景色 | 各变体图标圆形背景色不同：neutral / brand / danger |
-| F7 | className 透传 | 自定义 className 追加到根元素 |
-| F8 | HTML 属性透传 | `data-*`、`aria-*` 等原生属性支持 |
+<table>
+  <thead>
+    <tr><th>#</th><th>特性</th><th>说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>F1</td><td>三种变体</td><td>no-data（默认）/ no-result / error，各有默认图标和文案</td></tr>
+    <tr><td>F2</td><td>默认图标</td><td>no-data =文档图标 / no-result =搜索图标 / error =警告三角</td></tr>
+    <tr><td>F3</td><td>默认文案</td><td>各变体预设标题和描述，无需每次传入</td></tr>
+    <tr><td>F4</td><td>自定义覆盖</td><td>title / description / icon 均可覆盖默认值</td></tr>
+    <tr><td>F5</td><td>CTA 插槽</td><td>action 插槽支持任意 ReactNode（按钮、链接等）</td></tr>
+    <tr><td>F6</td><td>图标背景色</td><td>各变体图标圆形背景色不同：neutral / brand / danger</td></tr>
+    <tr><td>F7</td><td>className 透传</td><td>自定义 className 追加到根元素</td></tr>
+    <tr><td>F8</td><td>HTML 属性透传</td><td>data-*、aria-* 等原生属性支持</td></tr>
+  </tbody>
+</table>
 
 ---
 
@@ -54,15 +59,20 @@ import * as EmptyStateStories from './EmptyState.stories';
 
 ## 回归测试用例
 
-| # | 用例 | 预期结果 | 状态 |
-|---|------|----------|------|
-| R1 | 默认渲染（无 props） | 显示"暂无数据"+默认描述+文档图标 | ✅ |
-| R2 | `variant="no-data"` | 标题"暂无数据"，rect SVG 图标 | ✅ |
-| R3 | `variant="no-result"` | 标题"未找到匹配结果"，搜索 SVG 图标 | ✅ |
-| R4 | `variant="error"` | 标题"数据加载失败"，警告三角 SVG 图标 | ✅ |
-| R5 | `title="自定义"` | 自定义标题替代默认标题 | ✅ |
-| R6 | `description="自定义"` | 自定义描述替代默认描述 | ✅ |
-| R7 | `icon=<自定义图标>` | 自定义图标替代默认 SVG | ✅ |
-| R8 | `action=<Button>` | CTA 按钮出现在描述下方 | ✅ |
-| R9 | 无 action 时 | 不渲染按钮区域 | ✅ |
-| R10 | className / data-* 透传 | 属性正确挂载到根元素 | ✅ |
+<table>
+  <thead>
+    <tr><th>#</th><th>用例</th><th>预期结果</th><th>状态</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>R1</td><td>默认渲染（无 props）</td><td>显示"暂无数据"+默认描述+文档图标</td><td>✅</td></tr>
+    <tr><td>R2</td><td>variant="no-data"</td><td>标题"暂无数据"，rect SVG 图标</td><td>✅</td></tr>
+    <tr><td>R3</td><td>variant="no-result"</td><td>标题"未找到匹配结果"，搜索 SVG 图标</td><td>✅</td></tr>
+    <tr><td>R4</td><td>variant="error"</td><td>标题"数据加载失败"，警告三角 SVG 图标</td><td>✅</td></tr>
+    <tr><td>R5</td><td>title="自定义"</td><td>自定义标题替代默认标题</td><td>✅</td></tr>
+    <tr><td>R6</td><td>description="自定义"</td><td>自定义描述替代默认描述</td><td>✅</td></tr>
+    <tr><td>R7</td><td>icon=自定义图标</td><td>自定义图标替代默认 SVG</td><td>✅</td></tr>
+    <tr><td>R8</td><td>action=Button</td><td>CTA 按钮出现在描述下方</td><td>✅</td></tr>
+    <tr><td>R9</td><td>无 action 时</td><td>不渲染按钮区域</td><td>✅</td></tr>
+    <tr><td>R10</td><td>className / data-* 透传</td><td>属性正确挂载到根元素</td><td>✅</td></tr>
+  </tbody>
+</table>

@@ -1,0 +1,74 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as DeltaBadgeStories from './DeltaBadge.stories';
+
+<Meta of={DeltaBadgeStories} />
+
+<Title />
+
+涨跌徽章组件。统一全项目涨跌显示逻辑，替换散落在多个组件中的重复实现。
+
+**业务约定（医疗场景）**：默认涨=橙红（问题增多=警示），跌=绿。`inverse=true` 反转语义（满意度等正向指标）。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 功能特性
+
+| # | 特性 | 说明 |
+|---|------|------|
+| F1 | 方向自动推断 | `value > 0` 涨 / `< 0` 跌 / `= 0` 持平，显示对应箭头图标 |
+| F2 | 绝对值显示 | 始终显示绝对值，负号不出现在文案中 |
+| F3 | 语义色逻辑 | 默认：涨=danger、跌=success；`inverse` 翻转 |
+| F4 | 标签前缀 | `label` 前缀（"同比""环比"），无则不显示 |
+| F5 | 自定义单位 | 默认 `%`，可通过 `unit` 改为 `pp`、`分` 等 |
+| F6 | 两档尺寸 | `sm`=11px（KPI 卡内） / `md`=12px（独立展示） |
+| F7 | className 透传 | 自定义 className 追加到根元素 |
+| F8 | HTML 属性透传 | `data-*`、`aria-*` 等原生属性支持 |
+
+---
+
+## 所有变体
+
+<Canvas of={DeltaBadgeStories.AllVariants} />
+
+### 涨（默认语义 = 橙红）
+
+<Canvas of={DeltaBadgeStories.Up} />
+
+### 跌（默认语义 = 绿色）
+
+<Canvas of={DeltaBadgeStories.Down} />
+
+### 持平
+
+<Canvas of={DeltaBadgeStories.Flat} />
+
+### Inverse 模式
+
+<Canvas of={DeltaBadgeStories.InverseUp} />
+
+### 中等尺寸
+
+<Canvas of={DeltaBadgeStories.MediumSize} />
+
+---
+
+## 回归测试用例
+
+| # | 用例 | 预期结果 | 状态 |
+|---|------|----------|------|
+| R1 | `value=2.4 label="同比"` | 显示 `↑ 同比 2.4%`，橙红色 | ✅ |
+| R2 | `value=-1.2 label="环比"` | 显示 `↓ 环比 1.2%`，绿色 | ✅ |
+| R3 | `value=0` | 显示 `— 0%`，中性灰色 | ✅ |
+| R4 | `value=3.5 inverse` | 涨=绿色（正向指标语义反转） | ✅ |
+| R5 | `value=-2.1 inverse` | 跌=红色（正向指标语义反转） | ✅ |
+| R6 | `value=4.2 unit="pp"` | 单位显示为 `pp` 而非 `%` | ✅ |
+| R7 | `size="md"` | 字号 12px，间距更宽 | ✅ |
+| R8 | 负值不显示负号 | `value=-5` 显示 `5%` 非 `-5%` | ✅ |
+| R9 | className 透传 | 自定义 class 出现在根元素 | ✅ |
+| R10 | data-testid 透传 | 可通过 testid 查询 | ✅ |

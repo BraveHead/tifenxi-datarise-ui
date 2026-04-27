@@ -1,0 +1,68 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as EmptyStateStories from './EmptyState.stories';
+
+<Meta of={EmptyStateStories} />
+
+<Title />
+
+空态占位组件。覆盖三种场景：无数据、筛选无结果、加载失败。支持自定义图标、文案和 CTA 按钮。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 功能特性
+
+| # | 特性 | 说明 |
+|---|------|------|
+| F1 | 三种变体 | `no-data`（默认）/ `no-result` / `error`，各有默认图标和文案 |
+| F2 | 默认图标 | `no-data`=文档图标 / `no-result`=搜索图标 / `error`=警告三角 |
+| F3 | 默认文案 | 各变体预设标题和描述，无需每次传入 |
+| F4 | 自定义覆盖 | `title` / `description` / `icon` 均可覆盖默认值 |
+| F5 | CTA 插槽 | `action` 插槽支持任意 ReactNode（按钮、链接等） |
+| F6 | 图标背景色 | 各变体图标圆形背景色不同：neutral / brand / danger |
+| F7 | className 透传 | 自定义 className 追加到根元素 |
+| F8 | HTML 属性透传 | `data-*`、`aria-*` 等原生属性支持 |
+
+---
+
+## 所有变体
+
+<Canvas of={EmptyStateStories.AllVariants} />
+
+### 无数据
+
+<Canvas of={EmptyStateStories.NoData} />
+
+### 无结果
+
+<Canvas of={EmptyStateStories.NoResult} />
+
+### 加载失败
+
+<Canvas of={EmptyStateStories.Error} />
+
+### 自定义文案
+
+<Canvas of={EmptyStateStories.CustomContent} />
+
+---
+
+## 回归测试用例
+
+| # | 用例 | 预期结果 | 状态 |
+|---|------|----------|------|
+| R1 | 默认渲染（无 props） | 显示"暂无数据"+默认描述+文档图标 | ✅ |
+| R2 | `variant="no-data"` | 标题"暂无数据"，rect SVG 图标 | ✅ |
+| R3 | `variant="no-result"` | 标题"未找到匹配结果"，搜索 SVG 图标 | ✅ |
+| R4 | `variant="error"` | 标题"数据加载失败"，警告三角 SVG 图标 | ✅ |
+| R5 | `title="自定义"` | 自定义标题替代默认标题 | ✅ |
+| R6 | `description="自定义"` | 自定义描述替代默认描述 | ✅ |
+| R7 | `icon=<自定义图标>` | 自定义图标替代默认 SVG | ✅ |
+| R8 | `action=<Button>` | CTA 按钮出现在描述下方 | ✅ |
+| R9 | 无 action 时 | 不渲染按钮区域 | ✅ |
+| R10 | className / data-* 透传 | 属性正确挂载到根元素 | ✅ |

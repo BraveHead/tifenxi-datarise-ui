@@ -1,0 +1,70 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as InsightCardStories from './InsightCard.stories';
+
+<Meta of={InsightCardStories} />
+
+<Title />
+
+洞察卡组件。承载 AI 发现的问题与趋势。通过左侧 4px 色边 + 图标语义区分四种类型。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 功能特性
+
+| # | 特性 | 说明 |
+|---|------|------|
+| F1 | 四种类型 | `positive`（成功绿）/ `negative`（危险红）/ `warning`（警示黄）/ `neutral`（品牌蓝） |
+| F2 | 左侧色边 | 4px 左边框颜色随 type 变化 |
+| F3 | 图标区域 | 36x36 圆角图标，背景色和图标色随 type 变化 |
+| F4 | 默认图标 | 各 type 有不同默认图标：趋势上升/下降/警告/信息 |
+| F5 | 自定义图标 | `icon` 插槽覆盖默认图标 |
+| F6 | footer 插槽 | 底部区域，常放置 Tag + 影响指标文字 |
+| F7 | className 透传 | 自定义 className 追加到根元素 |
+| F8 | HTML 属性透传 | `data-*`、`aria-*` 等原生属性支持 |
+
+---
+
+## 所有类型
+
+<Canvas of={InsightCardStories.AllTypes} />
+
+### 正向洞察
+
+<Canvas of={InsightCardStories.Positive} />
+
+### 负向洞察
+
+<Canvas of={InsightCardStories.Negative} />
+
+### 警示洞察
+
+<Canvas of={InsightCardStories.Warning} />
+
+### 中性洞察
+
+<Canvas of={InsightCardStories.Neutral} />
+
+---
+
+## 回归测试用例
+
+| # | 用例 | 预期结果 | 状态 |
+|---|------|----------|------|
+| R1 | 基础渲染 | 标题和描述正常显示 | ✅ |
+| R2 | `type="positive"` | 左边框绿色（border-l-success-500） | ✅ |
+| R3 | `type="negative"` | 左边框红色（border-l-danger-500） | ✅ |
+| R4 | `type="warning"` | 左边框黄色（border-l-warning-500） | ✅ |
+| R5 | `type="neutral"` | 左边框蓝色（border-l-brand-500） | ✅ |
+| R6 | positive 图标背景 | 图标使用 bg-success-bg | ✅ |
+| R7 | negative 图标背景 | 图标使用 bg-danger-bg | ✅ |
+| R8 | 默认图标渲染 | 无 icon prop 时渲染 SVG | ✅ |
+| R9 | `icon=<自定义>` | 自定义图标替代默认 | ✅ |
+| R10 | `footer=<内容>` | 底部区域正常渲染 | ✅ |
+| R11 | 无 footer | 不渲染底部区域 | ✅ |
+| R12 | className / data-* 透传 | 属性正确挂载 | ✅ |

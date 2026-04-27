@@ -1,0 +1,68 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as SectionTitleStories from './SectionTitle.stories';
+
+<Meta of={SectionTitleStories} />
+
+<Title />
+
+编号区块标题组件。对应 OcSectionTitle 的通用版。支持编号徽章、描述文字、附加内容插槽和右侧操作区。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 功能特性
+
+| # | 特性 | 说明 |
+|---|------|------|
+| F1 | 编号徽章 | `number` 为数字时渲染圆形品牌色徽章 |
+| F2 | 徽章自定义色 | `numberColor` 支持 Tailwind class 覆盖默认 `bg-brand-500` |
+| F3 | 描述文字 | `description` 渲染在标题下方，有编号时自动缩进 32px |
+| F4 | extra 插槽 | 标题右侧附加内容（如 Badge / Tag） |
+| F5 | action 插槽 | 最右侧操作区（如按钮），自动 `ml-auto` 推到右侧 |
+| F6 | 无编号模式 | 省略 `number` 时不渲染徽章，描述不缩进 |
+| F7 | className 透传 | 自定义 className 追加到根元素 |
+| F8 | HTML 属性透传 | `data-*`、`aria-*` 等原生属性支持 |
+
+---
+
+## 多组合
+
+<Canvas of={SectionTitleStories.MultipleSections} />
+
+### 默认
+
+<Canvas of={SectionTitleStories.Default} />
+
+### 带操作按钮
+
+<Canvas of={SectionTitleStories.WithAction} />
+
+### 带附加 Badge
+
+<Canvas of={SectionTitleStories.WithExtra} />
+
+### 无编号
+
+<Canvas of={SectionTitleStories.NoNumber} />
+
+---
+
+## 回归测试用例
+
+| # | 用例 | 预期结果 | 状态 |
+|---|------|----------|------|
+| R1 | `title="标题"` | 标题文字渲染 | ✅ |
+| R2 | `number=1` | 渲染圆形徽章，显示数字 1 | ✅ |
+| R3 | 无 `number` | 不渲染徽章圆形 | ✅ |
+| R4 | 默认徽章色 | 徽章为 `bg-brand-500` | ✅ |
+| R5 | `numberColor="bg-success-500"` | 徽章颜色为绿色 | ✅ |
+| R6 | `description="描述"` 有编号 | 描述缩进 32px | ✅ |
+| R7 | `description="描述"` 无编号 | 描述不缩进 | ✅ |
+| R8 | `extra=<Tag>` | 标题后显示 Tag | ✅ |
+| R9 | `action=<Button>` | 右侧显示按钮 | ✅ |
+| R10 | className / data-* 透传 | 属性正确挂载 | ✅ |

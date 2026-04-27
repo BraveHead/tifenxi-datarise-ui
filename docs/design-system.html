@@ -1335,6 +1335,329 @@
   <div class="foot-note"><span>09 · Migration</span><span>12 / 12</span></div>
 </section>
 
+<!-- ============ SLIDE: COMPONENT LIBRARY ARCHITECTURE ============ -->
+<section data-label="组件库架构" class="slide">
+  <div class="slide-header">
+    <div class="slide-kicker">10 · Component Library</div>
+    <h1 class="slide-title">公共组件库 & 业务组件库架构</h1>
+    <p class="slide-subtitle">四层结构，从下往上依赖，禁止反向依赖。公共组件 <code class="inline">@datarise/ui</code> 不感知业务，业务组件 <code class="inline">@datarise/components</code> 感知医疗分析语义。</p>
+  </div>
+
+  <div class="col-2" style="gap:20px;">
+    <div class="module">
+      <div class="module-header"><div class="module-title">分层架构</div></div>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="background:var(--brand-50); border:1px solid var(--brand-200); border-radius:var(--radius-md); padding:12px 16px; display:flex; align-items:center; gap:12px;">
+          <span style="font-size:11px; font-weight:700; color:var(--brand-600); width:90px; flex-shrink:0; text-transform:uppercase; letter-spacing:.06em;">业务页面层</span>
+          <span style="font-size:11px; font-family:var(--font-mono); color:var(--brand-600);">Dashboard · PatientProfile · ModuleOverview ...</span>
+        </div>
+        <div style="background:var(--success-bg); border:1px solid var(--success-border); border-radius:var(--radius-md); padding:12px 16px; display:flex; align-items:center; gap:12px;">
+          <span style="font-size:11px; font-weight:700; color:var(--success-700); width:90px; flex-shrink:0; text-transform:uppercase; letter-spacing:.06em;">业务组件层</span>
+          <span style="font-size:11px; font-family:var(--font-mono); color:var(--success-700);">KpiCard · InsightCard · ActionCard · DrawerShell · ScopePill ...</span>
+        </div>
+        <div style="background:var(--info-bg); border:1px solid var(--info-border); border-radius:var(--radius-md); padding:12px 16px; display:flex; align-items:center; gap:12px;">
+          <span style="font-size:11px; font-weight:700; color:var(--info-700); width:90px; flex-shrink:0; text-transform:uppercase; letter-spacing:.06em;">公共组件层</span>
+          <span style="font-size:11px; font-family:var(--font-mono); color:var(--info-700);">Button · Badge · DeltaBadge · EmptyState · SectionTitle · Tag · Input · Tabs ...</span>
+        </div>
+        <div style="background:var(--neutral-50); border:1px solid var(--neutral-200); border-radius:var(--radius-md); padding:12px 16px; display:flex; align-items:center; gap:12px;">
+          <span style="font-size:11px; font-weight:700; color:var(--neutral-700); width:90px; flex-shrink:0; text-transform:uppercase; letter-spacing:.06em;">Token 层</span>
+          <span style="font-size:11px; font-family:var(--font-mono); color:var(--neutral-700);">tokens.css · styles.css · --brand / --neutral / --chart / --sp / --radius ...</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="module">
+      <div class="module-header"><div class="module-title">交付优先级</div></div>
+      <table class="table" style="font-size:12px;">
+        <thead><tr><th>阶段</th><th>交付物</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag--danger" style="font-size:10px;">P0</span></td><td>DeltaBadge · EmptyState · SectionTitle · DrawerShell</td></tr>
+          <tr><td><span class="tag tag--danger" style="font-size:10px;">P0</span></td><td>InsightCard · ActionCard</td></tr>
+          <tr><td><span class="tag tag--warning" style="font-size:10px;">P1</span></td><td>FilterBar · DateRangePicker · Dark 审计</td></tr>
+          <tr><td><span class="tag tag--neutral" style="font-size:10px;">P2</span></td><td>Drawer 统一迁移 · DataTable</td></tr>
+          <tr><td><span class="tag tag--neutral" style="font-size:10px;">P3</span></td><td>monorepo 拆包 @datarise/ui + @datarise/components</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="foot-note"><span>10 · Component Library</span><span>+5</span></div>
+</section>
+
+<!-- ============ SLIDE: NEW COMPONENTS - DeltaBadge ============ -->
+<section data-label="DeltaBadge 组件" class="slide">
+  <div class="slide-header">
+    <div class="slide-kicker">10a · New Components</div>
+    <h1 class="slide-title">DeltaBadge · 涨跌徽章</h1>
+    <p class="slide-subtitle">统一全项目涨跌显示逻辑。业务约定：<b>涨=橙红（问题增多=警示）</b>，<b>跌=绿</b>——与通用金融涨跌色相反。<code class="inline">inverse</code> 反转语义。</p>
+  </div>
+
+  <div class="col-2" style="gap:20px;">
+    <div class="module">
+      <div class="module-header"><div class="module-title">Variants</div><span class="tag tag--info" style="font-size:10px;">新组件</span></div>
+      <div style="display:flex; flex-direction:column; gap:16px;">
+        <div>
+          <div style="font-size:11px; color:var(--neutral-500); margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em;">默认（问题类指标）</div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <span class="delta bad" style="font-size:12px;"><span class="arr">↑</span>同比 2.4%</span>
+            <span class="delta good" style="font-size:12px;"><span class="arr">↓</span>环比 1.2%</span>
+            <span style="display:inline-flex;align-items:center;gap:3px;font-size:12px;font-weight:500;padding:2px 7px;border-radius:var(--radius-sm);border:1px solid var(--neutral-200);color:var(--neutral-500);background:var(--neutral-50);">— 持平 0%</span>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:11px; color:var(--neutral-500); margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em;">inverse=true（正向指标）</div>
+          <div style="display:flex; gap:10px; align-items:center;">
+            <span class="delta good" style="font-size:12px;"><span class="arr">↑</span>同比 3.5%</span>
+            <span class="delta bad" style="font-size:12px;"><span class="arr">↓</span>环比 2.1%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="module">
+      <div class="module-header"><div class="module-title">Props</div></div>
+      <table class="table" style="font-size:12px;">
+        <thead><tr><th>Prop</th><th>Type</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">value</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">number</td><td>正=涨 · 负=跌 · 0=持平</td></tr>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">label</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">string?</td><td>前缀标签（同比/环比）</td></tr>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">unit</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">string?</td><td>默认 '%'，可改 'pp' '分'</td></tr>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">inverse</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">boolean?</td><td>true=涨为绿（满意度等）</td></tr>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">size</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">'sm'|'md'</td><td>sm=KPI卡内 · md=独立展示</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="foot-note"><span>10a · DeltaBadge</span><span>+6</span></div>
+</section>
+
+<!-- ============ SLIDE: NEW COMPONENTS - EmptyState & SectionTitle ============ -->
+<section data-label="EmptyState & SectionTitle" class="slide">
+  <div class="slide-header">
+    <div class="slide-kicker">10b · New Components</div>
+    <h1 class="slide-title">EmptyState · SectionTitle</h1>
+    <p class="slide-subtitle">两个高频复用的公共组件：空态占位（3 变体）和编号区块标题。</p>
+  </div>
+
+  <div class="col-2" style="gap:20px;">
+    <div class="module">
+      <div class="module-header"><div class="module-title">EmptyState · 空态占位</div><span class="tag tag--info" style="font-size:10px;">新组件</span></div>
+      <div class="col-3" style="gap:12px;">
+        <div style="border:var(--border-subtle); border-radius:var(--radius-md); padding:16px; text-align:center;">
+          <div class="empty">
+            <div class="empty-illustration">∅</div>
+            <div class="empty-title">暂无数据</div>
+            <div class="empty-desc">请调整筛选条件</div>
+          </div>
+          <div style="font-size:10px; color:var(--neutral-400); margin-top:6px;">no-data</div>
+        </div>
+        <div style="border:var(--border-subtle); border-radius:var(--radius-md); padding:16px; text-align:center;">
+          <div class="empty">
+            <div class="empty-illustration" style="color:var(--brand-500);">🔍</div>
+            <div class="empty-title">未找到结果</div>
+            <div class="empty-desc">请放宽筛选范围</div>
+          </div>
+          <div style="font-size:10px; color:var(--neutral-400); margin-top:6px;">no-result</div>
+        </div>
+        <div style="border:var(--border-subtle); border-radius:var(--radius-md); padding:16px; text-align:center;">
+          <div class="empty">
+            <div class="empty-illustration" style="color:var(--danger-500);">!</div>
+            <div class="empty-title" style="color:var(--danger-700);">加载失败</div>
+            <div class="empty-desc">请检查网络后重试</div>
+          </div>
+          <div style="font-size:10px; color:var(--neutral-400); margin-top:6px;">error</div>
+        </div>
+      </div>
+      <table class="table" style="font-size:12px; margin-top:12px;">
+        <thead><tr><th>Prop</th><th>Type</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">variant</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">'no-data'|'no-result'|'error'</td><td>场景变体</td></tr>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">title</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">string?</td><td>自定义标题</td></tr>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">description</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">string?</td><td>自定义描述</td></tr>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">action</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">ReactNode?</td><td>CTA 按钮插槽</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="module">
+      <div class="module-header"><div class="module-title">SectionTitle · 编号区块标题</div><span class="tag tag--info" style="font-size:10px;">新组件</span></div>
+      <div style="display:flex; flex-direction:column; gap:16px; margin-bottom:12px;">
+        <div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:4px;">
+            <span class="num-chip">①</span>
+            <span style="font-size:15px; font-weight:600; color:var(--neutral-900);">科室服务质量排名</span>
+            <button class="btn btn--default btn--sm" style="margin-left:auto;">导出</button>
+          </div>
+          <div style="font-size:13px; color:var(--neutral-500); margin-left:32px; margin-top:-4px;">基于患者评价的科室综合排名</div>
+        </div>
+        <div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="num-chip" style="background:var(--success-500);">②</span>
+            <span style="font-size:15px; font-weight:600; color:var(--neutral-900);">差评原因分布</span>
+            <span class="tag tag--warning" style="font-size:11px;">需关注</span>
+          </div>
+        </div>
+        <div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="num-chip" style="background:var(--danger-500);">③</span>
+            <span style="font-size:15px; font-weight:600; color:var(--neutral-900);">行动建议</span>
+          </div>
+        </div>
+      </div>
+      <table class="table" style="font-size:12px;">
+        <thead><tr><th>Prop</th><th>Type</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">number</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">number?</td><td>编号徽章数字</td></tr>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">title</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">string</td><td>标题文字</td></tr>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">description</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">string?</td><td>副标题/描述</td></tr>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">numberColor</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">string?</td><td>徽章颜色 Tailwind class</td></tr>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">extra</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">ReactNode?</td><td>标题右侧附加（如 Badge）</td></tr>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">action</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">ReactNode?</td><td>右侧操作区</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="foot-note"><span>10b · EmptyState & SectionTitle</span><span>+7</span></div>
+</section>
+
+<!-- ============ SLIDE: NEW COMPONENTS - InsightCard & ActionCard ============ -->
+<section data-label="InsightCard & ActionCard" class="slide">
+  <div class="slide-header">
+    <div class="slide-kicker">10c · New Components</div>
+    <h1 class="slide-title">InsightCard · ActionCard</h1>
+    <p class="slide-subtitle">洞察卡承载 AI 发现的问题与趋势；行动建议卡提供可执行的改进步骤。两者配合完成"发现 → 行动"闭环。</p>
+  </div>
+
+  <div class="col-2" style="gap:20px;">
+    <div class="module">
+      <div class="module-header"><div class="module-title">InsightCard · 4 种类型</div><span class="tag tag--info" style="font-size:10px;">新组件</span></div>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        <div style="background:var(--neutral-0); border:var(--border-subtle); border-radius:var(--radius-md); padding:12px 16px; border-left:4px solid var(--success-500); display:flex; gap:10px;">
+          <div style="width:28px; height:28px; border-radius:var(--radius-md); background:var(--success-bg); color:var(--success-500); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:14px;">↗</div>
+          <div><div style="font-size:13px; font-weight:600; color:var(--neutral-900);">满意度稳步提升</div><div style="font-size:12px; color:var(--neutral-500);">近 3 个月连续改善</div></div>
+        </div>
+        <div style="background:var(--neutral-0); border:var(--border-subtle); border-radius:var(--radius-md); padding:12px 16px; border-left:4px solid var(--danger-500); display:flex; gap:10px;">
+          <div style="width:28px; height:28px; border-radius:var(--radius-md); background:var(--danger-bg); color:var(--danger-500); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:14px;">↘</div>
+          <div><div style="font-size:13px; font-weight:600; color:var(--neutral-900);">骨科中差评率持续上升</div><div style="font-size:12px; color:var(--neutral-500);">连续 4 周环比上升</div></div>
+        </div>
+        <div style="background:var(--neutral-0); border:var(--border-subtle); border-radius:var(--radius-md); padding:12px 16px; border-left:4px solid var(--warning-500); display:flex; gap:10px;">
+          <div style="width:28px; height:28px; border-radius:var(--radius-md); background:var(--warning-bg); color:var(--warning-500); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:14px;">⚠</div>
+          <div><div style="font-size:13px; font-weight:600; color:var(--neutral-900);">处方转化率低于基准</div><div style="font-size:12px; color:var(--neutral-500);">当前 68.3%，低于均值</div></div>
+        </div>
+        <div style="background:var(--neutral-0); border:var(--border-subtle); border-radius:var(--radius-md); padding:12px 16px; border-left:4px solid var(--brand-500); display:flex; gap:10px;">
+          <div style="width:28px; height:28px; border-radius:var(--radius-md); background:var(--brand-50); color:var(--brand-500); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:14px;">ⓘ</div>
+          <div><div style="font-size:13px; font-weight:600; color:var(--neutral-900);">节假日就诊量呈规律性峰值</div><div style="font-size:12px; color:var(--neutral-500);">建议提前调配排班</div></div>
+        </div>
+      </div>
+      <div style="font-size:11px; color:var(--neutral-500); margin-top:10px; line-height:1.6;">
+        Props: <code class="inline">type</code> positive|negative|warning|neutral · <code class="inline">title</code> <code class="inline">description</code> · <code class="inline">icon?</code> <code class="inline">footer?</code>
+      </div>
+    </div>
+
+    <div class="module">
+      <div class="module-header"><div class="module-title">ActionCard · 3 优先级</div><span class="tag tag--info" style="font-size:10px;">新组件</span></div>
+      <div style="display:flex; flex-direction:column; gap:10px;">
+        <div style="background:var(--neutral-0); border:var(--border-subtle); border-radius:var(--radius-md); padding:14px;">
+          <div style="display:flex; gap:10px; align-items:flex-start; margin-bottom:8px;">
+            <div style="width:28px; height:28px; border-radius:var(--radius-md); background:var(--danger-bg); color:var(--danger-500); display:flex; align-items:center; justify-content:center; flex-shrink:0; font-size:12px; font-weight:700;">⚡</div>
+            <div>
+              <span class="tag tag--danger" style="font-size:10px; height:18px; margin-bottom:3px;">高优先</span>
+              <div style="font-size:13px; font-weight:600; color:var(--neutral-900);">优化骨科候诊流程</div>
+            </div>
+          </div>
+          <div style="font-size:12px; color:var(--neutral-500); margin-bottom:8px;">「等待时间过长」占差评 38%</div>
+          <div style="font-size:11px; color:var(--neutral-500); display:flex; flex-direction:column; gap:3px; margin-bottom:8px;">
+            <span>› 接入实时叫号系统</span>
+            <span>› 设置超时预警</span>
+          </div>
+          <div style="font-size:10px; color:var(--neutral-500); background:var(--neutral-50); padding:4px 8px; border-radius:var(--radius-sm); margin-bottom:8px;">验证：差评下降 ≥50%</div>
+          <div style="display:flex; gap:6px; justify-content:flex-end;">
+            <button class="btn btn--default btn--sm" style="font-size:11px; height:24px;">查看</button>
+            <button class="btn btn--primary btn--sm" style="font-size:11px; height:24px;">创建任务</button>
+          </div>
+        </div>
+        <div style="display:flex; gap:8px;">
+          <div style="flex:1; background:var(--neutral-0); border:var(--border-subtle); border-radius:var(--radius-md); padding:10px; text-align:center;">
+            <span class="tag tag--warning" style="font-size:10px; height:18px;">中优先</span>
+            <div style="font-size:12px; margin-top:4px;">处方审核覆盖率</div>
+          </div>
+          <div style="flex:1; background:var(--neutral-0); border:var(--border-subtle); border-radius:var(--radius-md); padding:10px; text-align:center;">
+            <span class="tag tag--neutral" style="font-size:10px; height:18px;">低优先</span>
+            <div style="font-size:12px; margin-top:4px;">医生沟通培训</div>
+          </div>
+        </div>
+      </div>
+      <div style="font-size:11px; color:var(--neutral-500); margin-top:10px; line-height:1.6;">
+        Props: <code class="inline">priority</code> high|medium|low · <code class="inline">title</code> <code class="inline">description?</code> · <code class="inline">steps?</code> string[] · <code class="inline">verification?</code> · <code class="inline">actions?</code>
+      </div>
+    </div>
+  </div>
+  <div class="foot-note"><span>10c · InsightCard & ActionCard</span><span>+8</span></div>
+</section>
+
+<!-- ============ SLIDE: DrawerShell SPEC ============ -->
+<section data-label="DrawerShell 组件" class="slide">
+  <div class="slide-header">
+    <div class="slide-kicker">10d · New Components</div>
+    <h1 class="slide-title">DrawerShell · 统一抽屉壳</h1>
+    <p class="slide-subtitle">所有业务 Drawer（约 15 个）统一使用此壳。三区固定结构：<b>Header（固定）→ Body（滚动）→ Footer（固定）</b>。</p>
+  </div>
+
+  <div class="col-2" style="gap:20px;">
+    <div class="module">
+      <div class="module-header"><div class="module-title">三区结构</div><span class="tag tag--info" style="font-size:10px;">新组件</span></div>
+      <div style="border:var(--border-subtle); border-radius:var(--radius-lg); overflow:hidden; display:flex; flex-direction:column; height:360px; box-shadow:var(--shadow-pop);">
+        <div style="padding:16px 20px; border-bottom:var(--border-subtle); display:flex; justify-content:space-between; align-items:center; flex-shrink:0;">
+          <div>
+            <div style="font-size:15px; font-weight:600; color:var(--neutral-900);">内分泌科 · 满意度详情</div>
+            <div style="font-size:11px; color:var(--neutral-500); margin-top:2px;">近30天 · 汇总口径</div>
+          </div>
+          <button class="btn btn--default btn--sm" style="width:24px; height:24px; padding:0; display:flex; align-items:center; justify-content:center; font-size:14px; color:var(--neutral-500);">✕</button>
+        </div>
+        <div style="flex:1; overflow-y:auto; padding:16px 20px;">
+          <div style="background:var(--neutral-50); border-radius:var(--radius-md); padding:12px; font-size:12px; color:var(--neutral-500); line-height:1.6; margin-bottom:14px;">
+            科室整体表现稳定，「等待时间」维度略有下滑。
+          </div>
+          <div style="font-size:12px; font-weight:600; color:var(--neutral-900); margin-bottom:6px;">差评分布</div>
+          <div style="display:flex; flex-direction:column; gap:4px; font-size:12px; color:var(--neutral-500);">
+            <div>等待时间 62%</div>
+            <div>解释不清 24%</div>
+            <div>态度问题 14%</div>
+          </div>
+        </div>
+        <div style="padding:12px 20px; border-top:var(--border-subtle); display:flex; gap:8px; justify-content:flex-end; flex-shrink:0;">
+          <button class="btn btn--default btn--sm" style="font-size:12px;">导出报告</button>
+          <button class="btn btn--primary btn--sm" style="font-size:12px;">创建任务</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="module">
+      <div class="module-header"><div class="module-title">规格 & Props</div></div>
+      <table class="table" style="font-size:12px;">
+        <thead><tr><th>区域</th><th>规格</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td>DrawerHeader</td><td>p: 20px 24px · border-bottom</td><td>标题 + 副标题 + 关闭按钮</td></tr>
+          <tr><td>DrawerBody</td><td>flex:1 · overflow-y:auto</td><td>可滚动内容区</td></tr>
+          <tr><td>DrawerFooter</td><td>p: 14px 24px · border-top</td><td>最多 2 个按钮</td></tr>
+        </tbody>
+      </table>
+      <table class="table" style="font-size:12px; margin-top:12px;">
+        <thead><tr><th>Prop</th><th>Type</th><th>说明</th></tr></thead>
+        <tbody>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">size</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">'sm'|'md'|'lg'</td><td>480px · 640px · 800px</td></tr>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">title</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">string</td><td>Header 主标题</td></tr>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">subtitle</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">string?</td><td>Header 副标题</td></tr>
+          <tr><td style="font-family:var(--font-mono);font-size:11px;">onClose</td><td style="font-family:var(--font-mono);font-size:11px;color:var(--success-500);">() =&gt; void</td><td>关闭回调</td></tr>
+        </tbody>
+      </table>
+      <div style="margin-top:12px; font-size:11px; color:var(--neutral-500); padding:10px 12px; background:var(--info-bg); border:1px solid var(--info-border); border-radius:var(--radius-sm); line-height:1.6;">
+        <b style="color:var(--info-700);">迁移清单（15 个）：</b>KPIDetailDrawer · DepartmentDetailDrawer · DoctorDetailDrawer · ProcessNodeDetailDrawer · PrescriptionDrawer 系列 · ConversionDrawer 系列 等
+      </div>
+    </div>
+  </div>
+  <div class="foot-note"><span>10d · DrawerShell</span><span>+9</span></div>
+</section>
+
 </deck-stage>
 
 </body>

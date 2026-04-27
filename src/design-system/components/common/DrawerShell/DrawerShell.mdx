@@ -1,0 +1,66 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as DrawerShellStories from './DrawerShell.stories';
+
+<Meta of={DrawerShellStories} />
+
+<Title />
+
+统一抽屉壳组件。约 15 个业务 Drawer 迁移后共用此壳。三区固定结构：Header（固定）→ Body（滚动）→ Footer（固定）。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 功能特性
+
+| # | 特性 | 说明 |
+|---|------|------|
+| F1 | 三区结构 | `DrawerHeader` + `DrawerBody` + `DrawerFooter` 组合 |
+| F2 | 三档宽度 | `sm=480px` · `md=640px` · `lg=800px` |
+| F3 | Header 结构 | 标题（必填）+ 副标题（可选）+ 关闭按钮（可选） |
+| F4 | Body 滚动 | `flex:1 + overflow-y:auto`，内容超高时自动滚动 |
+| F5 | Footer 固定 | `border-top` 分隔，按钮右对齐，最多 2 个按钮 |
+| F6 | 关闭回调 | `onClose` 控制关闭按钮渲染和点击回调 |
+| F7 | className 透传 | 各子组件均支持 className 扩展 |
+| F8 | HTML 属性透传 | `data-*`、`aria-*` 等原生属性支持 |
+
+---
+
+## 默认（sm 宽度）
+
+<Canvas of={DrawerShellStories.Default} />
+
+## 中等宽度
+
+<Canvas of={DrawerShellStories.Medium} />
+
+## 大宽度
+
+<Canvas of={DrawerShellStories.Large} />
+
+## 无 Footer
+
+<Canvas of={DrawerShellStories.HeaderOnly} />
+
+---
+
+## 回归测试用例
+
+| # | 用例 | 预期结果 | 状态 |
+|---|------|----------|------|
+| R1 | 默认渲染 | 子组件内容正常显示 | ✅ |
+| R2 | `size` 默认 | 宽度 480px（w-[480px]） | ✅ |
+| R3 | `size="md"` | 宽度 640px | ✅ |
+| R4 | `size="lg"` | 宽度 800px | ✅ |
+| R5 | Header `title` | 标题文字渲染 | ✅ |
+| R6 | Header `subtitle` | 副标题渲染 | ✅ |
+| R7 | Header 无 subtitle | 不渲染副标题元素 | ✅ |
+| R8 | Header `onClose` | 渲染关闭按钮，点击触发回调 | ✅ |
+| R9 | Header 无 onClose | 不渲染关闭按钮 | ✅ |
+| R10 | Body 滚动 | 有 overflow-y-auto 类 | ✅ |
+| R11 | Footer 右对齐 | 有 justify-end 类 | ✅ |
+| R12 | className 透传 | 各子组件的 className 正确追加 | ✅ |

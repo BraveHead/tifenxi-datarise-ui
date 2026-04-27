@@ -1,0 +1,69 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as ActionCardStories from './ActionCard.stories';
+
+<Meta of={ActionCardStories} />
+
+<Title />
+
+行动建议卡组件。提供可执行的改进步骤，完成"发现 → 行动"闭环。支持三级优先级、步骤列表、验证指标和操作按钮。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 功能特性
+
+| # | 特性 | 说明 |
+|---|------|------|
+| F1 | 三级优先级 | `high`（红色）/ `medium`（黄色）/ `low`（灰色）自动映射徽章文字和颜色 |
+| F2 | 优先级徽章 | 自动显示"高优先"/"中优先"/"低优先"文字 |
+| F3 | 图标区域 | 36x36 圆角图标，背景色随优先级变化 |
+| F4 | 自定义图标 | `icon` 插槽覆盖默认闪电图标 |
+| F5 | 步骤列表 | `steps` 字符串数组，以 `›` 前缀渲染 |
+| F6 | 验证指标 | `verification` 文字在灰底区域展示 |
+| F7 | 操作按钮 | `actions` 插槽，右对齐，最多 2 个按钮 |
+| F8 | className 透传 | 自定义 className 追加到根元素 |
+| F9 | HTML 属性透传 | `data-*`、`aria-*` 等原生属性支持 |
+
+---
+
+## 所有优先级
+
+<Canvas of={ActionCardStories.AllPriorities} />
+
+### 高优先
+
+<Canvas of={ActionCardStories.HighPriority} />
+
+### 中优先
+
+<Canvas of={ActionCardStories.MediumPriority} />
+
+### 低优先
+
+<Canvas of={ActionCardStories.LowPriority} />
+
+---
+
+## 回归测试用例
+
+| # | 用例 | 预期结果 | 状态 |
+|---|------|----------|------|
+| R1 | 基础渲染 | 标题正常显示 | ✅ |
+| R2 | `priority="high"` | 显示"高优先"徽章，danger 色 | ✅ |
+| R3 | `priority="medium"` | 显示"中优先"徽章，warning 色 | ✅ |
+| R4 | `priority="low"` | 显示"低优先"徽章，neutral 色 | ✅ |
+| R5 | `description` | 描述文字正常渲染 | ✅ |
+| R6 | 无 description | 不渲染描述区域 | ✅ |
+| R7 | `steps=["a","b","c"]` | 渲染 3 个步骤项 | ✅ |
+| R8 | 无 steps / 空数组 | 不渲染步骤列表 | ✅ |
+| R9 | `verification` | 验证文字在灰底区域显示 | ✅ |
+| R10 | `actions=<按钮>` | 按钮右对齐渲染 | ✅ |
+| R11 | 无 actions | 不渲染操作区域 | ✅ |
+| R12 | `icon=<自定义>` | 自定义图标替代默认 | ✅ |
+| R13 | 默认图标 | 无 icon 时渲染闪电 SVG | ✅ |
+| R14 | className / data-* 透传 | 属性正确挂载 | ✅ |

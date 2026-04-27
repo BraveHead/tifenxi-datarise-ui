@@ -49,7 +49,7 @@ export function SectionTitle({
       </div>
       {description && (
         <div
-          className="text-fs-13 text-neutral-500 mt-[-4px]"
+          className="text-fs-13 text-neutral-500 mt-sp-1"
           style={{ marginLeft: number != null ? 32 : 0 }}
         >
           {description}

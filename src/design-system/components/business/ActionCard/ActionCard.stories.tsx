@@ -3,20 +3,23 @@ import type { Meta, StoryObj } from '@storybook/react';
 import { ActionCard } from './ActionCard';
 import { Button } from '../../common/Button/Button';
 
+/** 单卡预览宽度，模拟实际布局中的单列（≈400px） */
+const singleCardDecorator = (Story: React.ComponentType) => (
+  <div style={{ maxWidth: 400 }}>
+    <Story />
+  </div>
+);
+
 const meta = {
   title: 'Components/ActionCard',
   component: ActionCard,
-  decorators: [(Story: React.ComponentType) => (
-    <div style={{ maxWidth: 400 }}>
-      <Story />
-    </div>
-  )],
 } satisfies Meta<typeof ActionCard>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const HighPriority: Story = {
+  decorators: [singleCardDecorator],
   args: {
     priority: 'high',
     title: '优化骨科候诊流程减少等待投诉',
@@ -37,6 +40,7 @@ export const HighPriority: Story = {
 };
 
 export const MediumPriority: Story = {
+  decorators: [singleCardDecorator],
   args: {
     priority: 'medium',
     title: '推进处方在线审核覆盖率提升',
@@ -56,6 +60,7 @@ export const MediumPriority: Story = {
 };
 
 export const LowPriority: Story = {
+  decorators: [singleCardDecorator],
   args: {
     priority: 'low',
     title: '完善医生沟通培训体系',

@@ -1,0 +1,72 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as KpiCardGridStories from './KpiCardGrid.stories';
+
+<Meta of={KpiCardGridStories} />
+
+<Title />
+
+KPI 卡片响应式网格布局容器。支持 1–4 列，断点自动折叠。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 功能特性
+
+<table>
+  <thead>
+    <tr><th>#</th><th>特性</th><th>说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>F1</td><td>最大列数</td><td>columns 属性控制最大列数（1/2/3/4），默认 4</td></tr>
+    <tr><td>F2</td><td>响应式断点</td><td>sm:2 列, lg:3 列, xl:4 列，自动折叠</td></tr>
+    <tr><td>F3</td><td>等高对齐</td><td>items-stretch 确保子卡片等高</td></tr>
+    <tr><td>F4</td><td>间距</td><td>使用 gap-sp-4 (16px) token</td></tr>
+    <tr><td>F5</td><td>纯布局</td><td>无颜色定义，不受主题影响</td></tr>
+    <tr><td>F6</td><td>className 透传</td><td>自定义 className 追加到 grid 容器</td></tr>
+  </tbody>
+</table>
+
+---
+
+## 四列网格
+
+<Canvas of={KpiCardGridStories.FourColumns} />
+
+## 三列网格
+
+<Canvas of={KpiCardGridStories.ThreeColumns} />
+
+## 两列网格
+
+<Canvas of={KpiCardGridStories.TwoColumns} />
+
+## 单列网格
+
+<Canvas of={KpiCardGridStories.SingleColumn} />
+
+## 搭配 KpiCard
+
+<Canvas of={KpiCardGridStories.WithKpiCards} />
+
+---
+
+## 回归测试用例
+
+<table>
+  <thead>
+    <tr><th>#</th><th>用例</th><th>Story</th><th>预期结果</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>R1</td><td>4 列布局</td><td>FourColumns</td><td>4 个占位卡片在大屏上排成一行</td></tr>
+    <tr><td>R2</td><td>3 列布局</td><td>ThreeColumns</td><td>最多 3 列</td></tr>
+    <tr><td>R3</td><td>2 列布局</td><td>TwoColumns</td><td>最多 2 列</td></tr>
+    <tr><td>R4</td><td>1 列布局</td><td>SingleColumn</td><td>始终单列</td></tr>
+    <tr><td>R5</td><td>卡片等高</td><td>WithKpiCards</td><td>高度不同的 KpiCard 在同行等高对齐</td></tr>
+    <tr><td>R6</td><td>搭配真实 KpiCard</td><td>WithKpiCards</td><td>4 张 KpiCard 渲染正常，趋势指标可见</td></tr>
+  </tbody>
+</table>

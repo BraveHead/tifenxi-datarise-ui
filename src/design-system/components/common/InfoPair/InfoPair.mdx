@@ -1,0 +1,78 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as InfoPairStories from './InfoPair.stories';
+
+<Meta of={InfoPairStories} />
+
+<Title />
+
+标签-数值对展示组件。用于卡片底部指标列表、详情面板等场景。支持水平 / 垂直排列。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 功能特性
+
+<table>
+  <thead>
+    <tr><th>#</th><th>特性</th><th>说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>F1</td><td>水平排列</td><td>默认方向，label 和 value 水平排列，baseline 对齐</td></tr>
+    <tr><td>F2</td><td>垂直排列</td><td>direction="vertical"，label 在上 value 在下</td></tr>
+    <tr><td>F3</td><td>ReactNode 支持</td><td>label 和 value 均支持 ReactNode 类型</td></tr>
+    <tr><td>F4</td><td>语义色</td><td>label 使用 text-fg-secondary，value 使用 text-fg + font-medium</td></tr>
+    <tr><td>F5</td><td>主题适配</td><td>使用 fg / fg-secondary token，深色模式自动切换</td></tr>
+    <tr><td>F6</td><td>className 透传</td><td>自定义 className 追加到根元素</td></tr>
+    <tr><td>F7</td><td>HTML 属性透传</td><td>data-*、aria-* 等原生属性支持</td></tr>
+  </tbody>
+</table>
+
+---
+
+## 水平排列
+
+<Canvas of={InfoPairStories.Horizontal} />
+
+## 垂直排列
+
+<Canvas of={InfoPairStories.Vertical} />
+
+## ReactNode 内容
+
+<Canvas of={InfoPairStories.WithReactNode} />
+
+## 指标行
+
+<Canvas of={InfoPairStories.MetricRow} />
+
+## 垂直列表
+
+<Canvas of={InfoPairStories.VerticalList} />
+
+## 长文本
+
+<Canvas of={InfoPairStories.LongText} />
+
+---
+
+## 回归测试用例
+
+<table>
+  <thead>
+    <tr><th>#</th><th>用例</th><th>Story</th><th>预期结果</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>R1</td><td>水平默认渲染</td><td>Horizontal</td><td>label 灰色在左，value 深色加粗在右</td></tr>
+    <tr><td>R2</td><td>垂直排列</td><td>Vertical</td><td>label 在上，value 在下</td></tr>
+    <tr><td>R3</td><td>ReactNode value</td><td>WithReactNode</td><td>value 渲染为带品牌色的 span</td></tr>
+    <tr><td>R4</td><td>多组水平排列</td><td>MetricRow</td><td>三组 InfoPair 水平排列，间距正确</td></tr>
+    <tr><td>R5</td><td>多组垂直排列</td><td>VerticalList</td><td>三组 InfoPair 垂直堆叠</td></tr>
+    <tr><td>R6</td><td>长文本溢出</td><td>LongText</td><td>长标签和值在 300px 容器内换行显示</td></tr>
+    <tr><td>R7</td><td>深色模式</td><td>Horizontal (dark)</td><td>label 和 value 颜色自动切换为深色主题</td></tr>
+  </tbody>
+</table>

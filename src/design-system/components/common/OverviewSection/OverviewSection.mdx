@@ -1,0 +1,69 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as OverviewSectionStories from './OverviewSection.stories';
+
+<Meta of={OverviewSectionStories} />
+
+<Title />
+
+模块概览区段容器。包含标题、描述、右侧附加信息和内容区域。使用语义 HTML（h2 + section + aria-labelledby）。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 功能特性
+
+<table>
+  <thead>
+    <tr><th>#</th><th>特性</th><th>说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>F1</td><td>标题</td><td>必填，渲染为 h2，text-fs-18 font-semibold text-fg</td></tr>
+    <tr><td>F2</td><td>描述文案</td><td>可选，渲染为 p，text-fs-14 text-fg-secondary</td></tr>
+    <tr><td>F3</td><td>右侧附加</td><td>可选 extra 插槽，右对齐，text-fs-12 text-fg-tertiary</td></tr>
+    <tr><td>F4</td><td>内容区域</td><td>children 渲染在标题区下方</td></tr>
+    <tr><td>F5</td><td>语义 HTML</td><td>section + aria-labelledby + h2 + p</td></tr>
+    <tr><td>F6</td><td>主题适配</td><td>使用 text-fg / text-fg-secondary / text-fg-tertiary token</td></tr>
+    <tr><td>F7</td><td>className / 属性透传</td><td>自定义 className 和 HTML 属性挂载到 section</td></tr>
+  </tbody>
+</table>
+
+---
+
+## 完整示例
+
+<Canvas of={OverviewSectionStories.Default} />
+
+## 仅标题
+
+<Canvas of={OverviewSectionStories.TitleOnly} />
+
+## 带描述
+
+<Canvas of={OverviewSectionStories.WithDescription} />
+
+## 带右侧附加
+
+<Canvas of={OverviewSectionStories.WithExtra} />
+
+---
+
+## 回归测试用例
+
+<table>
+  <thead>
+    <tr><th>#</th><th>用例</th><th>Story</th><th>预期结果</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>R1</td><td>完整渲染</td><td>Default</td><td>标题加粗 + 描述灰色 + extra 右上角 + children 区域</td></tr>
+    <tr><td>R2</td><td>仅标题</td><td>TitleOnly</td><td>标题显示，无描述和 extra，children 正常</td></tr>
+    <tr><td>R3</td><td>带描述</td><td>WithDescription</td><td>标题 + 描述，无 extra 和 children</td></tr>
+    <tr><td>R4</td><td>带 extra</td><td>WithExtra</td><td>extra 文字右对齐显示</td></tr>
+    <tr><td>R5</td><td>语义 HTML</td><td>Default</td><td>section 有 aria-labelledby，标题是 h2</td></tr>
+    <tr><td>R6</td><td>深色模式</td><td>Default (dark)</td><td>标题亮白色，描述灰色可读，extra 浅灰</td></tr>
+  </tbody>
+</table>

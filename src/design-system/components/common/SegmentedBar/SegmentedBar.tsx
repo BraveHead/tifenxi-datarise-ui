@@ -107,7 +107,7 @@ export function SegmentedBar({
           return (
             <div
               key={`${index}-${item.label}`}
-              className="relative transition-opacity duration-fast h-full flex items-center justify-center overflow-hidden whitespace-nowrap text-fs-11 text-neutral-0 font-medium"
+              className="relative transition-opacity duration-fast h-full flex items-center justify-center overflow-hidden whitespace-nowrap text-fs-11 text-fg-on-accent font-medium"
               style={{
                 backgroundColor: item.color,
                 width: `${width}%`,
@@ -121,7 +121,7 @@ export function SegmentedBar({
               )}
               {isHovered && (
                 <div
-                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-dropdown bg-neutral-0 rounded-md shadow-pop px-sp-3 py-sp-2 text-fs-12 text-neutral-700 whitespace-nowrap pointer-events-none"
+                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-dropdown bg-surface rounded-md shadow-pop px-sp-3 py-sp-2 text-fs-12 text-fg-body whitespace-nowrap pointer-events-none"
                 >
                   {item.renderTooltip ? (
                     item.renderTooltip(item, percentage, total)

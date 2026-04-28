@@ -35,7 +35,7 @@ export function SectionTitle({
         {number != null && (
           <span
             className={cx(
-              'w-[22px] h-[22px] rounded-full text-neutral-0 text-[11px] font-bold',
+              'w-[22px] h-[22px] rounded-full text-fg-on-accent text-[11px] font-bold',
               'inline-flex items-center justify-center flex-shrink-0',
               numberColor || 'bg-brand-500',
             )}
@@ -43,13 +43,13 @@ export function SectionTitle({
             {number}
           </span>
         )}
-        <span className="text-[15px] font-semibold text-neutral-900">{title}</span>
+        <span className="text-[15px] font-semibold text-fg">{title}</span>
         {extra}
         {action && <div className="ml-auto">{action}</div>}
       </div>
       {description && (
         <div
-          className="text-fs-13 text-neutral-500 mt-sp-1"
+          className="text-fs-13 text-fg-secondary mt-sp-1"
           style={{ marginLeft: number != null ? 32 : 0 }}
         >
           {description}

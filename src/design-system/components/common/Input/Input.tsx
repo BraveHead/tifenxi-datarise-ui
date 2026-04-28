@@ -28,7 +28,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-fs-13 text-neutral-700 font-medium mb-1.5"
+            className="block text-fs-13 text-fg-body font-medium mb-1.5"
           >
             {label}
           </label>
@@ -38,12 +38,12 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
           id={inputId}
           disabled={disabled}
           className={cx(
-            'h-8 px-sp-3 rounded-md border text-fs-14 text-neutral-900 outline-none transition-colors duration-fast',
-            'placeholder:text-neutral-400',
+            'h-8 px-sp-3 rounded-md border text-fs-14 text-fg outline-none transition-colors duration-fast',
+            'placeholder:text-fg-tertiary',
             block && 'w-full',
-            !error && !disabled && 'border-neutral-200 hover:border-neutral-300 focus:border-brand-500 focus:ring-3 focus:ring-brand-500/12',
+            !error && !disabled && 'border-line-strong hover:border-neutral-300 focus:border-brand-500 focus:ring-3 focus:ring-brand-500/12',
             error && 'border-danger-500 focus:ring-3 focus:ring-danger-500/12',
-            disabled && 'bg-neutral-50 text-neutral-400 cursor-not-allowed',
+            disabled && 'bg-surface-muted text-fg-tertiary cursor-not-allowed',
             className,
           )}
           {...rest}
@@ -51,7 +51,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(
         {help && (
           <p className={cx(
             'mt-1 text-fs-12',
-            error ? 'text-danger-500' : 'text-neutral-400',
+            error ? 'text-danger-500' : 'text-fg-tertiary',
           )}>
             {help}
           </p>

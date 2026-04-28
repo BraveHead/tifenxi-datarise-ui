@@ -21,7 +21,7 @@ export function Divider({ direction = 'horizontal', decorative = true, className
     <div
       className={cx(
         direction === 'horizontal' ? 'w-full h-px' : 'h-full w-px',
-        'bg-neutral-100',
+        'bg-line',
         className,
       )}
       role={decorative ? 'none' : 'separator'}

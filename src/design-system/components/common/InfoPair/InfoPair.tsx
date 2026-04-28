@@ -25,8 +25,8 @@ export function InfoPair({ label, value, direction = 'horizontal', className, ..
       )}
       {...rest}
     >
-      <span className="text-fs-13 text-neutral-500">{label}</span>
-      <span className="text-fs-13 text-neutral-900 font-medium">{value}</span>
+      <span className="text-fs-13 text-fg-secondary">{label}</span>
+      <span className="text-fs-13 text-fg font-medium">{value}</span>
     </div>
   );
 }

@@ -26,7 +26,7 @@ export function Callout({ variant = 'info', icon, className, children, ...rest }
   return (
     <div
       className={cx(
-        'flex items-start gap-sp-3 px-sp-4 py-sp-3 rounded-md text-fs-13 text-neutral-700',
+        'flex items-start gap-sp-3 px-sp-4 py-sp-3 rounded-md text-fs-13 text-fg-body',
         v.bg,
         className,
       )}
@@ -47,8 +47,8 @@ export function Callout({ variant = 'info', icon, className, children, ...rest }
 export function CalloutKV({ label, value }: { label: string; value: React.ReactNode }) {
   return (
     <span className="inline-flex items-center gap-1">
-      <span className="text-neutral-500">{label}</span>
-      <span className="text-neutral-900 font-medium">{value}</span>
+      <span className="text-fg-secondary">{label}</span>
+      <span className="text-fg font-medium">{value}</span>
     </span>
   );
 }

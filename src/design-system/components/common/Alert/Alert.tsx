@@ -50,7 +50,7 @@ export function Alert({
         'flex items-start gap-sp-3 px-sp-4 py-sp-3 rounded-lg border',
         v.bg,
         v.border,
-        'text-fs-14 text-neutral-700',
+        'text-fs-14 text-fg-body',
         className,
       )}
       role={variantRole[variant]}
@@ -66,7 +66,7 @@ export function Alert({
         <button
           type="button"
           onClick={onClose}
-          className="flex-none text-neutral-400 hover:text-neutral-700 transition-colors duration-fast cursor-pointer leading-none text-fs-16"
+          className="flex-none text-fg-tertiary hover:text-fg-body transition-colors duration-fast cursor-pointer leading-none text-fs-16"
           aria-label="关闭"
         >
           ×

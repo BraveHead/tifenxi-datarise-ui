@@ -51,7 +51,7 @@ export function DeltaBadge({
     (direction === 'up' && !inverse) || (direction === 'down' && inverse);
 
   const colorClass = direction === 'flat'
-    ? 'text-neutral-500 bg-neutral-50 border-neutral-200'
+    ? 'text-fg-secondary bg-surface-muted border-line-strong'
     : isGood
       ? 'text-success-500 bg-success-bg border-success-border'
       : 'text-danger-500 bg-danger-bg border-danger-border';

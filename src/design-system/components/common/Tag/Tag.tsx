@@ -19,11 +19,11 @@ export interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
 const variantClasses: Record<TagVariant, string> = {
   'severity-high': 'bg-[var(--severity-high-bg)] text-[var(--severity-high-text)] border-[var(--severity-high-border)]',
   'severity-mid': 'bg-warning-bg text-warning-700 border-warning-border',
-  'severity-low': 'bg-neutral-50 text-neutral-500 border-neutral-200',
+  'severity-low': 'bg-surface-muted text-fg-secondary border-line-strong',
   danger: 'bg-danger-bg text-danger-700 border-danger-border',
   success: 'bg-success-bg text-success-700 border-success-border',
   info: 'bg-info-bg text-info-700 border-info-border',
-  neutral: 'bg-neutral-50 text-neutral-700 border-neutral-200',
+  neutral: 'bg-surface-muted text-fg-body border-line-strong',
 };
 
 const dotClasses: Record<NonNullable<TagProps['dot']>, string> = {

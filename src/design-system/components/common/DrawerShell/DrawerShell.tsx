@@ -39,7 +39,7 @@ export function DrawerShell({ size = 'sm', className, children, ...rest }: Drawe
   return (
     <div
       className={cx(
-        'bg-neutral-0 rounded-lg shadow-modal border border-neutral-100',
+        'bg-surface rounded-lg shadow-modal border border-line',
         'flex flex-col h-full overflow-hidden',
         sizeWidths[size],
         className,
@@ -55,16 +55,16 @@ export function DrawerHeader({ title, subtitle, onClose, className, ...rest }: D
   return (
     <div
       className={cx(
-        'px-sp-6 pt-sp-5 pb-[18px] border-b border-neutral-100',
+        'px-sp-6 pt-sp-5 pb-[18px] border-b border-line',
         'flex items-center justify-between flex-shrink-0',
         className,
       )}
       {...rest}
     >
       <div>
-        <div className="text-fs-16 font-semibold text-neutral-900">{title}</div>
+        <div className="text-fs-16 font-semibold text-fg">{title}</div>
         {subtitle && (
-          <div className="text-fs-12 text-neutral-500 mt-0.5">{subtitle}</div>
+          <div className="text-fs-12 text-fg-secondary mt-0.5">{subtitle}</div>
         )}
       </div>
       {onClose && (
@@ -73,8 +73,8 @@ export function DrawerHeader({ title, subtitle, onClose, className, ...rest }: D
           onClick={onClose}
           className={cx(
             'w-7 h-7 rounded-sm border-none flex items-center justify-center',
-            'bg-neutral-50 text-neutral-500 cursor-pointer',
-            'hover:bg-neutral-100 transition-colors duration-fast',
+            'bg-surface-muted text-fg-secondary cursor-pointer',
+            'hover:bg-line transition-colors duration-fast',
           )}
           aria-label="关闭"
         >
@@ -105,7 +105,7 @@ export function DrawerFooter({ className, children, ...rest }: DrawerFooterProps
   return (
     <div
       className={cx(
-        'px-sp-6 py-[14px] border-t border-neutral-100',
+        'px-sp-6 py-[14px] border-t border-line',
         'flex items-center gap-sp-2 justify-end flex-shrink-0',
         className,
       )}

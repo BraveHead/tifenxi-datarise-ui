@@ -1,0 +1,70 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as DividerStories from './Divider.stories';
+
+<Meta of={DividerStories} />
+
+<Title />
+
+分隔线组件。支持横向 / 竖向两种方向，默认装饰性（对辅助技术隐藏）。颜色跟随 `--line` token 自动切换主题。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 功能特性
+
+<table>
+  <thead>
+    <tr><th>#</th><th>特性</th><th>说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>F1</td><td>横向分隔线</td><td>默认方向，w-full h-px，颜色 bg-line</td></tr>
+    <tr><td>F2</td><td>竖向分隔线</td><td>direction="vertical"，h-full w-px，需父容器有明确高度</td></tr>
+    <tr><td>F3</td><td>装饰模式</td><td>默认 decorative=true，role="none" + aria-hidden，辅助技术忽略</td></tr>
+    <tr><td>F4</td><td>语义模式</td><td>decorative=false 时 role="separator" + aria-orientation</td></tr>
+    <tr><td>F5</td><td>主题适配</td><td>使用 bg-line token，深色模式自动切换</td></tr>
+    <tr><td>F6</td><td>className 透传</td><td>支持自定义类名覆盖颜色等样式</td></tr>
+    <tr><td>F7</td><td>HTML 属性透传</td><td>data-*、aria-* 等原生属性支持</td></tr>
+  </tbody>
+</table>
+
+---
+
+## 横向分隔线
+
+<Canvas of={DividerStories.Horizontal} />
+
+## 竖向分隔线
+
+<Canvas of={DividerStories.Vertical} />
+
+## 上下文中使用
+
+<Canvas of={DividerStories.InContext} />
+
+## 竖向行内使用
+
+<Canvas of={DividerStories.VerticalInline} />
+
+---
+
+## 回归测试用例
+
+<table>
+  <thead>
+    <tr><th>#</th><th>用例</th><th>Story</th><th>预期结果</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>R1</td><td>横向默认渲染</td><td>Horizontal</td><td>全宽 1px 横线，颜色 bg-line</td></tr>
+    <tr><td>R2</td><td>竖向渲染</td><td>Vertical</td><td>全高 1px 竖线，颜色 bg-line</td></tr>
+    <tr><td>R3</td><td>上下文分隔</td><td>InContext</td><td>"上方内容"和"下方内容"之间有分隔线</td></tr>
+    <tr><td>R4</td><td>竖向行内分隔</td><td>VerticalInline</td><td>"左侧"和"右侧"之间有竖线</td></tr>
+    <tr><td>R5</td><td>自定义颜色</td><td>CustomColor</td><td>className 覆盖颜色为 bg-brand-200</td></tr>
+    <tr><td>R6</td><td>深色模式</td><td>Horizontal (dark)</td><td>分隔线颜色自动切换为深色 line token</td></tr>
+    <tr><td>R7</td><td>装饰模式 ARIA</td><td>Horizontal</td><td>role="none"，aria-hidden="true"</td></tr>
+  </tbody>
+</table>

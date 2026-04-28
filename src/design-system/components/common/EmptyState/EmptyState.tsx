@@ -23,7 +23,7 @@ const defaultConfig: Record<EmptyStateVariant, { title: string; description: str
   'no-data': {
     title: '暂无数据',
     description: '当前时间段内没有相关记录，请调整筛选条件',
-    illusBg: 'bg-neutral-50',
+    illusBg: 'bg-surface-muted',
   },
   'no-result': {
     title: '未找到匹配结果',
@@ -85,16 +85,16 @@ export function EmptyState({
     >
       <div
         className={cx(
-          'w-20 h-20 rounded-full flex items-center justify-center mb-sp-5 text-neutral-400',
+          'w-20 h-20 rounded-full flex items-center justify-center mb-sp-5 text-fg-tertiary',
           config.illusBg,
         )}
       >
         {icon || <DefaultIcon variant={variant} />}
       </div>
-      <div className="text-[15px] font-semibold text-neutral-900 mb-sp-2">
+      <div className="text-[15px] font-semibold text-fg mb-sp-2">
         {title || config.title}
       </div>
-      <div className="text-fs-13 text-neutral-500 max-w-[280px] leading-relaxed mb-sp-5">
+      <div className="text-fs-13 text-fg-secondary max-w-[280px] leading-relaxed mb-sp-5">
         {description || config.description}
       </div>
       {action && <div>{action}</div>}

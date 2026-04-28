@@ -18,13 +18,13 @@ export interface ButtonProps
 /* 所有视觉值来自 styles.css @theme inline 映射的 tokens.css 设计变量 */
 const variantClasses: Record<ButtonVariant, string> = {
   primary:
-    'bg-brand-500 text-neutral-0 hover:bg-brand-600 active:bg-brand-700 border-transparent',
+    'bg-brand-500 text-fg-on-accent hover:bg-brand-600 active:bg-brand-700 border-transparent',
   default:
-    'bg-neutral-0 text-neutral-700 border-neutral-200 hover:bg-neutral-50 hover:border-neutral-300 active:bg-neutral-100',
+    'bg-surface text-fg-body border-line-strong hover:bg-surface-muted hover:border-neutral-300 active:bg-neutral-100',
   ghost:
     'bg-transparent text-brand-600 border-transparent hover:bg-brand-50 active:bg-brand-100',
   danger:
-    'bg-danger-500 text-neutral-0 hover:bg-danger-700 border-transparent',
+    'bg-danger-500 text-fg-on-accent hover:bg-danger-700 border-transparent',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {

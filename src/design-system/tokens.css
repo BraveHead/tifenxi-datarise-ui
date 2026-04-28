@@ -136,6 +136,71 @@
   --z-drawer:   400;
   --z-modal:    500;
   --z-toast:    600;
+
+  /* ============================================================
+     语义 Token — 随主题切换
+     组件应优先使用这些 token，而非直接引用 neutral-* 色阶
+     ============================================================ */
+
+  /* —— 表面 / 背景 —— */
+  --surface:        var(--neutral-0);    /* 卡片 / 容器背景 */
+  --surface-page:   var(--neutral-25);   /* 页面底色 */
+  --surface-muted:  var(--neutral-50);   /* 次级容器、hover 填充 */
+  --surface-invert: var(--neutral-900);  /* 反色表面 */
+
+  /* —— 前景 / 文字 —— */
+  --fg:             var(--neutral-900);  /* 标题 */
+  --fg-body:        var(--neutral-700);  /* 正文 */
+  --fg-secondary:   var(--neutral-500);  /* 次要文字 */
+  --fg-tertiary:    var(--neutral-400);  /* 辅助文字 */
+  --fg-on-accent:   #FFFFFF;             /* 彩色背景上的文字（不随主题变） */
+
+  /* —— 线条 / 描边 —— */
+  --line:           var(--neutral-100);  /* 分隔线、细描边 */
+  --line-strong:    var(--neutral-200);  /* 输入框描边 */
+}
+
+/* ============================================================
+   深色主题覆盖
+   在根元素添加 class="dark" 即可切换
+   ============================================================ */
+.dark {
+  /* —— 表面 / 背景 —— */
+  --surface:        #1A1D23;
+  --surface-page:   #0F1115;
+  --surface-muted:  #22262E;
+  --surface-invert: #F0F2F5;
+
+  /* —— 前景 / 文字 —— */
+  --fg:             #F0F2F5;
+  --fg-body:        #C9CED6;
+  --fg-secondary:   #9AA1AD;
+  --fg-tertiary:    #6B7280;
+
+  /* —— 线条 / 描边 —— */
+  --line:           #2A2F38;
+  --line-strong:    #353B45;
+
+  /* —— 语义色（深色背景版） —— */
+  --success-bg:     #0D2818;
+  --success-border: #1B4332;
+  --warning-bg:     #2A1F0E;
+  --warning-border: #4A3A1A;
+  --danger-bg:      #2A1215;
+  --danger-border:  #4A2228;
+  --info-bg:        #0F1A2E;
+  --info-border:    #1A3050;
+  --severity-high-bg:     #2A1A0E;
+  --severity-high-border: #4A3218;
+
+  /* —— 品牌色浅阶（深色模式下用于填充） —— */
+  --brand-50:  #172554;
+  --brand-100: #1E3A6E;
+
+  /* —— 阴影（深色模式需更强） —— */
+  --shadow-card:  0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-pop:   0 6px 16px -4px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-modal: 0 20px 48px -8px rgba(0, 0, 0, 0.6);
 }
 
 /* ============================================================
@@ -149,8 +214,8 @@ html, body {
   font-family: var(--font-sans);
   font-size: var(--fs-14);
   line-height: var(--lh-base);
-  color: var(--neutral-900);
-  background: var(--neutral-25);
+  color: var(--fg);
+  background: var(--surface-page);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;

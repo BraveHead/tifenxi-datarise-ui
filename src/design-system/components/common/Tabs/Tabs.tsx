@@ -19,7 +19,7 @@ function cx(...cls: Array<string | false | undefined>) {
 
 export function Tabs({ items, activeKey, onChange, className, ...rest }: TabsProps) {
   return (
-    <div className={cx('flex gap-sp-6 border-b border-neutral-100 mb-sp-4', className)} role="tablist" {...rest}>
+    <div className={cx('flex gap-sp-6 border-b border-line mb-sp-4', className)} role="tablist" {...rest}>
       {items.map((item) => {
         const active = item.key === activeKey;
         return (
@@ -34,7 +34,7 @@ export function Tabs({ items, activeKey, onChange, className, ...rest }: TabsPro
               'inline-flex items-center gap-1.5',
               active
                 ? 'text-brand-600 font-medium'
-                : 'text-neutral-500 hover:text-neutral-900',
+                : 'text-fg-secondary hover:text-fg',
             )}
           >
             {item.label}
@@ -60,7 +60,7 @@ export function SegTabs({ items, activeKey, onChange, className, ...rest }: SegT
   return (
     <div
       className={cx(
-        'inline-flex bg-neutral-50 border border-neutral-100 rounded-md p-[3px] gap-0.5',
+        'inline-flex bg-surface-muted border border-line rounded-md p-[3px] gap-0.5',
         className,
       )}
       role="tablist"
@@ -78,8 +78,8 @@ export function SegTabs({ items, activeKey, onChange, className, ...rest }: SegT
             className={cx(
               'px-sp-4 py-1 rounded-sm text-fs-13 cursor-pointer inline-flex items-center gap-1.5 transition-all duration-fast',
               active
-                ? 'bg-neutral-0 text-neutral-900 font-medium shadow-card'
-                : 'text-neutral-500 hover:text-neutral-700',
+                ? 'bg-surface text-fg font-medium shadow-card'
+                : 'text-fg-secondary hover:text-fg-body',
             )}
           >
             {item.label}

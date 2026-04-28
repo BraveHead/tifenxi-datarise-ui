@@ -95,7 +95,7 @@ export function InsightCard({
   return (
     <div
       className={cx(
-        'bg-neutral-0 border border-neutral-100 rounded-lg shadow-card',
+        'bg-surface border border-line rounded-lg shadow-card',
         'px-sp-5 py-sp-4 border-l-4 flex gap-sp-4',
         config.borderColor,
         className,
@@ -113,8 +113,8 @@ export function InsightCard({
       </span>
 
       <div className="flex-1 min-w-0">
-        <div className="text-fs-14 font-semibold text-neutral-900 mb-1">{title}</div>
-        <div className="text-fs-13 text-neutral-500 leading-relaxed">{description}</div>
+        <div className="text-fs-14 font-semibold text-fg mb-1">{title}</div>
+        <div className="text-fs-13 text-fg-secondary leading-relaxed">{description}</div>
         {footer && (
           <div className="flex items-center gap-sp-2 mt-sp-2 flex-wrap">{footer}</div>
         )}

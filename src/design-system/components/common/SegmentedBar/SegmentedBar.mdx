@@ -1,0 +1,86 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as SegmentedBarStories from './SegmentedBar.stories';
+
+<Meta of={SegmentedBarStories} />
+
+<Title />
+
+水平堆叠比例条组件。展示占比分布，支持 hover tooltip、内嵌标签和最小宽度保底。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 功能特性
+
+<table>
+  <thead>
+    <tr><th>#</th><th>特性</th><th>说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>F1</td><td>比例计算</td><td>按 items 的 value 计算各段占比宽度</td></tr>
+    <tr><td>F2</td><td>最小宽度保底</td><td>小比例（&lt;3%）保底显示 3% 宽度，确保可见</td></tr>
+    <tr><td>F3</td><td>圆角模式</td><td>rounded=true 时容器使用 rounded-full</td></tr>
+    <tr><td>F4</td><td>内嵌标签</td><td>showInnerLabel=true 时，宽度 &ge; 8% 的段显示标签</td></tr>
+    <tr><td>F5</td><td>Hover 交互</td><td>hover 段高亮，非 hover 段降低透明度；显示 tooltip</td></tr>
+    <tr><td>F6</td><td>自定义 Tooltip</td><td>renderTooltip 回调自定义 tooltip 内容</td></tr>
+    <tr><td>F7</td><td>空值处理</td><td>value=0 的段不渲染；总和为 0 时组件返回 null</td></tr>
+    <tr><td>F8</td><td>ARIA 标注</td><td>role="img" + aria-label 列出各段数据摘要</td></tr>
+    <tr><td>F9</td><td>主题适配</td><td>tooltip 背景 bg-surface，文字 text-fg-body 自动切换</td></tr>
+  </tbody>
+</table>
+
+---
+
+## 默认五段
+
+<Canvas of={SegmentedBarStories.Default} />
+
+## 圆角模式
+
+<Canvas of={SegmentedBarStories.Rounded} />
+
+## 内嵌标签
+
+<Canvas of={SegmentedBarStories.WithInnerLabels} />
+
+## 小比例保底
+
+<Canvas of={SegmentedBarStories.SmallValues} />
+
+## 两段进度
+
+<Canvas of={SegmentedBarStories.TwoSegments} />
+
+## 自定义 Tooltip
+
+<Canvas of={SegmentedBarStories.CustomTooltip} />
+
+## 空数据
+
+<Canvas of={SegmentedBarStories.EmptyItems} />
+
+---
+
+## 回归测试用例
+
+<table>
+  <thead>
+    <tr><th>#</th><th>用例</th><th>Story</th><th>预期结果</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>R1</td><td>五段比例条</td><td>Default</td><td>5 段按数值比例分配宽度，颜色正确</td></tr>
+    <tr><td>R2</td><td>圆角两端</td><td>Rounded</td><td>左右两端圆角，高度 20px</td></tr>
+    <tr><td>R3</td><td>内嵌标签</td><td>WithInnerLabels</td><td>门诊/住院/急诊标签显示在段内</td></tr>
+    <tr><td>R4</td><td>小比例保底</td><td>SmallValues</td><td>小比例和极小比例段仍可见（&ge;3% 宽度）</td></tr>
+    <tr><td>R5</td><td>Hover tooltip</td><td>Default (hover)</td><td>hover 时显示 tooltip，其他段降低透明度</td></tr>
+    <tr><td>R6</td><td>自定义 tooltip</td><td>CustomTooltip (hover)</td><td>tooltip 显示自定义内容（人数 + 百分比）</td></tr>
+    <tr><td>R7</td><td>空数据</td><td>EmptyItems</td><td>不渲染任何内容</td></tr>
+    <tr><td>R8</td><td>全零值</td><td>AllZeroValues</td><td>不渲染任何内容</td></tr>
+    <tr><td>R9</td><td>深色模式</td><td>Default (dark)</td><td>tooltip 背景切换为深色表面</td></tr>
+  </tbody>
+</table>

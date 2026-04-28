@@ -1,0 +1,83 @@
+import { Meta, Canvas, Controls, Title } from '@storybook/blocks';
+import * as AlertStories from './Alert.stories';
+
+<Meta of={AlertStories} />
+
+<Title />
+
+信息提示条组件。与 Callout 的区别：Alert 有边框 + 支持关闭按钮，用于页面级提示；Callout 无边框，用于内嵌上下文信息。
+
+---
+
+## Props
+
+<Controls />
+
+---
+
+## 功能特性
+
+<table>
+  <thead>
+    <tr><th>#</th><th>特性</th><th>说明</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>F1</td><td>四种语义变体</td><td>info / success / warning / danger，各有对应底色 + 边框色 + 图标色</td></tr>
+    <tr><td>F2</td><td>ARIA role 分级</td><td>info/success 使用 role="status"（不打断读屏）；warning/danger 使用 role="alert"（打断读屏）</td></tr>
+    <tr><td>F3</td><td>图标插槽</td><td>可选 icon 属性，带 aria-hidden="true"</td></tr>
+    <tr><td>F4</td><td>可关闭</td><td>closable + onClose 配合使用，渲染 × 关闭按钮</td></tr>
+    <tr><td>F5</td><td>closable 安全</td><td>closable=true 但无 onClose 时不渲染关闭按钮，避免死按钮</td></tr>
+    <tr><td>F6</td><td>主题适配</td><td>语义色 token 自动切换深色背景；文字使用 text-fg-body</td></tr>
+    <tr><td>F7</td><td>className 透传</td><td>自定义 className 追加到根元素</td></tr>
+  </tbody>
+</table>
+
+---
+
+## 所有变体
+
+<Canvas of={AlertStories.AllVariants} />
+
+## Info — 信息提示
+
+<Canvas of={AlertStories.Info} />
+
+## Success — 成功提示
+
+<Canvas of={AlertStories.Success} />
+
+## Warning — 警告提示
+
+<Canvas of={AlertStories.Warning} />
+
+## Danger — 错误提示
+
+<Canvas of={AlertStories.Danger} />
+
+## 可关闭
+
+<Canvas of={AlertStories.Closable} />
+
+## 无图标
+
+<Canvas of={AlertStories.NoIcon} />
+
+---
+
+## 回归测试用例
+
+<table>
+  <thead>
+    <tr><th>#</th><th>用例</th><th>Story</th><th>预期结果</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>R1</td><td>Info 变体</td><td>Info</td><td>蓝色底色 + 蓝色边框 + 蓝色图标</td></tr>
+    <tr><td>R2</td><td>Success 变体</td><td>Success</td><td>绿色底色 + 绿色边框</td></tr>
+    <tr><td>R3</td><td>Warning 变体</td><td>Warning</td><td>黄色底色 + 黄色边框，role="alert"</td></tr>
+    <tr><td>R4</td><td>Danger 变体</td><td>Danger</td><td>红色底色 + 红色边框，role="alert"</td></tr>
+    <tr><td>R5</td><td>关闭按钮渲染</td><td>Closable</td><td>右侧显示 × 按钮，点击后 Alert 消失</td></tr>
+    <tr><td>R6</td><td>无图标布局</td><td>NoIcon</td><td>文字左对齐，无图标位</td></tr>
+    <tr><td>R7</td><td>长文本 + 可关闭</td><td>AllVariants (最后一行)</td><td>长文本不挤压关闭按钮</td></tr>
+    <tr><td>R8</td><td>深色模式</td><td>AllVariants (dark)</td><td>四种变体均切换为深色背景 + 深色边框</td></tr>
+  </tbody>
+</table>

@@ -42,10 +42,10 @@ const priorityConfig: Record<ActionPriority, {
     iconColor: 'text-brand-500',
   },
   low: {
-    badgeClass: 'bg-neutral-50 text-neutral-500 border-neutral-200',
+    badgeClass: 'bg-surface-muted text-fg-secondary border-line-strong',
     badgeText: '低优先',
-    iconBg: 'bg-neutral-50',
-    iconColor: 'text-neutral-500',
+    iconBg: 'bg-surface-muted',
+    iconColor: 'text-fg-secondary',
   },
 };
 
@@ -73,7 +73,7 @@ export function ActionCard({
   return (
     <div
       className={cx(
-        'bg-neutral-0 border border-neutral-100 rounded-lg shadow-card p-sp-4',
+        'bg-surface border border-line rounded-lg shadow-card p-sp-4',
         className,
       )}
       {...rest}
@@ -98,20 +98,20 @@ export function ActionCard({
           >
             {config.badgeText}
           </span>
-          <div className="text-fs-14 font-semibold text-neutral-900 leading-snug">{title}</div>
+          <div className="text-fs-14 font-semibold text-fg leading-snug">{title}</div>
         </div>
       </div>
 
       {/* Description */}
       {description && (
-        <div className="text-fs-13 text-neutral-500 leading-relaxed mb-sp-3">{description}</div>
+        <div className="text-fs-13 text-fg-secondary leading-relaxed mb-sp-3">{description}</div>
       )}
 
       {/* Steps */}
       {steps && steps.length > 0 && (
         <ul className="flex flex-col gap-1 mb-sp-3 list-none">
           {steps.map((step, i) => (
-            <li key={i} className="text-fs-12 text-neutral-500 flex gap-1.5 items-start pl-0.5">
+            <li key={i} className="text-fs-12 text-fg-secondary flex gap-1.5 items-start pl-0.5">
               <span className="text-brand-500 font-bold leading-relaxed flex-shrink-0">›</span>
               <span>{step}</span>
             </li>
@@ -121,7 +121,7 @@ export function ActionCard({
 
       {/* Verification */}
       {verification && (
-        <div className="text-[11px] text-neutral-500 leading-relaxed mb-sp-2 px-sp-2 py-1.5 bg-neutral-50 rounded-sm">
+        <div className="text-[11px] text-fg-secondary leading-relaxed mb-sp-2 px-sp-2 py-1.5 bg-surface-muted rounded-sm">
           {verification}
         </div>
       )}

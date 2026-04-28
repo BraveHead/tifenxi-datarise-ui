@@ -34,12 +34,12 @@ export interface KpiCardProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 const iconBadgeClasses: Record<IconBadgeVariant, string> = {
-  mood:    'bg-[#eef2ff] text-[#4f46e5]',
-  pulse:   'bg-[#ecfdf5] text-[#059669]',
-  trend:   'bg-[#f5f3ff] text-[#7c3aed]',
-  alert:   'bg-[#fff1ea] text-[#c2410c]',
-  users:   'bg-[#fdf2f8] text-[#be185d]',
-  default: 'bg-neutral-100 text-neutral-600',
+  mood:    'bg-info-bg text-brand-700',
+  pulse:   'bg-success-bg text-success-700',
+  trend:   'bg-info-bg text-brand-600',
+  alert:   'bg-warning-bg text-warning-700',
+  users:   'bg-danger-bg text-danger-700',
+  default: 'bg-surface-muted text-fg-secondary',
 };
 
 function cx(...cls: Array<string | false | undefined>) {
@@ -65,8 +65,8 @@ export function KpiCard({
       className={cx(
         'relative flex flex-col gap-sp-2 rounded-lg border overflow-hidden min-h-[150px]',
         danger
-          ? 'bg-gradient-to-b from-[#fff1ea] to-[#fff6f2] border-[#fcd9c6]'
-          : 'bg-neutral-0 border-neutral-100',
+          ? 'bg-danger-bg border-danger-border'
+          : 'bg-surface border-line',
         className,
       )}
       style={{ padding: '16px 18px 0' }}
@@ -82,7 +82,7 @@ export function KpiCard({
 
       {/* 头部：名称 + 图标 */}
       <div className="flex items-start justify-between gap-sp-3">
-        <span className={cx('text-fs-13 leading-snug', nameClassName || 'text-neutral-500')}>{name}</span>
+        <span className={cx('text-fs-13 leading-snug', nameClassName || 'text-fg-secondary')}>{name}</span>
         {icon && (
           <span className={cx(
             'flex-none w-7 h-7 rounded-lg inline-flex items-center justify-center',
@@ -95,17 +95,17 @@ export function KpiCard({
 
       {/* 数值 */}
       <div className="flex items-baseline gap-1.5 mt-0.5">
-        <span className="font-num text-[30px] font-semibold text-neutral-900 leading-none tracking-tight">
+        <span className="font-num text-[30px] font-semibold text-fg leading-none tracking-tight">
           {value}
         </span>
         {unit && (
-          <span className="text-fs-13 text-neutral-500 font-normal font-sans">{unit}</span>
+          <span className="text-fs-13 text-fg-secondary font-normal font-sans">{unit}</span>
         )}
       </div>
 
       {/* 同环比 */}
       {deltas && deltas.length > 0 && (
-        <div className="flex items-center gap-sp-4 flex-wrap text-[11px] font-num text-neutral-500">
+        <div className="flex items-center gap-sp-4 flex-wrap text-[11px] font-num text-fg-secondary">
           {deltas.map((d, i) => (
             <span
               key={i}

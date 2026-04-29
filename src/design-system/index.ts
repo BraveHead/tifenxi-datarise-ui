@@ -50,7 +50,7 @@ export type { SegmentedBarProps, SegmentedBarItem } from './components/common/Se
 // ─── Business Components ───
 
 export { KpiCard } from './components/business/KpiCard/KpiCard';
-export type { KpiCardProps, KpiDelta, IconBadgeVariant } from './components/business/KpiCard/KpiCard';
+export type { KpiCardProps, ComparisonData } from './components/business/KpiCard/KpiCard';
 
 export { InsightCard } from './components/business/InsightCard/InsightCard';
 export type { InsightCardProps, InsightType } from './components/business/InsightCard/InsightCard';

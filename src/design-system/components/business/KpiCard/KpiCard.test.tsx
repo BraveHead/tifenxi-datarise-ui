@@ -5,19 +5,19 @@ import { KpiCard } from './KpiCard';
 describe('KpiCard', () => {
   // ─── 基础渲染 ───
 
-  it('renders name and value', () => {
-    render(<KpiCard name="总样本量" value="2,090" />);
+  it('renders title and value', () => {
+    render(<KpiCard title="总样本量" value="2,090" />);
     expect(screen.getByText('总样本量')).toBeInTheDocument();
     expect(screen.getByText('2,090')).toBeInTheDocument();
   });
 
   it('renders numeric value', () => {
-    render(<KpiCard name="test" value={42} />);
+    render(<KpiCard title="test" value={42} />);
     expect(screen.getByText('42')).toBeInTheDocument();
   });
 
   it('renders without optional props', () => {
-    render(<KpiCard name="简单指标" value="100" />);
+    render(<KpiCard title="简单指标" value="100" />);
     expect(screen.getByText('简单指标')).toBeInTheDocument();
     expect(screen.getByText('100')).toBeInTheDocument();
   });
@@ -25,216 +25,119 @@ describe('KpiCard', () => {
   // ─── unit ───
 
   it('renders unit', () => {
-    render(<KpiCard name="test" value="100" unit="份" />);
+    render(<KpiCard title="test" value="100" unit="份" />);
     expect(screen.getByText('份')).toBeInTheDocument();
   });
 
-  it('does not render unit element when unit is omitted', () => {
-    const { container } = render(<KpiCard name="test" value="100" />);
-    const unitEl = container.querySelector('.font-sans.text-neutral-500');
-    // value 区域的 unit span 不应存在
-    expect(unitEl).not.toBeInTheDocument();
-  });
+  // ─── icon ───
 
-  // ─── name 样式 ───
-
-  it('uses default name color when nameClassName is not provided', () => {
-    render(<KpiCard name="默认名称" value="100" />);
-    const nameEl = screen.getByText('默认名称');
-    expect(nameEl.className).toContain('text-neutral-500');
-  });
-
-  it('applies nameClassName and replaces default color', () => {
-    render(<KpiCard name="自定义名称" value="100" nameClassName="text-brand-500 font-semibold" />);
-    const nameEl = screen.getByText('自定义名称');
-    expect(nameEl.className).toContain('text-brand-500');
-    expect(nameEl.className).toContain('font-semibold');
-    expect(nameEl.className).not.toContain('text-neutral-500');
-  });
-
-  // ─── icon badge ───
-
-  it('renders icon badge', () => {
-    render(<KpiCard name="test" value="100" icon={<span data-testid="icon">★</span>} />);
+  it('renders icon with background', () => {
+    render(<KpiCard title="test" value="100" icon={<span data-testid="icon">★</span>} iconBgColor="bg-blue-100" />);
     expect(screen.getByTestId('icon')).toBeInTheDocument();
   });
 
-  it('does not render icon badge when icon is omitted', () => {
-    const { container } = render(<KpiCard name="test" value="100" />);
-    const badge = container.querySelector('.rounded-lg.inline-flex');
-    expect(badge).not.toBeInTheDocument();
+  it('does not render icon when omitted', () => {
+    const { container } = render(<KpiCard title="test" value="100" />);
+    const badges = container.querySelectorAll('.w-8.h-8');
+    expect(badges).toHaveLength(0);
   });
 
-  it.each([
-    ['mood', 'bg-[#eef2ff]'],
-    ['pulse', 'bg-[#ecfdf5]'],
-    ['trend', 'bg-[#f5f3ff]'],
-    ['alert', 'bg-[#fff1ea]'],
-    ['users', 'bg-[#fdf2f8]'],
-    ['default', 'bg-neutral-100'],
-  ] as const)('applies %s icon variant class', (variant, expectedClass) => {
-    const { container } = render(
-      <KpiCard name="test" value="1" icon={<span>★</span>} iconVariant={variant} />,
-    );
-    const badge = container.querySelector('.inline-flex.items-center.justify-center');
-    expect(badge?.className).toContain(expectedClass);
-  });
+  // ─── comparison ───
 
-  it('uses default icon variant when iconVariant is omitted', () => {
-    const { container } = render(
-      <KpiCard name="test" value="1" icon={<span>★</span>} />,
-    );
-    const badge = container.querySelector('.inline-flex.items-center.justify-center');
-    expect(badge?.className).toContain('bg-neutral-100');
-  });
-
-  // ─── delta 渲染 ───
-
-  it('renders deltas with label before value (arrow → label → value)', () => {
+  it('renders yoy and mom labels', () => {
     render(
-      <KpiCard name="test" value="100" deltas={[
-        { label: '同比', value: '12.4%', direction: 'up', sentiment: 'good' },
-      ]} />,
-    );
-    const deltaRow = screen.getByText('同比').closest('span[class*="inline-flex"]')!;
-    const children = Array.from(deltaRow.children).map(c => c.textContent);
-    expect(children).toEqual(['▲', '同比', '12.4%']);
-  });
-
-  it('renders up arrow for direction=up', () => {
-    render(
-      <KpiCard name="test" value="1" deltas={[
-        { label: 'l', value: 'v', direction: 'up', sentiment: 'good' },
-      ]} />,
-    );
-    expect(screen.getByText('▲')).toBeInTheDocument();
-  });
-
-  it('renders down arrow for direction=down', () => {
-    render(
-      <KpiCard name="test" value="1" deltas={[
-        { label: 'l', value: 'v', direction: 'down', sentiment: 'good' },
-      ]} />,
-    );
-    expect(screen.getByText('▼')).toBeInTheDocument();
-  });
-
-  it('renders good sentiment with success color', () => {
-    render(
-      <KpiCard name="test" value="100" deltas={[
-        { label: '同比', value: '12.4%', direction: 'up', sentiment: 'good' },
-      ]} />,
-    );
-    const delta = screen.getByText('12.4%');
-    expect(delta.parentElement?.className).toContain('text-success-500');
-  });
-
-  it('renders bad sentiment with danger color', () => {
-    render(
-      <KpiCard name="test" value="100" deltas={[
-        { label: '环比', value: '0.3%', direction: 'up', sentiment: 'bad' },
-      ]} />,
-    );
-    const delta = screen.getByText('0.3%');
-    expect(delta.parentElement?.className).toContain('text-danger-500');
-  });
-
-  it('renders multiple deltas', () => {
-    render(
-      <KpiCard name="test" value="1" deltas={[
-        { label: '同比', value: '1.0%', direction: 'up', sentiment: 'good' },
-        { label: '环比', value: '2.0%', direction: 'down', sentiment: 'bad' },
-      ]} />,
+      <KpiCard title="test" value="100" comparison={{ yoy: 12.4, mom: -3.2 }} />,
     );
     expect(screen.getByText('同比')).toBeInTheDocument();
     expect(screen.getByText('环比')).toBeInTheDocument();
-    expect(screen.getByText('1.0%')).toBeInTheDocument();
-    expect(screen.getByText('2.0%')).toBeInTheDocument();
-    expect(screen.getByText('▲')).toBeInTheDocument();
-    expect(screen.getByText('▼')).toBeInTheDocument();
+    expect(screen.getByText('12.4%')).toBeInTheDocument();
+    expect(screen.getByText('3.2%')).toBeInTheDocument();
   });
 
-  it('does not render delta section when deltas is empty', () => {
-    const { container } = render(<KpiCard name="test" value="1" deltas={[]} />);
-    const deltaRow = container.querySelector('.gap-sp-4');
-    expect(deltaRow).not.toBeInTheDocument();
+  it('renders up arrow for positive yoy', () => {
+    const { container } = render(
+      <KpiCard title="test" value="100" comparison={{ yoy: 5.0, mom: 0 }} />,
+    );
+    const svgs = container.querySelectorAll('svg');
+    expect(svgs.length).toBeGreaterThanOrEqual(1);
   });
 
-  it('does not render delta section when deltas is omitted', () => {
-    const { container } = render(<KpiCard name="test" value="1" />);
-    const deltaRow = container.querySelector('.gap-sp-4');
-    expect(deltaRow).not.toBeInTheDocument();
+  it('renders down arrow for negative mom', () => {
+    const { container } = render(
+      <KpiCard title="test" value="100" comparison={{ yoy: 0, mom: -2.5 }} />,
+    );
+    const svgs = container.querySelectorAll('svg');
+    expect(svgs.length).toBeGreaterThanOrEqual(1);
+  });
+
+  it('renders dash for null comparison value', () => {
+    render(
+      <KpiCard title="test" value="100" comparison={{ yoy: null, mom: null }} />,
+    );
+    const dashes = screen.getAllByText('-');
+    expect(dashes).toHaveLength(2);
+  });
+
+  it('does not render comparison section when omitted', () => {
+    render(<KpiCard title="test" value="1" />);
+    expect(screen.queryByText('同比')).not.toBeInTheDocument();
   });
 
   // ─── sparkline ───
 
   it('renders sparkline slot', () => {
-    render(<KpiCard name="test" value="100" sparkline={<svg data-testid="spark" />} />);
+    render(<KpiCard title="test" value="100" sparkline={<svg data-testid="spark" />} />);
     expect(screen.getByTestId('spark')).toBeInTheDocument();
   });
 
-  it('does not render sparkline container when sparkline is omitted', () => {
-    const { container } = render(<KpiCard name="test" value="1" />);
-    const sparkContainer = container.querySelector('.mb-sp-4.h-9');
-    expect(sparkContainer).not.toBeInTheDocument();
-  });
+  // ─── highlight ───
 
-  // ─── danger 变体 ───
-
-  it('renders danger variant with red bar', () => {
-    const { container } = render(<KpiCard name="低分占比" value="3.0" danger />);
-    const redBar = container.querySelector('.bg-danger-500');
-    expect(redBar).toBeInTheDocument();
-  });
-
-  it('renders danger variant with gradient background', () => {
-    const { container } = render(<KpiCard name="test" value="1" danger />);
+  it('renders highlight with border-l-4', () => {
+    const { container } = render(<KpiCard title="满意度" value="97.2" highlight />);
     const root = container.firstElementChild!;
-    expect(root.className).toContain('from-[#fff1ea]');
-    expect(root.className).toContain('border-[#fcd9c6]');
+    expect(root.className).toContain('border-l-4');
+    expect((root as HTMLElement).style.borderLeftColor).toBe('var(--danger-500)');
   });
 
-  // ─── highlight 变体 ───
+  // ─── danger ───
 
-  it('renders highlight variant with brand bar', () => {
-    const { container } = render(<KpiCard name="满意度" value="97.2" highlight />);
-    const brandBar = container.querySelector('.bg-brand-500');
-    expect(brandBar).toBeInTheDocument();
+  it('renders danger card with danger bg', () => {
+    const { container } = render(<KpiCard title="低分占比" value="3.0" danger />);
+    const root = container.firstElementChild! as HTMLElement;
+    expect(root.style.backgroundColor).toBe('var(--danger-bg)');
+    expect(root.className).toContain('border-l-4');
   });
 
   it('danger takes precedence over highlight', () => {
-    const { container } = render(<KpiCard name="test" value="1" danger highlight />);
-    expect(container.querySelector('.bg-danger-500')).toBeInTheDocument();
-    expect(container.querySelector('.bg-brand-500')).not.toBeInTheDocument();
+    const { container } = render(<KpiCard title="test" value="1" danger highlight />);
+    const root = container.firstElementChild! as HTMLElement;
+    expect(root.style.backgroundColor).toBe('var(--danger-bg)');
   });
 
-  it('no accent bar when neither danger nor highlight', () => {
-    const { container } = render(<KpiCard name="test" value="1" />);
-    expect(container.querySelector('.bg-danger-500')).not.toBeInTheDocument();
-    expect(container.querySelector('.bg-brand-500')).not.toBeInTheDocument();
-  });
+  // ─── extra ───
 
-  // ─── 默认样式 ───
-
-  it('renders normal card with default background and border', () => {
-    const { container } = render(<KpiCard name="test" value="1" />);
-    const root = container.firstElementChild!;
-    expect(root.className).toContain('bg-neutral-0');
-    expect(root.className).toContain('border-neutral-100');
+  it('renders extra slot next to comparison', () => {
+    render(
+      <KpiCard
+        title="test"
+        value="100"
+        comparison={{ yoy: 1.0, mom: 0 }}
+        extra={<button data-testid="attr-btn">智能归因</button>}
+      />,
+    );
+    expect(screen.getByTestId('attr-btn')).toBeInTheDocument();
   });
 
   // ─── className & HTML 属性透传 ───
 
-  it('passes custom className to root element', () => {
-    const { container } = render(<KpiCard name="test" value="1" className="my-custom-class" />);
-    const root = container.firstElementChild!;
-    expect(root.className).toContain('my-custom-class');
+  it('passes custom className', () => {
+    const { container } = render(<KpiCard title="test" value="1" className="my-custom" />);
+    expect(container.firstElementChild!.className).toContain('my-custom');
   });
 
   it('passes HTML attributes through rest props', () => {
-    render(<KpiCard name="test" value="1" data-testid="kpi-root" aria-label="KPI card" />);
+    render(<KpiCard title="test" value="1" data-testid="kpi-root" aria-label="KPI" />);
     const root = screen.getByTestId('kpi-root');
-    expect(root).toBeInTheDocument();
-    expect(root).toHaveAttribute('aria-label', 'KPI card');
+    expect(root).toHaveAttribute('aria-label', 'KPI');
   });
 });

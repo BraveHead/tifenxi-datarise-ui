@@ -208,7 +208,14 @@
    ============================================================ */
 *, *::before, *::after { box-sizing: border-box; }
 
-html, body {
+html {
+  /* 不设 font-size，保留浏览器默认 16px 作为 rem 基准 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
   margin: 0;
   padding: 0;
   font-family: var(--font-sans);
@@ -216,9 +223,6 @@ html, body {
   line-height: var(--lh-base);
   color: var(--fg);
   background: var(--surface-page);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-rendering: optimizeLegibility;
 }
 
 /* 数字常用 tabular */

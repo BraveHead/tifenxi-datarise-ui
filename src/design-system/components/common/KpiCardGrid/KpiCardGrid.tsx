@@ -22,7 +22,7 @@ const columnClasses: Record<KpiCardGridColumns, string> = {
 export function KpiCardGrid({ columns = 4, children, className, ...rest }: KpiCardGridProps) {
   return (
     <div
-      className={cx('grid gap-sp-4 items-stretch', columnClasses[columns], className)}
+      className={cx('grid gap-4 items-stretch', columnClasses[columns], className)}
       {...rest}
     >
       {children}

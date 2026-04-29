@@ -5,11 +5,11 @@ import * as KpiCardStories from './KpiCard.stories';
 
 <Title />
 
-KPI 指标卡。5 个槽位：名称 → 图标徽章 → 数值 → 同环比 delta → sparkline。支持 `danger` 危险变体和 `highlight` 强调变体。
+KPI 指标卡。槽位：标题 → 图标 → 数值 → 同比/环比 → sparkline。支持 `danger` 危险变体和 `highlight` 强调变体，支持深浅主题。
 
-**布局规则**：每行 4–5 张卡片。Sparkline 全宽贴底，统一 `brand-500`。
+**布局规则**：每行 4 张卡片，配合 `KpiCardGrid` 使用。Sparkline 全宽贴底。
 
-**Delta 顺序**：`▲ 标签 数值`（如 `▲ 同比 0.8%`），标签在前、数值在后。
+**同比/环比**：正值绿色 + 上箭头，负值红色 + 下箭头，零值/null 灰色。
 
 ---
 
@@ -31,33 +31,28 @@ KPI 指标卡。5 个槽位：名称 → 图标徽章 → 数值 → 同环比 d
 
 ## 带 Sparkline
 
-Sparkline 贴底全宽，统一 `brand-500` stroke，不使用多色。
-
 <Canvas of={KpiCardStories.WithSparkline} />
 
 ## 强调卡片
 
-左侧 3px 品牌色条 (`brand-500`)，用于突出核心指标（如"门诊患者满意度"）。可通过 `nameClassName` 自定义名称颜色。
+左侧 4px 红色边框，用于突出核心指标（如"门诊患者满意度"）。
 
 <Canvas of={KpiCardStories.HighlightCard} />
 
 ## 危险卡片
 
-左侧 3px 红条 + 粉色渐变背景 (`#fff1ea → #fff6f2`)。用于标记异常指标。`danger` 优先级高于 `highlight`。
+左侧 4px 红条 + 危险色背景。`danger` 优先级高于 `highlight`。
 
 <Canvas of={KpiCardStories.DangerCard} />
 
-## 多 Delta
+## 平趋势
 
-同时展示同比、环比等多个对比指标。
+数值为 0 时，同比/环比显示灰色，无箭头。
 
-<Canvas of={KpiCardStories.MultiDelta} />
+<Canvas of={KpiCardStories.FlatTrend} />
 
----
+## 深色主题
 
-## Delta 语义色规则
+根元素添加 `class="dark"` 即可切换，所有颜色通过 CSS 变量自动适配。
 
-- **越高越好指标**（满意度 / 好评率）：↑ green (`success`)，↓ red (`danger`)
-- **越低越好指标**（差评率 / 投诉）：↑ red (`danger`)，↓ green (`success`)
-
-通过 `sentiment: 'good' | 'bad'` 控制，与 `direction` 解耦。
+<Canvas of={KpiCardStories.DarkTheme} />

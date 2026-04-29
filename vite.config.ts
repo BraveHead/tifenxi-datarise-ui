@@ -24,7 +24,7 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime', 'framer-motion'],
+      external: ['react', 'react-dom', 'react/jsx-runtime', 'framer-motion', '@antv/g2', 'dayjs'],
     },
   },
   test: {

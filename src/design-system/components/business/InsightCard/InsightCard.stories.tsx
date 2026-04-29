@@ -67,6 +67,57 @@ export const Neutral: Story = {
   },
 };
 
+export const WithTagSuccess: Story = {
+  args: {
+    type: 'positive',
+    title: '满意度稳步提升',
+    description: '近 3 个月连续改善，内分泌科为主要贡献科室，推荐率提升 4.2pp。',
+    tag: { text: '已验证', status: 'success' },
+    footer: (
+      <>
+        <Tag variant="success">优秀</Tag>
+        <span style={{ fontSize: 12, color: 'var(--neutral-500)' }}>影响指标：推荐率 +4.2pp</span>
+      </>
+    ),
+  },
+};
+
+export const WithTagDanger: Story = {
+  args: {
+    type: 'negative',
+    title: '骨科中差评率持续上升',
+    description: '连续 4 周环比上升，「解释不清」类差评占比达 63%，需优先介入。',
+    tag: { text: '待处理', status: 'danger' },
+  },
+};
+
+export const WithTagWarning: Story = {
+  args: {
+    type: 'warning',
+    title: '处方转化率低于行业基准',
+    description: '当前 68.3%，低于同类医院均值 74.1%。',
+    tag: { text: '观察中', status: 'warning' },
+  },
+};
+
+export const WithTagInfo: Story = {
+  args: {
+    type: 'neutral',
+    title: '节假日就诊量呈现规律性峰值',
+    description: '春节、国庆前后 3 天为就诊高峰。',
+    tag: { text: '信息', status: 'info' },
+  },
+};
+
+export const WithTagDefault: Story = {
+  args: {
+    type: 'neutral',
+    title: '数据采集完成',
+    description: '本期数据已采集完毕，等待分析。',
+    tag: { text: '草稿' },
+  },
+};
+
 export const AllTypes: Story = {
   render: () => (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>

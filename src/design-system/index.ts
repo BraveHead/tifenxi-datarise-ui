@@ -38,6 +38,12 @@ export type { InfoPairProps, InfoPairDirection } from './components/common/InfoP
 export { Alert } from './components/common/Alert/Alert';
 export type { AlertProps, AlertVariant } from './components/common/Alert/Alert';
 
+export { Spinner } from './components/common/Spinner/Spinner';
+export type { SpinnerProps, SpinnerSize } from './components/common/Spinner/Spinner';
+
+export { Skeleton, SkeletonBlock } from './components/common/Skeleton/Skeleton';
+export type { SkeletonProps, SkeletonBlockProps } from './components/common/Skeleton/Skeleton';
+
 export { OverviewSection } from './components/common/OverviewSection/OverviewSection';
 export type { OverviewSectionProps } from './components/common/OverviewSection/OverviewSection';
 
@@ -47,13 +53,51 @@ export type { KpiCardGridProps, KpiCardGridColumns } from './components/common/K
 export { SegmentedBar } from './components/common/SegmentedBar/SegmentedBar';
 export type { SegmentedBarProps, SegmentedBarItem } from './components/common/SegmentedBar/SegmentedBar';
 
+export { Tooltip } from './components/common/Tooltip/Tooltip';
+export type { TooltipProps, TooltipPlacement } from './components/common/Tooltip/Tooltip';
+
+export { Drawer } from './components/common/Drawer/Drawer';
+export type { DrawerProps } from './components/common/Drawer/Drawer';
+
+export { Modal } from './components/common/Modal/Modal';
+export type { ModalProps } from './components/common/Modal/Modal';
+
+export { toast } from './components/common/Toast/Toast';
+export type { ToastOptions } from './components/common/Toast/Toast';
+
 // ─── Business Components ───
 
 export { KpiCard } from './components/business/KpiCard/KpiCard';
-export type { KpiCardProps, ComparisonData } from './components/business/KpiCard/KpiCard';
+export type { KpiCardProps, ComparisonData, TrendItem } from './components/business/KpiCard/KpiCard';
 
 export { InsightCard } from './components/business/InsightCard/InsightCard';
-export type { InsightCardProps, InsightType } from './components/business/InsightCard/InsightCard';
+export type { InsightCardProps, InsightType, InsightTag, InsightTagStatus } from './components/business/InsightCard/InsightCard';
 
 export { ActionCard } from './components/business/ActionCard/ActionCard';
 export type { ActionCardProps, ActionPriority } from './components/business/ActionCard/ActionCard';
+
+// ─── Chart Utilities ───
+
+export { getChartTokens, getSeriesColor } from './utils/chartTokens';
+export { generateNiceTicks, calculateDomain } from './utils/chartUtils';
+export { useG2Chart } from './hooks/useG2Chart';
+
+// ─── Chart Components ───
+
+export { TrendSparkline } from './components/charts/TrendSparkline/TrendSparkline';
+export type { TrendSparklineProps, TrendDataPoint } from './components/charts/TrendSparkline/TrendSparkline';
+
+export { QuadrantScatterChart } from './components/charts/QuadrantScatterChart/QuadrantScatterChart';
+export type {
+  QuadrantScatterChartProps,
+  QuadrantScatterItem,
+  ReferenceLine,
+  LegendItem as QuadrantLegendItem,
+} from './components/charts/QuadrantScatterChart/QuadrantScatterChart';
+
+export { StackedBarChart } from './components/charts/StackedBarChart/StackedBarChart';
+export type {
+  StackedBarChartProps,
+  BarColumn,
+  BarSegment,
+} from './components/charts/StackedBarChart/StackedBarChart';

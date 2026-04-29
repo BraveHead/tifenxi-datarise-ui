@@ -124,6 +124,38 @@ export const DarkTheme: Story = {
   },
 };
 
+/** 使用 trends 自定义趋势项 */
+export const WithTrends: Story = {
+  decorators: [singleCardDecorator],
+  args: {
+    title: '整体满意度',
+    value: '96.8',
+    unit: '分',
+    icon: <span>😊</span>,
+    iconBgColor: 'bg-blue-100',
+    trends: [
+      { label: '较上月', value: 1.2 },
+      { label: '较上季', value: -0.8 },
+      { label: '较去年', value: 3.5 },
+    ],
+  },
+};
+
+/** trends 优先级高于 comparison */
+export const TrendsOverComparison: Story = {
+  decorators: [singleCardDecorator],
+  args: {
+    title: '好评率',
+    value: '91.42',
+    unit: '%',
+    comparison: { yoy: 12.4, mom: -3.2 },
+    trends: [
+      { label: '较上周', value: 0.5 },
+      { label: '较上月', value: -2.1 },
+    ],
+  },
+};
+
 /** 模拟 KPI 行（全宽 4 列） */
 export const KpiRow: Story = {
   render: () => (

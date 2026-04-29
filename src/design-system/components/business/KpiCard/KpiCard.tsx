@@ -11,6 +11,16 @@ export interface ComparisonData {
   mom: number | null;
 }
 
+/**
+ * 通用趋势项，用于替代固定的同比/环比展示
+ */
+export interface TrendItem {
+  /** 趋势标签，如"较上月""较去年" */
+  label: string;
+  /** 趋势百分比值，null 表示无数据 */
+  value: number | null;
+}
+
 export interface KpiCardProps {
   /** 指标标题 */
   title: string;
@@ -24,6 +34,8 @@ export interface KpiCardProps {
   iconBgColor?: string;
   /** 同比/环比数据 */
   comparison?: ComparisonData;
+  /** 通用趋势数组，优先级高于 comparison（提供时替代同比/环比展示） */
+  trends?: TrendItem[];
   /** 底部趋势图（ReactNode 插槽） */
   sparkline?: React.ReactNode;
   /** 是否显示左侧红色边框高亮 */
@@ -89,6 +101,7 @@ export function KpiCard({
   icon,
   iconBgColor = 'bg-blue-50',
   comparison,
+  trends,
   sparkline,
   highlight = false,
   danger = false,
@@ -149,8 +162,17 @@ export function KpiCard({
         )}
       </div>
 
-      {/* 同比/环比 + 额外操作 */}
-      {comparison && (
+      {/* 趋势（优先）或 同比/环比 + 额外操作 */}
+      {trends && trends.length > 0 ? (
+        <div className="flex items-center justify-between mb-3">
+          <div className="flex items-center gap-4">
+            {trends.map((t) => (
+              <ComparisonItem key={t.label} label={t.label} value={t.value} />
+            ))}
+          </div>
+          {extra}
+        </div>
+      ) : comparison ? (
         <div className="flex items-center justify-between mb-3">
           <div className="flex items-center gap-4">
             <ComparisonItem label="同比" value={comparison.yoy} />
@@ -158,7 +180,7 @@ export function KpiCard({
           </div>
           {extra}
         </div>
-      )}
+      ) : null}
 
       {/* 趋势图插槽 */}
       {sparkline && (

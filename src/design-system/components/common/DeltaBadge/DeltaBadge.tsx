@@ -73,13 +73,13 @@ export function DeltaBadge({
       {...rest}
     >
       {direction === 'up' && (
-        <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="flex-shrink-0">
-          <path d="M18 15l-6-6-6 6" />
+        <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="currentColor" className="flex-shrink-0">
+          <path d="M12 4l8 12H4z" />
         </svg>
       )}
       {direction === 'down' && (
-        <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="flex-shrink-0">
-          <path d="M6 9l6 6 6-6" />
+        <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="currentColor" className="flex-shrink-0">
+          <path d="M12 20l8-12H4z" />
         </svg>
       )}
       {direction === 'flat' && (
@@ -88,7 +88,7 @@ export function DeltaBadge({
         </svg>
       )}
       {label && <span className="font-sans">{label}</span>}
-      <span>{Math.abs(value)}{unit}</span>
+      <span>{direction === 'up' ? '+' : direction === 'down' ? '' : ''}{Math.abs(value)}{unit}</span>
     </span>
   );
 }

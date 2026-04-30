@@ -18,8 +18,14 @@ export interface SegmentedBarProps extends Omit<React.HTMLAttributes<HTMLDivElem
   height?: number;
   /** 是否圆角 */
   rounded?: boolean;
-  /** 是否在段内显示标签（宽度 >= 8% 时） */
+  /** 是否在段内显示标签（宽度 >= 8% 时）— 等同于 innerLabelType='label' */
   showInnerLabel?: boolean;
+  /** 段内标签类型：label 显示标签文字，value 显示数值+单位。优先于 showInnerLabel */
+  innerLabelType?: 'label' | 'value';
+  /** 数值单位（innerLabelType='value' 时使用，如 "个"、"次"） */
+  unit?: string;
+  /** 是否显示 hover tooltip（默认 true） */
+  showTooltip?: boolean;
 }
 
 function cx(...cls: Array<string | false | undefined>) {
@@ -73,9 +79,13 @@ export function SegmentedBar({
   height = 24,
   rounded = false,
   showInnerLabel = false,
+  innerLabelType,
+  unit = '',
+  showTooltip = true,
   className,
   ...rest
 }: SegmentedBarProps) {
+  const effectiveLabelType = innerLabelType ?? (showInnerLabel ? 'label' : undefined);
   const total = items.reduce((sum, item) => sum + item.value, 0);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
@@ -83,9 +93,24 @@ export function SegmentedBar({
 
   if (total === 0) return null;
 
+  // Calculate the center position of the hovered segment for tooltip placement
+  const hoveredTooltipLeft = useMemo(() => {
+    if (hoveredIndex === null) return 0;
+    let offset = 0;
+    for (let i = 0; i < hoveredIndex; i++) {
+      offset += widths[i];
+    }
+    return offset + widths[hoveredIndex] / 2;
+  }, [hoveredIndex, widths]);
+
+  const hoveredItem = hoveredIndex !== null ? items[hoveredIndex] : null;
+  const hoveredPercentage = hoveredItem
+    ? ((hoveredItem.value / total) * 100).toFixed(1)
+    : '';
+
   return (
     <div
-      className={cx('w-full', className)}
+      className={cx('w-full relative', className)}
       role="img"
       aria-label={items.map((item) => {
         const pct = ((item.value / total) * 100).toFixed(1);
@@ -93,6 +118,40 @@ export function SegmentedBar({
       }).join(', ')}
       {...rest}
     >
+      {/* Tooltip rendered outside overflow-hidden */}
+      {showTooltip && hoveredItem && (
+        <div
+          className="absolute bottom-full left-0 mb-1 z-dropdown pointer-events-none"
+          style={{ left: `${hoveredTooltipLeft}%`, transform: 'translateX(-50%)' }}
+        >
+          <div
+            className="rounded-md whitespace-nowrap"
+            style={{
+              background: 'var(--surface, #fff)',
+              boxShadow: 'var(--shadow-pop, 0 4px 12px rgba(0,0,0,0.12))',
+              padding: 'var(--sp-2, 8px) var(--sp-3, 12px)',
+              fontSize: 'var(--fs-12, 12px)',
+              color: 'var(--fg-body, #374151)',
+              border: '1px solid var(--line, #EEF0F2)',
+            }}
+          >
+            {hoveredItem.renderTooltip ? (
+              hoveredItem.renderTooltip(hoveredItem, hoveredPercentage, total)
+            ) : (
+              <span>{hoveredItem.label}: {hoveredItem.value} ({hoveredPercentage}%)</span>
+            )}
+          </div>
+          {/* Arrow */}
+          <div
+            className="mx-auto w-0 h-0"
+            style={{
+              borderLeft: '6px solid transparent',
+              borderRight: '6px solid transparent',
+              borderTop: '6px solid var(--surface, #fff)',
+            }}
+          />
+        </div>
+      )}
       <div
         className={cx('flex w-full overflow-hidden', rounded && 'rounded-full')}
         style={{ height }}
@@ -101,7 +160,6 @@ export function SegmentedBar({
           const width = widths[index];
           if (item.value === 0) return null;
 
-          const percentage = ((item.value / total) * 100).toFixed(1);
           const isHovered = hoveredIndex === index;
 
           return (
@@ -116,19 +174,10 @@ export function SegmentedBar({
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
             >
-              {showInnerLabel && width >= 8 && (
-                <span className="px-1 truncate">{item.label}</span>
-              )}
-              {isHovered && (
-                <div
-                  className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-dropdown bg-surface rounded-md shadow-pop px-sp-3 py-sp-2 text-fs-12 text-fg-body whitespace-nowrap pointer-events-none"
-                >
-                  {item.renderTooltip ? (
-                    item.renderTooltip(item, percentage, total)
-                  ) : (
-                    <span>{item.label}: {item.value} ({percentage}%)</span>
-                  )}
-                </div>
+              {effectiveLabelType && width >= 8 && (
+                <span className="px-1 truncate">
+                  {effectiveLabelType === 'value' ? `${item.value}${unit}` : item.label}
+                </span>
               )}
             </div>
           );

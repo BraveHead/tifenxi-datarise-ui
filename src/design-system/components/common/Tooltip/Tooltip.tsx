@@ -112,64 +112,36 @@ function wouldOverflow(coords: Coords, tooltipRect: DOMRect): boolean {
   );
 }
 
-/** CSS for the arrow triangle, pointing toward the trigger */
+/** CSS for the arrow — AntD-style rotated square with shadow */
 function arrowStyle(placement: TooltipPlacement): React.CSSProperties {
+  const size = 8;
+  const half = size / 2;
   const base: React.CSSProperties = {
     position: 'absolute',
-    width: 0,
-    height: 0,
-    borderStyle: 'solid',
+    width: size,
+    height: size,
+    background: '#FFFFFF',
+    transform: 'rotate(45deg)',
+    boxShadow: '3px 3px 7px rgba(0,0,0,0.07)',
   };
-  const s = ARROW_SIZE;
-  const transparent = 'transparent';
-  // The arrow color should match the tooltip bg (neutral-900 → #1F2328 from tokens)
-  const color = 'var(--neutral-900, #1F2328)';
 
   switch (placement) {
     case 'top':
+      return { ...base, bottom: -half, left: '50%', marginLeft: -half };
     case 'topLeft':
+      return { ...base, bottom: -half, left: 12 };
     case 'topRight':
-      return {
-        ...base,
-        bottom: -s,
-        left: '50%',
-        marginLeft: -s,
-        borderWidth: `${s}px ${s}px 0 ${s}px`,
-        borderColor: `${color} ${transparent} ${transparent} ${transparent}`,
-        ...(placement === 'topLeft' ? { left: 12, marginLeft: 0 } : {}),
-        ...(placement === 'topRight' ? { left: 'auto', right: 12, marginLeft: 0 } : {}),
-      };
+      return { ...base, bottom: -half, right: 12 };
     case 'bottom':
+      return { ...base, top: -half, left: '50%', marginLeft: -half, boxShadow: '-3px -3px 7px rgba(0,0,0,0.07)' };
     case 'bottomLeft':
+      return { ...base, top: -half, left: 12, boxShadow: '-3px -3px 7px rgba(0,0,0,0.07)' };
     case 'bottomRight':
-      return {
-        ...base,
-        top: -s,
-        left: '50%',
-        marginLeft: -s,
-        borderWidth: `0 ${s}px ${s}px ${s}px`,
-        borderColor: `${transparent} ${transparent} ${color} ${transparent}`,
-        ...(placement === 'bottomLeft' ? { left: 12, marginLeft: 0 } : {}),
-        ...(placement === 'bottomRight' ? { left: 'auto', right: 12, marginLeft: 0 } : {}),
-      };
+      return { ...base, top: -half, right: 12, boxShadow: '-3px -3px 7px rgba(0,0,0,0.07)' };
     case 'left':
-      return {
-        ...base,
-        top: '50%',
-        right: -s,
-        marginTop: -s,
-        borderWidth: `${s}px 0 ${s}px ${s}px`,
-        borderColor: `${transparent} ${transparent} ${transparent} ${color}`,
-      };
+      return { ...base, top: '50%', right: -half, marginTop: -half, boxShadow: '3px -3px 7px rgba(0,0,0,0.07)' };
     case 'right':
-      return {
-        ...base,
-        top: '50%',
-        left: -s,
-        marginTop: -s,
-        borderWidth: `${s}px ${s}px ${s}px 0`,
-        borderColor: `${transparent} ${color} ${transparent} ${transparent}`,
-      };
+      return { ...base, top: '50%', left: -half, marginTop: -half, boxShadow: '-3px 3px 7px rgba(0,0,0,0.07)' };
   }
 }
 
@@ -292,8 +264,9 @@ export function Tooltip({
           onMouseEnter={show}
           onMouseLeave={hide}
           className={cx(
-            'absolute px-sp-2 py-sp-1 rounded-radius-sm shadow-pop',
-            'bg-neutral-900 text-neutral-0 text-fs-12 leading-tight',
+            'absolute px-sp-2 py-sp-1',
+            'bg-white text-black text-fs-12 leading-tight rounded-[2px]',
+            'shadow-[0_6px_16px_0_rgba(0,0,0,0.08),0_3px_6px_-4px_rgba(0,0,0,0.12),0_9px_28px_8px_rgba(0,0,0,0.05)]',
             'transition-opacity duration-fast pointer-events-auto',
             'max-w-[280px] break-words',
             positioned ? 'opacity-100' : 'opacity-0',
@@ -303,9 +276,10 @@ export function Tooltip({
             top: coords.top,
             left: coords.left,
             zIndex: 'var(--z-tooltip, 550)' as unknown as number,
+            overflow: 'visible',
           }}
         >
-          {title}
+          <div className="relative" style={{ zIndex: 1 }}>{title}</div>
           <span style={arrowStyle(actualPlacement)} aria-hidden="true" />
         </div>,
         document.body,

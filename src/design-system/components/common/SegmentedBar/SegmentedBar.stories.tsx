@@ -104,6 +104,18 @@ export const EmptyItems: Story = {
   },
 };
 
+export const InnerLabelValue: Story = {
+  args: {
+    height: 32,
+    innerLabelType: 'value',
+    unit: '个',
+    items: [
+      { label: '结构失衡', value: 0, color: 'var(--danger-500)' },
+      { label: '未失衡', value: 345, color: 'var(--series-1)' },
+    ],
+  },
+};
+
 export const AllZeroValues: Story = {
   args: {
     items: [

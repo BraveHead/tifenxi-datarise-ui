@@ -34,7 +34,7 @@ export function Tabs({ items, activeKey, onChange, className, ...rest }: TabsPro
               'inline-flex items-center gap-1.5',
               active
                 ? 'text-brand-600 font-medium'
-                : 'text-fg-secondary hover:text-fg',
+                : 'text-gray-700 hover:text-gray-900',
             )}
           >
             {item.label}
@@ -60,7 +60,7 @@ export function SegTabs({ items, activeKey, onChange, className, ...rest }: SegT
   return (
     <div
       className={cx(
-        'inline-flex bg-surface-muted border border-line rounded-md p-[3px] gap-0.5',
+        'inline-flex bg-surface-muted border border-line rounded-lg p-[3px] gap-0.5',
         className,
       )}
       role="tablist"
@@ -76,10 +76,10 @@ export function SegTabs({ items, activeKey, onChange, className, ...rest }: SegT
             aria-selected={active}
             onClick={() => onChange(item.key)}
             className={cx(
-              'px-sp-4 py-1 rounded-sm text-fs-13 cursor-pointer inline-flex items-center gap-1.5 transition-all duration-fast',
+              'px-sp-4 py-1.5 rounded-md text-fs-14 cursor-pointer inline-flex items-center gap-1.5 transition-all duration-fast',
               active
-                ? 'bg-surface text-fg font-medium shadow-card'
-                : 'text-fg-secondary hover:text-fg-body',
+                ? 'bg-surface text-brand-600 font-medium shadow-card'
+                : 'text-gray-700 hover:text-gray-900',
             )}
           >
             {item.label}

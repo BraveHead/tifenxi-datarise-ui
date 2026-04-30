@@ -71,10 +71,10 @@ export const WithKpiCards: Story = {
   args: { columns: 4, children: null },
   render: () => (
     <KpiCardGrid columns={4}>
-      <KpiCard name="整体满意度" value="92.3" unit="%" deltas={[{ label: '同比', value: '+3.2%', direction: 'up', sentiment: 'good' }]} />
-      <KpiCard name="NPS 指数" value="68.5" unit="分" deltas={[{ label: '环比', value: '+1.8%', direction: 'up', sentiment: 'good' }]} />
-      <KpiCard name="主动评价率" value="57" unit="%" deltas={[{ label: '同比', value: '-2.1%', direction: 'down', sentiment: 'bad' }]} />
-      <KpiCard name="投诉率" value="0.8" unit="%" deltas={[{ label: '环比', value: '-0.3%', direction: 'down', sentiment: 'good' }]} />
+      <KpiCard title="整体满意度" value="92.3" unit="%" comparison={{ yoy: 3.2, mom: 1.1 }} />
+      <KpiCard title="NPS 指数" value="68.5" unit="分" comparison={{ yoy: 1.8, mom: 0.5 }} />
+      <KpiCard title="主动评价率" value="57" unit="%" comparison={{ yoy: -2.1, mom: 0.8 }} />
+      <KpiCard title="投诉率" value="0.8" unit="%" comparison={{ yoy: -0.3, mom: -0.1 }} />
     </KpiCardGrid>
   ),
 };

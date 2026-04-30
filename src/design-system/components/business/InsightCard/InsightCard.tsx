@@ -2,6 +2,13 @@ import React from 'react';
 
 export type InsightType = 'positive' | 'negative' | 'warning' | 'neutral';
 
+export type InsightTagStatus = 'success' | 'warning' | 'danger' | 'info' | 'default' | 'processing';
+
+export interface InsightTag {
+  text: string;
+  status?: InsightTagStatus;
+}
+
 export interface InsightCardProps extends React.HTMLAttributes<HTMLDivElement> {
   /** 洞察类型 */
   type: InsightType;
@@ -11,6 +18,8 @@ export interface InsightCardProps extends React.HTMLAttributes<HTMLDivElement> {
   title: string;
   /** 描述文字 */
   description: string;
+  /** 标题区右侧的标签 pill */
+  tag?: InsightTag;
   /** 底部区域（如 Badge + 影响指标） */
   footer?: React.ReactNode;
 }
@@ -44,6 +53,15 @@ const typeConfig: Record<InsightType, {
     iconBg: 'bg-brand-50',
     iconColor: 'text-brand-500',
   },
+};
+
+const tagStatusClasses: Record<InsightTagStatus, string> = {
+  success: 'bg-success-bg text-success-700',
+  warning: 'bg-warning-bg text-warning-700',
+  danger: 'bg-danger-bg text-danger-700',
+  info: 'bg-info-bg text-info-700',
+  default: 'bg-neutral-100 text-neutral-500',
+  processing: 'bg-neutral-100 text-neutral-500',
 };
 
 function DefaultIcon({ type }: { type: InsightType }) {
@@ -86,6 +104,7 @@ export function InsightCard({
   icon,
   title,
   description,
+  tag,
   footer,
   className,
   ...rest
@@ -113,7 +132,19 @@ export function InsightCard({
       </span>
 
       <div className="flex-1 min-w-0">
-        <div className="text-fs-14 font-semibold text-fg mb-1">{title}</div>
+        <div className="flex items-center justify-between gap-sp-2 mb-1">
+          <span className="text-fs-14 font-semibold text-fg">{title}</span>
+          {tag && (
+            <span
+              className={cx(
+                'text-fs-11 px-sp-2 py-0.5 rounded-radius-full inline-flex items-center whitespace-nowrap flex-shrink-0 font-medium',
+                tagStatusClasses[tag.status || 'default'],
+              )}
+            >
+              {tag.text}
+            </span>
+          )}
+        </div>
         <div className="text-fs-13 text-fg-secondary leading-relaxed">{description}</div>
         {footer && (
           <div className="flex items-center gap-sp-2 mt-sp-2 flex-wrap">{footer}</div>

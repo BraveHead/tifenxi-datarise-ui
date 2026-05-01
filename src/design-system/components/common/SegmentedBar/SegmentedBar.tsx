@@ -141,15 +141,21 @@ export function SegmentedBar({
               <span>{hoveredItem.label}: {hoveredItem.value} ({hoveredPercentage}%)</span>
             )}
           </div>
-          {/* Arrow */}
-          <div
-            className="mx-auto w-0 h-0"
-            style={{
-              borderLeft: '6px solid transparent',
-              borderRight: '6px solid transparent',
-              borderTop: '6px solid var(--surface, #fff)',
-            }}
-          />
+          {/* Arrow — rotated square matching Tooltip component style */}
+          <div className="mx-auto" style={{ marginTop: -1, width: 8, height: 8, overflow: 'hidden' }}>
+            <div
+              style={{
+                width: 8,
+                height: 8,
+                background: 'var(--surface, #fff)',
+                border: '1px solid var(--line, #F0F0F5)',
+                transform: 'rotate(45deg)',
+                transformOrigin: 'center center',
+                marginTop: -4,
+                boxShadow: '3px 3px 7px rgba(0,0,0,0.07)',
+              }}
+            />
+          </div>
         </div>
       )}
       <div

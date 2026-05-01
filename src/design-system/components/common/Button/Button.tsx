@@ -54,7 +54,7 @@ function cx(...cls: Array<string | false | undefined>) {
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(
     {
-      variant = 'default',
+      variant,
       size = 'md',
       block = false,
       disabled = false,
@@ -73,7 +73,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) {
     const isNativeType = type === 'button' || type === 'submit' || type === 'reset';
-    const mappedVariant = variant ?? (danger ? 'danger' : ghost ? 'ghost' : isNativeType ? 'default' : type);
+    const mappedVariant: ButtonVariant = variant ?? (danger ? 'danger' : ghost ? 'ghost' : isNativeType ? 'default' : (type as ButtonVariant));
     const nativeType = htmlType ?? (isNativeType ? type : 'button');
 
     return (

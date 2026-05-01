@@ -195,55 +195,65 @@ describe('RT-8: Typography / 字体', () => {
 
 // ── RT-9: Dark Mode ─────────────────────────────────────
 
-describe('RT-9: Dark Mode 语义色覆盖', () => {
+describe('RT-9: Dark Mode — Arco 暗色色板全量覆盖', () => {
   it('.dark 块存在', () => {
     expect(tokensCSS).toContain('.dark');
   });
 
-  // Surface
-  it('dark --surface 为深色', () => {
-    const v = getDarkToken('--surface');
-    expect(v).toBe('#1A1D23');
+  // Neutral 全阶翻转
+  const darkNeutrals: Record<string, string> = {
+    '--neutral-0':   '#1A1D23',
+    '--neutral-25':  '#0F1115',
+    '--neutral-50':  '#22262E',
+    '--neutral-100': '#2A2F38',
+    '--neutral-200': '#353B45',
+    '--neutral-300': '#454B55',
+    '--neutral-400': '#656B75',
+    '--neutral-500': '#9AA1AD',
+    '--neutral-700': '#C9CED6',
+    '--neutral-900': '#F0F2F5',
+  };
+
+  for (const [token, value] of Object.entries(darkNeutrals)) {
+    it(`dark ${token} = ${value}`, () => {
+      expect(getDarkToken(token)).toBe(value);
+    });
+  }
+
+  // Brand Arco dark palette
+  const darkBrand: Record<string, string> = {
+    '--brand-50':  '#000F4D',
+    '--brand-500': '#4382ED',
+    '--brand-600': '#6BA1F1',
+    '--brand-700': '#94BFF6',
+    '--brand-900': '#ECF6FF',
+  };
+
+  for (const [token, value] of Object.entries(darkBrand)) {
+    it(`dark ${token} = ${value}`, () => {
+      expect(getDarkToken(token)).toBe(value);
+    });
+  }
+
+  // Semantic colors Arco dark
+  it('dark --success-500 = #3DB981 (Arco提亮)', () => {
+    expect(getDarkToken('--success-500')).toBe('#3DB981');
+  });
+  it('dark --warning-500 = #ED853F (Arco提亮)', () => {
+    expect(getDarkToken('--warning-500')).toBe('#ED853F');
+  });
+  it('dark --danger-500 = #DE5B5D (Arco提亮)', () => {
+    expect(getDarkToken('--danger-500')).toBe('#DE5B5D');
   });
 
-  it('dark --surface-page 为最深色', () => {
-    const v = getDarkToken('--surface-page');
-    expect(v).toBe('#0F1115');
+  // Chart colors
+  it('dark --chart-3 != #C9CED6 (暗底隐形色修正)', () => {
+    expect(getDarkToken('--chart-3')).toBe('#656B75');
   });
 
-  // Foreground
-  it('dark --fg 为浅色', () => {
-    const v = getDarkToken('--fg');
-    expect(v).toBe('#F0F2F5');
-  });
-
-  // Semantic backgrounds recalculated for GIO colors
-  it('dark --success-bg 基于 GIO #16A76A 混合', () => {
-    const v = getDarkToken('--success-bg');
-    expect(v).toBe('#192829');
-  });
-
-  it('dark --warning-bg 基于 GIO #E8651B 混合', () => {
-    const v = getDarkToken('--warning-bg');
-    expect(v).toBe('#2B2322');
-  });
-
-  it('dark --danger-bg 基于 GIO #D63841 混合', () => {
-    const v = getDarkToken('--danger-bg');
-    expect(v).toBe('#291F25');
-  });
-
-  it('dark --info-bg 基于 GIO #1F61E8 混合', () => {
-    const v = getDarkToken('--info-bg');
-    expect(v).toBe('#1A2233');
-  });
-
-  it('dark --brand-50 = dark info-bg', () => {
-    expect(getDarkToken('--brand-50')).toBe('#1A2233');
-  });
-
-  it('dark --brand-100 = dark info-border', () => {
-    expect(getDarkToken('--brand-100')).toBe('#1B2946');
+  // Series
+  it('dark --series-1 = #FD8260 (GIO橙提亮)', () => {
+    expect(getDarkToken('--series-1')).toBe('#FD8260');
   });
 });
 
@@ -361,36 +371,35 @@ describe('RT-12: chartTokens 扩展', () => {
   });
 });
 
-// ── RT-13: ThemeProvider fallback 一致性 ─────────────────
+// ── RT-13: ThemeProvider 架构验证 ────────────────────────
 
-describe('RT-13: ThemeProvider fallback 值', () => {
+describe('RT-13: ThemeProvider 架构', () => {
   const src = readFileSync(
     resolve(__dirname, '../providers/ThemeProvider.tsx'),
     'utf-8',
   );
 
-  const expectedFallbacks: Record<string, string> = {
-    '--success-500': '#16A76A',
-    '--warning-500': '#E8651B',
-    '--danger-500':  '#D63841',
-    '--success-700': '#0C8556',
-    '--warning-700': '#C14C11',
-    '--danger-700':  '#B4232F',
-    '--success-bg':  '#E3FDEE',
-    '--warning-bg':  '#FFF4E8',
-    '--danger-bg':   '#FFEBE8',
-    '--neutral-50':  '#F3F3F5',
-    '--neutral-100': '#F0F0F5',
-    '--neutral-200': '#E4E5E8',
-    '--neutral-900': '#191C22',
-    '--neutral-700': '#4E5357',
-  };
+  it('使用 AntD darkAlgorithm', () => {
+    expect(src).toContain('darkAlgorithm');
+  });
 
-  for (const [varName, fallback] of Object.entries(expectedFallbacks)) {
-    it(`getCSSVar('${varName}', '${fallback}')`, () => {
-      // Check that the fallback value appears after the var name
-      const pattern = `'${varName}', '${fallback}'`;
-      expect(src).toContain(pattern);
-    });
-  }
+  it('使用 MutationObserver 监听 .dark class', () => {
+    expect(src).toContain('MutationObserver');
+    expect(src).toContain("'class'");
+  });
+
+  it('buildTheme 接受 dark 参数', () => {
+    expect(src).toContain('buildTheme(dark)');
+  });
+
+  it('使用 isDarkMode 检测暗色模式', () => {
+    expect(src).toContain('isDarkMode');
+    expect(src).toContain("'dark'");
+  });
+
+  it('读取 CSS 变量构建主题（无硬编码 fallback）', () => {
+    // 确保使用 getCSSVar 但不含 light-mode 硬编码 fallback
+    expect(src).toContain("getCSSVar('--brand-500')");
+    expect(src).toContain("getCSSVar('--neutral-0')");
+  });
 });

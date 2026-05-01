@@ -1,5 +1,5 @@
-import React, { useMemo, useLayoutEffect, useState } from 'react';
-import { ConfigProvider } from 'antd';
+import React, { useMemo, useLayoutEffect, useState, useEffect } from 'react';
+import { ConfigProvider, theme as antdTheme } from 'antd';
 import zhCN from 'antd/locale/zh_CN';
 import type { ThemeConfig } from 'antd';
 import type { Locale } from 'antd/es/locale';
@@ -20,29 +20,40 @@ function getCSSVar(name: string, fallback = ''): string {
   return value || fallback;
 }
 
+/** Detect if <html> has class="dark" */
+function isDarkMode(): boolean {
+  if (typeof document === 'undefined') return false;
+  return document.documentElement.classList.contains('dark');
+}
+
 /** Build AntD theme config from CSS tokens at runtime */
-function buildTheme(): ThemeConfig {
-  const brand500 = getCSSVar('--brand-500', '#1F61E8');
-  const brand600 = getCSSVar('--brand-600', '#1A55D6');
-  const brand700 = getCSSVar('--brand-700', '#1347C1');
-  const brand50 = getCSSVar('--brand-50', '#E8EFFF');
-  const success500 = getCSSVar('--success-500', '#16A76A');
-  const success700 = getCSSVar('--success-700', '#0C8556');
-  const successBg = getCSSVar('--success-bg', '#E3FDEE');
-  const warning500 = getCSSVar('--warning-500', '#E8651B');
-  const warning700 = getCSSVar('--warning-700', '#C14C11');
-  const warningBg = getCSSVar('--warning-bg', '#FFF4E8');
-  const danger500 = getCSSVar('--danger-500', '#D63841');
-  const danger700 = getCSSVar('--danger-700', '#B4232F');
-  const dangerBg = getCSSVar('--danger-bg', '#FFEBE8');
-  const neutral50 = getCSSVar('--neutral-50', '#F3F3F5');
-  const neutral100 = getCSSVar('--neutral-100', '#F0F0F5');
-  const neutral200 = getCSSVar('--neutral-200', '#E4E5E8');
-  const neutral400 = getCSSVar('--neutral-400', '#A5A9B1');
-  const neutral700 = getCSSVar('--neutral-700', '#4E5357');
-  const neutral900 = getCSSVar('--neutral-900', '#191C22');
+function buildTheme(dark: boolean): ThemeConfig {
+  const brand500 = getCSSVar('--brand-500');
+  const brand600 = getCSSVar('--brand-600');
+  const brand700 = getCSSVar('--brand-700');
+  const brand50 = getCSSVar('--brand-50');
+  const success500 = getCSSVar('--success-500');
+  const success700 = getCSSVar('--success-700');
+  const successBg = getCSSVar('--success-bg');
+  const warning500 = getCSSVar('--warning-500');
+  const warning700 = getCSSVar('--warning-700');
+  const warningBg = getCSSVar('--warning-bg');
+  const danger500 = getCSSVar('--danger-500');
+  const danger700 = getCSSVar('--danger-700');
+  const dangerBg = getCSSVar('--danger-bg');
+  const neutral0 = getCSSVar('--neutral-0');
+  const neutral50 = getCSSVar('--neutral-50');
+  const neutral100 = getCSSVar('--neutral-100');
+  const neutral200 = getCSSVar('--neutral-200');
+  const neutral300 = getCSSVar('--neutral-300');
+  const neutral400 = getCSSVar('--neutral-400');
+  const neutral500 = getCSSVar('--neutral-500');
+  const neutral700 = getCSSVar('--neutral-700');
+  const neutral900 = getCSSVar('--neutral-900');
 
   return {
+    // Use AntD's darkAlgorithm when in dark mode
+    algorithm: dark ? antdTheme.darkAlgorithm : antdTheme.defaultAlgorithm,
     token: {
       colorPrimary: brand500,
       colorPrimaryHover: brand600,
@@ -56,18 +67,18 @@ function buildTheme(): ThemeConfig {
       colorError: danger500,
       colorErrorHover: danger700,
       colorErrorActive: danger700,
-      colorInfo: getCSSVar('--info-500', '#1F61E8'),
-      colorBgContainer: getCSSVar('--neutral-0', '#FFFFFF'),
-      colorBgElevated: getCSSVar('--neutral-0', '#FFFFFF'),
+      colorInfo: getCSSVar('--info-500'),
+      colorBgContainer: neutral0,
+      colorBgElevated: neutral0,
       colorBgLayout: neutral50,
       colorBorder: neutral200,
       colorBorderSecondary: neutral100,
       colorSplit: neutral100,
       colorText: neutral900,
-      colorTextSecondary: getCSSVar('--neutral-500', '#6B7280'),  /* 保持不变 */
+      colorTextSecondary: neutral500,
       colorTextTertiary: neutral400,
-      colorTextQuaternary: getCSSVar('--neutral-300', '#D7D9DD'),
-      colorTextDisabled: getCSSVar('--neutral-300', '#D7D9DD'),
+      colorTextQuaternary: neutral300,
+      colorTextDisabled: neutral300,
       colorFill: neutral200,
       colorFillSecondary: neutral100,
       colorFillTertiary: neutral50,
@@ -77,7 +88,7 @@ function buildTheme(): ThemeConfig {
       fontSizeHeading1: 18,
       fontSizeHeading2: 16,
       fontSizeHeading3: 14,
-      fontFamily: getCSSVar('--font-sans', '-apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif'),
+      fontFamily: getCSSVar('--font-sans'),
     },
     components: {
       Tabs: { colorPrimary: brand500 },
@@ -134,13 +145,36 @@ function buildTheme(): ThemeConfig {
 
 export function TifenxiProvider({ children, locale = zhCN }: TifenxiProviderProps) {
   const [ready, setReady] = useState(false);
+  const [dark, setDark] = useState(false);
 
-  // Wait for CSS variables to be available
+  // Wait for CSS variables to be available & detect initial dark mode
   useLayoutEffect(() => {
+    setDark(isDarkMode());
     setReady(true);
   }, []);
 
-  const theme = useMemo(() => (ready ? buildTheme() : {}), [ready]);
+  // Watch for .dark class changes on <html> via MutationObserver
+  useEffect(() => {
+    if (typeof MutationObserver === 'undefined') return;
+
+    const observer = new MutationObserver((mutations) => {
+      for (const mutation of mutations) {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          // Small delay to let CSS variables update after class toggle
+          requestAnimationFrame(() => setDark(isDarkMode()));
+        }
+      }
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const theme = useMemo(() => (ready ? buildTheme(dark) : {}), [ready, dark]);
 
   return (
     <ConfigProvider theme={theme} locale={locale}>

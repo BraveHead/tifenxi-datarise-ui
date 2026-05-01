@@ -198,47 +198,100 @@
    在根元素添加 class="dark" 即可切换
    ============================================================ */
 .dark {
-  /* —— 表面 / 背景 —— */
-  --surface:        #1A1D23;
-  --surface-page:   #0F1115;
-  --surface-muted:  #22262E;
-  --surface-invert: #F0F2F5;
+  /* ============================================================
+     暗黑主题 — 完整覆盖
+     色板算法：@arco-design/color palette-dark (GIO Design 参考 Arco 体系)
+     设计原则：暗底提亮主色，浅阶沉底，深阶提亮，确保对比度
+     ============================================================ */
 
-  /* —— 前景 / 文字 —— */
-  --fg:             #F0F2F5;
-  --fg-body:        #C9CED6;
-  --fg-secondary:   #9AA1AD;
-  --fg-tertiary:    #6B7280;
+  /* —— 中性色全阶翻转 —— */
+  --neutral-0:   #1A1D23;   /* 容器背景（light 白 → dark 深灰） */
+  --neutral-25:  #0F1115;   /* 页面底色 */
+  --neutral-50:  #22262E;   /* 次级容器 */
+  --neutral-100: #2A2F38;   /* 分隔线 */
+  --neutral-200: #353B45;   /* 输入描边 */
+  --neutral-300: #454B55;   /* 组件边框 */
+  --neutral-400: #656B75;   /* 重边框 */
+  --neutral-500: #9AA1AD;   /* 次要文字 */
+  --neutral-700: #C9CED6;   /* 正文 */
+  --neutral-900: #F0F2F5;   /* 标题 */
 
-  /* —— 线条 / 描边 —— */
-  --line:           #2A2F38;
-  --line-strong:    #353B45;
+  /* —— 品牌色全阶 (Arco dark palette, seed #1F61E8) —— */
+  --brand-50:  #000F4D;
+  --brand-100: #051F73;
+  --brand-200: #10359A;
+  --brand-300: #2050C1;
+  --brand-400: #346FE8;
+  --brand-500: #4382ED;    /* 暗底主色 — 提亮以保证对比度 */
+  --brand-600: #6BA1F1;    /* 暗底悬浮 */
+  --brand-700: #94BFF6;    /* 暗底点击 */
+  --brand-800: #BFDBFA;
+  --brand-900: #ECF6FF;
 
-  /* —— 语义色（深色背景版 — 基于 GIO 色值 8%/18% 混合 surface #1A1D23） —— */
-  /* Success base #16A76A */
-  --success-bg:     #192829;
-  --success-border: #193630;
-  /* Warning base #E8651B */
-  --warning-bg:     #2B2322;
-  --warning-border: #3F2A22;
-  /* Danger base #D63841 */
-  --danger-bg:      #291F25;
-  --danger-border:  #3C2228;
-  /* Info base #1F61E8 (= brand) */
-  --info-bg:        #1A2233;
-  --info-border:    #1B2946;
-  /* Severity high base #D9722A */
-  --severity-high-bg:     #292424;
-  --severity-high-border: #3C2C24;
+  /* —— 成功色 (Arco dark palette, seed #16A76A) —— */
+  --success-bg:     #004D37;
+  --success-border: #056346;
+  --success-200:    #0F7A54;
+  --success-500:    #3DB981;   /* 暗底提亮绿 */
+  --success-600:    #61CA98;
+  --success-700:    #8BDCB2;
 
-  /* —— 品牌色浅阶（深色模式下用于填充，与 info 同源） —— */
-  --brand-50:  #1A2233;
-  --brand-100: #1B2946;
+  /* —— 提示色 (Arco dark palette, seed #E8651B) —— */
+  --warning-bg:     #4D1200;
+  --warning-border: #732103;
+  --warning-200:    #9A380D;
+  --warning-500:    #ED853F;   /* 暗底提亮橙 */
+  --warning-600:    #F1A469;
+  --warning-700:    #F6C295;
 
-  /* —— 阴影（深色模式：保持 GIO 结构，加深 opacity） —— */
+  /* —— 错误色 (Arco dark palette, seed #D63841) —— */
+  --danger-bg:      #4D000E;
+  --danger-border:  #6F0616;
+  --danger-200:     #911523;
+  --danger-500:     #DE5B5D;   /* 暗底提亮红 */
+  --danger-600:     #E67F7D;
+  --danger-700:     #EFA4A1;
+
+  /* —— Info 色（= Brand 暗色同源） —— */
+  --info-bg:        #000F4D;
+  --info-border:    #051F73;
+  --info-500:       #4382ED;
+  --info-700:       #94BFF6;
+
+  /* —— 严重度 —— */
+  --severity-high-bg:     #4D1200;
+  --severity-high-border: #732103;
+  --severity-high-text:   #F1A469;
+
+  /* —— 图表色 — Arco dark step-6 提亮，确保暗底可见 —— */
+  --chart-1: #E9635E;   /* 满意度 1-2 分（提亮红） */
+  --chart-2: #FDCF28;   /* 满意度 3 分（提亮黄） */
+  --chart-3: #656B75;   /* 满意度 4 分（暗底灰，原 #C9CED6 会隐形） */
+  --chart-4: #6ECAB0;   /* 满意度 4.x 过渡 */
+  --chart-5: #3DB981;   /* 满意度 5 分（= success-500 dark） */
+
+  /* —— Series 12 色 — Arco dark step-6 —— */
+  --series-1:  #FD8260;
+  --series-2:  #4382ED;
+  --series-3:  #4C8EF2;
+  --series-4:  #F48962;
+  --series-5:  #31C793;
+  --series-6:  #FDCF28;
+  --series-7:  #54C0FB;
+  --series-8:  #9B5EF1;
+  --series-9:  #E964B4;
+  --series-10: #E9635E;
+  --series-11: #B8E24B;
+  --series-12: #3AD1C9;
+
+  /* —— 前景上的白色文字不变 —— */
+  --fg-on-accent: #FFFFFF;
+
+  /* —— 阴影（暗底加深 opacity） —— */
   --shadow-card:  0 2px 5px rgba(0, 0, 0, 0.25);
   --shadow-pop:   0 4px 10px rgba(0, 0, 0, 0.3);
   --shadow-modal: 0 8px 20px rgba(0, 0, 0, 0.4);
+  --shadow-focus: 0 0 0 2px var(--brand-100);
 }
 
 /* ============================================================

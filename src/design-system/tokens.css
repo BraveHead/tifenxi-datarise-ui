@@ -5,13 +5,13 @@
 
 :root {
   /* —— 品牌 / 主色 —— */
-  --brand-50:  #EFF6FF;
-  --brand-100: #DBEAFE;
-  --brand-200: #BFDBFE;
-  --brand-400: #60A5FA;
-  --brand-500: #3B82F6;   /* 主色 · 链接 · 选中态 */
-  --brand-600: #2563EB;
-  --brand-700: #1D4ED8;
+  --brand-50:  #e8efff;
+  --brand-100: #d0dfff;
+  --brand-200: #a8c3ff;
+  --brand-400: #6b8ef0;
+  --brand-500: #1f61e8;   /* 主色 · 链接 · 选中态 */
+  --brand-600: #1a55d6;
+  --brand-700: #1347c1;
 
   /* —— 中性色（背景 / 文字 / 描边） —— */
   --neutral-0:   #FFFFFF;
@@ -43,7 +43,7 @@
 
   --info-bg:       #EAF3FE;   /* Callout 信息条底色 */
   --info-border:   #BBD6F7;
-  --info-500:      #3B82F6;
+  --info-500:      #1f61e8;
   --info-700:      #1F5EC0;
 
   /* 严重度（专用，略带橙调，与 warning 区分） */
@@ -58,7 +58,7 @@
   --chart-4: #5DB9A1;   /* 4.x 过渡 */
   --chart-5: #2BA471;   /* 5 分 */
   /* 对比维度序列（折线 / 多条柱） */
-  --series-1: #3B82F6;
+  --series-1: #1f61e8;
   --series-2: #2BA471;
   --series-3: #F5A623;
   --series-4: #8B5CF6;

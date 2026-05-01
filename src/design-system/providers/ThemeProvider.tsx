@@ -22,10 +22,10 @@ function getCSSVar(name: string, fallback = ''): string {
 
 /** Build AntD theme config from CSS tokens at runtime */
 function buildTheme(): ThemeConfig {
-  const brand500 = getCSSVar('--brand-500', '#3B82F6');
-  const brand600 = getCSSVar('--brand-600', '#2563EB');
-  const brand700 = getCSSVar('--brand-700', '#1D4ED8');
-  const brand50 = getCSSVar('--brand-50', '#EFF6FF');
+  const brand500 = getCSSVar('--brand-500', '#1f61e8');
+  const brand600 = getCSSVar('--brand-600', '#1a55d6');
+  const brand700 = getCSSVar('--brand-700', '#1347c1');
+  const brand50 = getCSSVar('--brand-50', '#e8efff');
   const success500 = getCSSVar('--success-500', '#2BA471');
   const success700 = getCSSVar('--success-700', '#1B7A52');
   const successBg = getCSSVar('--success-bg', '#E8F6EF');
@@ -56,7 +56,7 @@ function buildTheme(): ThemeConfig {
       colorError: danger500,
       colorErrorHover: danger700,
       colorErrorActive: danger700,
-      colorInfo: getCSSVar('--info-500', '#3B82F6'),
+      colorInfo: getCSSVar('--info-500', '#1f61e8'),
       colorBgContainer: getCSSVar('--neutral-0', '#FFFFFF'),
       colorBgElevated: getCSSVar('--neutral-0', '#FFFFFF'),
       colorBgLayout: neutral50,

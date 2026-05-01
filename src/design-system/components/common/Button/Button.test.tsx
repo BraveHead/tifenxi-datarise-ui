@@ -26,22 +26,24 @@ describe('Button', () => {
 
   it.each([
     ['primary', 'bg-brand-500'],
-    ['default', 'bg-neutral-0'],
+    ['default', 'bg-surface'],
     ['ghost', 'bg-transparent'],
     ['danger', 'bg-danger-500'],
+    ['link', 'bg-transparent'],
+    ['text', 'bg-transparent'],
   ] as const)('applies %s variant class', (variant, expectedClass) => {
     render(<Button variant={variant}>btn</Button>);
     expect(screen.getByRole('button').className).toContain(expectedClass);
   });
 
-  it('uses token color text-neutral-0 for primary instead of text-white', () => {
+  it('uses token color text-fg-on-accent for primary instead of text-white', () => {
     render(<Button variant="primary">btn</Button>);
-    expect(screen.getByRole('button').className).toContain('text-neutral-0');
+    expect(screen.getByRole('button').className).toContain('text-fg-on-accent');
   });
 
   it('defaults to "default" variant when no variant prop', () => {
     render(<Button>btn</Button>);
-    expect(screen.getByRole('button').className).toContain('border-neutral-200');
+    expect(screen.getByRole('button').className).toContain('border-line-strong');
   });
 
   // ── Size classes (token-based) ────────────────────────
@@ -189,6 +191,37 @@ describe('Button', () => {
     expect(screen.queryByTestId('icon-l')).not.toBeInTheDocument();
     expect(screen.queryByTestId('icon-r')).not.toBeInTheDocument();
     expect(screen.getByRole('button').querySelector('svg')).toBeInTheDocument();
+  });
+
+  // ── Link variant ──────────────────────────────────────
+
+  it('link variant has brand text color', () => {
+    render(<Button variant="link">链接</Button>);
+    expect(screen.getByRole('button').className).toContain('text-brand-600');
+  });
+
+  it('link variant has hover:underline', () => {
+    render(<Button variant="link">链接</Button>);
+    expect(screen.getByRole('button').className).toContain('hover:underline');
+  });
+
+  it('link variant has no padding and auto height', () => {
+    render(<Button variant="link">链接</Button>);
+    const cls = screen.getByRole('button').className;
+    expect(cls).toContain('p-0');
+    expect(cls).toContain('h-auto');
+  });
+
+  // ── Text variant ─────────────────────────────────────
+
+  it('text variant has body text color', () => {
+    render(<Button variant="text">文字</Button>);
+    expect(screen.getByRole('button').className).toContain('text-fg-body');
+  });
+
+  it('text variant has transparent background', () => {
+    render(<Button variant="text">文字</Button>);
+    expect(screen.getByRole('button').className).toContain('bg-transparent');
   });
 
   // ── Events ────────────────────────────────────────────

@@ -8,7 +8,7 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'default', 'ghost', 'danger'],
+      options: ['primary', 'default', 'ghost', 'danger', 'link', 'text'],
     },
     size: {
       control: 'select',
@@ -50,6 +50,14 @@ export const Ghost: Story = {
 
 export const Danger: Story = {
   args: { variant: 'danger', children: '删除' },
+};
+
+export const Link: Story = {
+  args: { variant: 'link', children: '查看详情' },
+};
+
+export const Text: Story = {
+  args: { variant: 'text', children: '编辑' },
 };
 
 // ── Sizes ─────────────────────────────────────────────
@@ -138,13 +146,15 @@ export const AllVariants: Story = {
     <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
       <Button variant="primary">主操作</Button>
       <Button variant="default">次要</Button>
-      <Button variant="ghost">文字</Button>
+      <Button variant="ghost">幽灵</Button>
       <Button variant="danger">危险</Button>
+      <Button variant="link">链接</Button>
+      <Button variant="text">文字</Button>
     </div>
   ),
   play: async ({ canvasElement }) => {
     const btns = within(canvasElement).getAllByRole('button');
-    await expect(btns).toHaveLength(4);
+    await expect(btns).toHaveLength(6);
   },
 };
 

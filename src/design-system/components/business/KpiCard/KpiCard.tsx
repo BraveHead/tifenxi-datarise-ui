@@ -59,7 +59,7 @@ function cx(...cls: Array<string | false | undefined>) {
 /** 根据数值正负返回 CSS 变量颜色 */
 function getTrendColor(value: number | null): string {
   if (value === null || value === 0) return 'var(--fg-secondary, #6B7280)';
-  return value > 0 ? 'var(--success-500, #2BA471)' : 'var(--danger-500, #E5484D)';
+  return value > 0 ? 'var(--success-500, #2BA471)' : 'var(--warning-500, #E37318)';
 }
 
 /** 格式化百分比显示 */
@@ -69,25 +69,29 @@ function formatPercent(value: number | null): string {
 }
 
 const ArrowUp = () => (
-  <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" className="inline-block">
-    <path d="M5 2L8 6H2L5 2Z" />
+  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" className="inline-block">
+    <path d="M2 8.5L5 5.5L7 7.5L10 4.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M7.5 4.5H10V7" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 const ArrowDown = () => (
-  <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" className="inline-block">
-    <path d="M5 8L2 4H8L5 8Z" />
+  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" className="inline-block">
+    <path d="M2 4.5L5 7.5L7 5.5L10 8.5" strokeLinecap="round" strokeLinejoin="round" />
+    <path d="M7.5 8.5H10V6" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
 );
 
 function ComparisonItem({ label, value }: { label: string; value: number | null }) {
   const color = getTrendColor(value);
   return (
-    <span className="inline-flex items-center gap-1 text-sm" style={{ color }}>
-      {value !== null && value > 0 && <ArrowUp />}
-      {value !== null && value < 0 && <ArrowDown />}
-      <span>{label}</span>
-      <span>{formatPercent(value)}</span>
+    <span className="inline-flex items-center gap-1 text-sm">
+      <span className="inline-flex items-center gap-1" style={{ color }}>
+        {value !== null && value > 0 && <ArrowUp />}
+        {value !== null && value < 0 && <ArrowDown />}
+        <span>{formatPercent(value)}</span>
+      </span>
+      <span style={{ color: 'var(--fg-secondary, #6B7280)' }}>{label}</span>
     </span>
   );
 }
@@ -125,7 +129,7 @@ export function KpiCard({
       }}
       whileHover={{ boxShadow: HOVER_SHADOW }}
       className={cx(
-        'h-full w-full rounded-md relative flex flex-col p-4',
+        'h-full min-h-[156px] w-full rounded-md relative flex flex-col p-6',
         className,
       )}
       style={{
@@ -140,7 +144,7 @@ export function KpiCard({
     >
       {/* 标题 + 图标 */}
       <div className="flex items-center justify-between">
-        <span className="text-sm font-semibold" style={{ color: 'var(--brand-600, #2563EB)' }}>
+        <span className="text-sm font-semibold" style={{ color: 'var(--fg, #1F2328)' }}>
           {title}
         </span>
         {icon && (

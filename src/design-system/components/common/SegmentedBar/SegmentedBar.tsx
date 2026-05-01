@@ -131,8 +131,8 @@ export function SegmentedBar({
               boxShadow: 'var(--shadow-pop, 0 4px 12px rgba(0,0,0,0.12))',
               padding: 'var(--sp-2, 8px) var(--sp-3, 12px)',
               fontSize: 'var(--fs-12, 12px)',
-              color: 'var(--fg-body, #374151)',
-              border: '1px solid var(--line, #EEF0F2)',
+              color: 'var(--fg-body, #4E5357)',
+              border: '1px solid var(--line, #F0F0F5)',
             }}
           >
             {hoveredItem.renderTooltip ? (

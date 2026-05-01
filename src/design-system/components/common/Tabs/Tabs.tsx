@@ -34,7 +34,7 @@ export function Tabs({ items, activeKey, onChange, className, ...rest }: TabsPro
               'inline-flex items-center gap-1.5',
               active
                 ? 'text-brand-600 font-medium'
-                : 'text-gray-700 hover:text-gray-900',
+                : 'text-fg-body hover:text-fg',
             )}
           >
             {item.label}
@@ -79,7 +79,7 @@ export function SegTabs({ items, activeKey, onChange, className, ...rest }: SegT
               'px-sp-4 py-1.5 rounded-md text-fs-14 cursor-pointer inline-flex items-center gap-1.5 transition-all duration-fast',
               active
                 ? 'bg-surface text-brand-600 font-medium shadow-card'
-                : 'text-gray-700 hover:text-gray-900',
+                : 'text-fg-body hover:text-fg',
             )}
           >
             {item.label}

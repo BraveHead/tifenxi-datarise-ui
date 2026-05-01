@@ -7,7 +7,7 @@ describe('DeltaBadge', () => {
 
   it('renders positive value with up arrow', () => {
     render(<DeltaBadge value={2.4} />);
-    expect(screen.getByText('2.4%')).toBeInTheDocument();
+    expect(screen.getByText('+2.4%')).toBeInTheDocument();
   });
 
   it('renders negative value with down arrow', () => {
@@ -43,28 +43,28 @@ describe('DeltaBadge', () => {
 
   it('uses % as default unit', () => {
     render(<DeltaBadge value={3} />);
-    expect(screen.getByText('3%')).toBeInTheDocument();
+    expect(screen.getByText('+3%')).toBeInTheDocument();
   });
 
   it('supports custom unit', () => {
     render(<DeltaBadge value={4.2} unit="pp" />);
-    expect(screen.getByText('4.2pp')).toBeInTheDocument();
+    expect(screen.getByText('+4.2pp')).toBeInTheDocument();
   });
 
   // ─── direction → SVG icon ───
 
-  it('renders up chevron SVG for positive value', () => {
+  it('renders up triangle SVG for positive value', () => {
     const { container } = render(<DeltaBadge value={1} />);
     const svg = container.querySelector('svg');
     expect(svg).toBeInTheDocument();
-    expect(svg?.querySelector('path')?.getAttribute('d')).toContain('M18 15');
+    expect(svg?.querySelector('path')?.getAttribute('d')).toContain('M12 4');
   });
 
-  it('renders down chevron SVG for negative value', () => {
+  it('renders down triangle SVG for negative value', () => {
     const { container } = render(<DeltaBadge value={-1} />);
     const svg = container.querySelector('svg');
     expect(svg).toBeInTheDocument();
-    expect(svg?.querySelector('path')?.getAttribute('d')).toContain('M6 9');
+    expect(svg?.querySelector('path')?.getAttribute('d')).toContain('M12 20');
   });
 
   it('renders flat line SVG for zero value', () => {
@@ -86,9 +86,9 @@ describe('DeltaBadge', () => {
     expect(container.firstElementChild?.className).toContain('text-success-500');
   });
 
-  it('flat value uses neutral color', () => {
+  it('flat value uses neutral/secondary color', () => {
     const { container } = render(<DeltaBadge value={0} />);
-    expect(container.firstElementChild?.className).toContain('text-neutral-500');
+    expect(container.firstElementChild?.className).toContain('text-fg-secondary');
   });
 
   // ─── inverse 模式：涨=success, 跌=danger（满意度等正向指标） ───

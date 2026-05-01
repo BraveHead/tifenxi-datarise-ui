@@ -59,7 +59,7 @@ function cx(...cls: Array<string | false | undefined>) {
 /** 根据数值正负返回 CSS 变量颜色 */
 function getTrendColor(value: number | null): string {
   if (value === null || value === 0) return 'var(--fg-secondary, #6B7280)';
-  return value > 0 ? 'var(--success-500, #2BA471)' : 'var(--warning-500, #E37318)';
+  return value > 0 ? 'var(--success-500, #16A76A)' : 'var(--warning-500, #E8651B)';
 }
 
 /** 格式化百分比显示 */
@@ -114,8 +114,8 @@ export function KpiCard({
   className,
   style: styleProp,
 }: KpiCardProps) {
-  const baseBorderColor = danger ? 'var(--danger-border, #F5B9BB)' : 'var(--line, #E5E7EB)';
-  const leftBorderColor = highlight || danger ? 'var(--danger-500, #E5484D)' : baseBorderColor;
+  const baseBorderColor = danger ? 'var(--danger-border, #FFCBC7)' : 'var(--line, #F0F0F5)';
+  const leftBorderColor = highlight || danger ? 'var(--danger-500, #D63841)' : baseBorderColor;
   const restShadow = 'var(--shadow-card, 0 1px 2px rgba(15,23,42,0.04))';
 
   return (
@@ -137,14 +137,14 @@ export function KpiCard({
         borderWidth: highlight || danger ? '1px 1px 1px 4px' : '1px',
         borderColor: baseBorderColor,
         borderLeftColor: leftBorderColor,
-        backgroundColor: danger ? 'var(--danger-bg, #FDECEC)' : 'var(--surface, #FFFFFF)',
+        backgroundColor: danger ? 'var(--danger-bg, #FFEBE8)' : 'var(--surface, #FFFFFF)',
         boxShadow: restShadow,
         ...styleProp,
       }}
     >
       {/* 标题 + 图标 */}
       <div className="flex items-center justify-between">
-        <span className="text-sm font-semibold" style={{ color: 'var(--fg, #1F2328)' }}>
+        <span className="text-sm font-semibold" style={{ color: 'var(--fg, #191C22)' }}>
           {title}
         </span>
         {icon && (
@@ -156,7 +156,7 @@ export function KpiCard({
 
       {/* 主指标值 */}
       <div className="mt-1 mb-3">
-        <span className="text-2xl font-bold" style={{ color: 'var(--fg, #1F2328)' }}>
+        <span className="text-2xl font-bold" style={{ color: 'var(--fg, #191C22)' }}>
           {value}
         </span>
         {unit && (

@@ -22,25 +22,25 @@ function getCSSVar(name: string, fallback = ''): string {
 
 /** Build AntD theme config from CSS tokens at runtime */
 function buildTheme(): ThemeConfig {
-  const brand500 = getCSSVar('--brand-500', '#1f61e8');
-  const brand600 = getCSSVar('--brand-600', '#1a55d6');
-  const brand700 = getCSSVar('--brand-700', '#1347c1');
-  const brand50 = getCSSVar('--brand-50', '#e8efff');
-  const success500 = getCSSVar('--success-500', '#2BA471');
-  const success700 = getCSSVar('--success-700', '#1B7A52');
-  const successBg = getCSSVar('--success-bg', '#E8F6EF');
-  const warning500 = getCSSVar('--warning-500', '#F5A623');
-  const warning700 = getCSSVar('--warning-700', '#B5740F');
-  const warningBg = getCSSVar('--warning-bg', '#FEF5E7');
-  const danger500 = getCSSVar('--danger-500', '#E5484D');
-  const danger700 = getCSSVar('--danger-700', '#AD1F24');
-  const dangerBg = getCSSVar('--danger-bg', '#FDECEC');
-  const neutral50 = getCSSVar('--neutral-50', '#F5F7FA');
-  const neutral100 = getCSSVar('--neutral-100', '#EEF0F2');
-  const neutral200 = getCSSVar('--neutral-200', '#E1E4E8');
-  const neutral400 = getCSSVar('--neutral-400', '#9AA1AD');
-  const neutral700 = getCSSVar('--neutral-700', '#374151');
-  const neutral900 = getCSSVar('--neutral-900', '#1F2328');
+  const brand500 = getCSSVar('--brand-500', '#1F61E8');
+  const brand600 = getCSSVar('--brand-600', '#1A55D6');
+  const brand700 = getCSSVar('--brand-700', '#1347C1');
+  const brand50 = getCSSVar('--brand-50', '#E8EFFF');
+  const success500 = getCSSVar('--success-500', '#16A76A');
+  const success700 = getCSSVar('--success-700', '#0C8556');
+  const successBg = getCSSVar('--success-bg', '#E3FDEE');
+  const warning500 = getCSSVar('--warning-500', '#E8651B');
+  const warning700 = getCSSVar('--warning-700', '#C14C11');
+  const warningBg = getCSSVar('--warning-bg', '#FFF4E8');
+  const danger500 = getCSSVar('--danger-500', '#D63841');
+  const danger700 = getCSSVar('--danger-700', '#B4232F');
+  const dangerBg = getCSSVar('--danger-bg', '#FFEBE8');
+  const neutral50 = getCSSVar('--neutral-50', '#F3F3F5');
+  const neutral100 = getCSSVar('--neutral-100', '#F0F0F5');
+  const neutral200 = getCSSVar('--neutral-200', '#E4E5E8');
+  const neutral400 = getCSSVar('--neutral-400', '#A5A9B1');
+  const neutral700 = getCSSVar('--neutral-700', '#4E5357');
+  const neutral900 = getCSSVar('--neutral-900', '#191C22');
 
   return {
     token: {
@@ -56,7 +56,7 @@ function buildTheme(): ThemeConfig {
       colorError: danger500,
       colorErrorHover: danger700,
       colorErrorActive: danger700,
-      colorInfo: getCSSVar('--info-500', '#1f61e8'),
+      colorInfo: getCSSVar('--info-500', '#1F61E8'),
       colorBgContainer: getCSSVar('--neutral-0', '#FFFFFF'),
       colorBgElevated: getCSSVar('--neutral-0', '#FFFFFF'),
       colorBgLayout: neutral50,
@@ -64,10 +64,10 @@ function buildTheme(): ThemeConfig {
       colorBorderSecondary: neutral100,
       colorSplit: neutral100,
       colorText: neutral900,
-      colorTextSecondary: getCSSVar('--neutral-500', '#6B7280'),
+      colorTextSecondary: getCSSVar('--neutral-500', '#6B7280'),  /* 保持不变 */
       colorTextTertiary: neutral400,
-      colorTextQuaternary: getCSSVar('--neutral-300', '#C9CED6'),
-      colorTextDisabled: getCSSVar('--neutral-300', '#C9CED6'),
+      colorTextQuaternary: getCSSVar('--neutral-300', '#D7D9DD'),
+      colorTextDisabled: getCSSVar('--neutral-300', '#D7D9DD'),
       colorFill: neutral200,
       colorFillSecondary: neutral100,
       colorFillTertiary: neutral50,
@@ -77,7 +77,7 @@ function buildTheme(): ThemeConfig {
       fontSizeHeading1: 18,
       fontSizeHeading2: 16,
       fontSizeHeading3: 14,
-      fontFamily: getCSSVar('--font-sans', '-apple-system, BlinkMacSystemFont, sans-serif'),
+      fontFamily: getCSSVar('--font-sans', '-apple-system, BlinkMacSystemFont, "PingFang SC", sans-serif'),
     },
     components: {
       Tabs: { colorPrimary: brand500 },

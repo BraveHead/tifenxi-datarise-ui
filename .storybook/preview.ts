@@ -45,7 +45,7 @@ const preview: Preview = {
     },
     backgrounds: {
       values: [
-        { name: 'Page', value: '#FAFBFC' },
+        { name: 'Page', value: '#F8F8F9' },
         { name: 'White', value: '#FFFFFF' },
         { name: 'Dark Page', value: '#0F1115' },
         { name: 'Dark Surface', value: '#1A1D23' },

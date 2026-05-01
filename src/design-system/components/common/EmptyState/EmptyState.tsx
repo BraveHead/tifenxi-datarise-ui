@@ -42,7 +42,7 @@ const defaultConfig: Record<Exclude<EmptyStateVariant, 'compact'>, { title: stri
 };
 
 function DefaultIcon({ variant }: { variant: EmptyStateVariant }) {
-  const strokeColor = variant === 'error' ? '#DC2626' : variant === 'no-result' ? 'var(--brand-500)' : 'currentColor';
+  const strokeColor = variant === 'error' ? 'var(--danger-500)' : variant === 'no-result' ? 'var(--brand-500)' : 'currentColor';
   if (variant === 'no-data') {
     return (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={strokeColor} strokeWidth="1.5">

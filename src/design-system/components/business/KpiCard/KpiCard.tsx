@@ -103,7 +103,7 @@ export function KpiCard({
   value,
   unit,
   icon,
-  iconBgColor = 'bg-blue-50',
+  iconBgColor = 'bg-brand-100',
   comparison,
   trends,
   sparkline,

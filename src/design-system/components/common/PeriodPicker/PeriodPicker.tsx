@@ -297,18 +297,18 @@ export const PeriodPicker = ({
   // ── Render ──────────────────────────────────
 
   const dropdownContent = (
-    <div className="w-full max-w-[800px] overflow-hidden rounded-lg border border-gray-100 bg-white shadow-xl">
+    <div className="w-full max-w-[800px] overflow-hidden rounded-lg border border-line bg-surface shadow-xl">
       <div className="flex">
         {/* 左侧分类导航 */}
-        <div className="w-[140px] flex-shrink-0 border-r border-gray-100 bg-gray-50/50 py-2">
+        <div className="w-[140px] flex-shrink-0 border-r border-line bg-surface-muted/50 py-2">
           {CATEGORIES.map((cat) => (
             <div
               key={cat.key}
               onClick={() => setSelectedCategory(cat.key)}
               className={`mx-3 my-1 cursor-pointer px-2 py-2 text-sm transition-colors ${
                 selectedCategory === cat.key
-                  ? 'bg-blue-50 font-medium text-blue-600'
-                  : 'text-gray-600 hover:text-blue-600'
+                  ? 'bg-brand-100 font-medium text-brand-600'
+                  : 'text-fg-body hover:text-brand-600'
               }`}
             >
               {cat.label}
@@ -331,8 +331,8 @@ export const PeriodPicker = ({
                       onClick={() => handlePresetClick(preset)}
                       className={`cursor-pointer rounded px-4 py-2 text-sm transition-colors ${
                         isSelected
-                          ? 'bg-blue-50 font-medium text-blue-600'
-                          : 'text-gray-700 hover:bg-gray-50'
+                          ? 'bg-brand-100 font-medium text-brand-600'
+                          : 'text-fg-body hover:bg-surface-muted'
                       }`}
                     >
                       {preset.label}
@@ -346,7 +346,7 @@ export const PeriodPicker = ({
             <div className="flex flex-1 flex-col">
               {/* Mode tabs */}
               <div className="px-6 pb-3 pt-4">
-                <div className="inline-flex rounded-md bg-gray-100 p-0.5">
+                <div className="inline-flex rounded-md bg-surface-muted p-0.5">
                   {(['month', 'quarter'] as HistoricalMode[]).map((mode) => (
                     <button
                       key={mode}
@@ -354,8 +354,8 @@ export const PeriodPicker = ({
                       onClick={() => handleModeSwitch(mode)}
                       className={`rounded px-4 py-1 text-sm transition-colors ${
                         historicalMode === mode
-                          ? 'bg-white font-medium text-blue-600 shadow-sm'
-                          : 'text-gray-500 hover:text-gray-700'
+                          ? 'bg-surface font-medium text-brand-600 shadow-sm'
+                          : 'text-fg-secondary hover:text-fg-body'
                       }`}
                     >
                       {mode === 'month' ? '月份' : '季度'}
@@ -382,7 +382,7 @@ export const PeriodPicker = ({
           )}
 
           {/* 底部操作按钮 */}
-          <div className="flex justify-end gap-3 border-t border-gray-100 bg-gray-50/30 p-4">
+          <div className="flex justify-end gap-3 border-t border-line bg-surface-muted/30 p-4">
             <Button onClick={handleCancel} className="px-6">
               取消
             </Button>
@@ -416,7 +416,7 @@ export const PeriodPicker = ({
       <Button
         variant="default"
         icon={<CalendarOutlined className="text-current" />}
-        className="!gap-2 rounded-md border border-gray-200 bg-white px-3.5 text-gray-700 transition-all hover:!border-blue-500 hover:!bg-white hover:!text-blue-600"
+        className="!gap-2 rounded-md border border-line bg-surface px-3.5 text-fg-body transition-all hover:!border-brand-600 hover:!bg-surface hover:!text-brand-600"
       >
         {getDisplayText(presets, presetValue, value)}
       </Button>

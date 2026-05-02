@@ -58,8 +58,8 @@ export function TrendSparkline({
     if (!containerRef.current) return;
     if (chartRef.current) chartRef.current.destroy();
 
-    // Read series-1 color from design tokens (fallback to brand blue)
-    const lineColor = getSeriesColor(0) || 'var(--series-1, #3B82F6)';
+    // Read series-1 color from design tokens (fallback to token value)
+    const lineColor = getSeriesColor(0) || 'var(--series-1, #FC5F3A)';
 
     const chart = new Chart({
       container: containerRef.current,

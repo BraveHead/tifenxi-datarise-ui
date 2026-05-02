@@ -67,7 +67,7 @@ export function StackedBarChart({
       style={{
         position: 'relative',
         borderRadius: 'var(--radius-lg, 8px)',
-        backgroundColor: 'var(--surface-muted, #F5F7FA)',
+        backgroundColor: 'var(--surface-muted, #F3F3F5)',
         padding: 20,
       }}
     >
@@ -145,7 +145,7 @@ export function StackedBarChart({
             zIndex: 10,
             whiteSpace: 'nowrap',
             borderRadius: 'var(--radius-lg, 8px)',
-            border: '1px solid var(--line, #EEF0F2)',
+            border: '1px solid var(--line, #F0F0F5)',
             paddingLeft: 12,
             paddingRight: 12,
             paddingTop: 8,
@@ -157,14 +157,14 @@ export function StackedBarChart({
             backgroundColor: 'var(--surface, #FFFFFF)',
           }}
         >
-          <p style={{ marginBottom: 4, fontSize: 'var(--fs-12, 12px)', fontWeight: 500, color: 'var(--fg, #1F2328)' }}>
+          <p style={{ marginBottom: 4, fontSize: 'var(--fs-12, 12px)', fontWeight: 500, color: 'var(--fg, #191C22)' }}>
             {data[tooltip.colIdx].label}
           </p>
           {[...data[tooltip.colIdx].segments].reverse().map((seg, i) => (
             <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8, fontSize: 11, lineHeight: '20px', color: 'var(--fg-secondary, #6B7280)' }}>
               <span style={{ display: 'inline-block', height: 8, width: 8, borderRadius: '50%', background: seg.color }} />
               <span>{seg.label ?? `类别${i + 1}`}</span>
-              <span style={{ marginLeft: 'auto', fontWeight: 500, color: 'var(--fg, #1F2328)' }}>{seg.value}%</span>
+              <span style={{ marginLeft: 'auto', fontWeight: 500, color: 'var(--fg, #191C22)' }}>{seg.value}%</span>
             </div>
           ))}
         </div>

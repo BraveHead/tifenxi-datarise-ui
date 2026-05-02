@@ -18,19 +18,19 @@ interface ToastItem {
 
 const ICON_MAP: Record<ToastType, { color: string; path: string }> = {
   success: {
-    color: 'var(--success-500, #2BA471)',
+    color: 'var(--success-500, #16A76A)',
     path: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z',
   },
   error: {
-    color: 'var(--danger-500, #E5484D)',
+    color: 'var(--danger-500, #D63841)',
     path: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z',
   },
   info: {
-    color: 'var(--info-500, #3B82F6)',
+    color: 'var(--info-500, #1F61E8)',
     path: 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z',
   },
   warning: {
-    color: 'var(--warning-500, #F5A623)',
+    color: 'var(--warning-500, #E8651B)',
     path: 'M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z',
   },
 };
@@ -62,7 +62,7 @@ function ToastBar({ item }: { item: ToastItem }) {
         gap: 'var(--sp-2, 8px)',
         padding: 'var(--sp-3, 12px) var(--sp-4, 16px)',
         background: 'var(--surface, #fff)',
-        border: '1px solid var(--line, #EEF0F2)',
+        border: '1px solid var(--line, #F0F0F5)',
         borderRadius: 'var(--radius-lg, 8px)',
         boxShadow: 'var(--shadow-pop)',
         fontSize: 'var(--fs-14, 14px)',

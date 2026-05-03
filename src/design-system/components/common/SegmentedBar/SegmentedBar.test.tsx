@@ -12,7 +12,7 @@ const sampleItems: SegmentedBarItem[] = [
 describe('SegmentedBar', () => {
   it('renders segments for each non-zero item', () => {
     const { container } = render(<SegmentedBar items={sampleItems} />);
-    const segments = container.querySelectorAll('[style*="backgroundColor"]');
+    const segments = container.querySelectorAll('[style*="background-color"]');
     expect(segments.length).toBe(3);
   });
 
@@ -34,7 +34,7 @@ describe('SegmentedBar', () => {
       { label: 'b', value: 0, color: 'blue' },
     ];
     const { container } = render(<SegmentedBar items={items} />);
-    const segments = container.querySelectorAll('[style*="backgroundColor"]');
+    const segments = container.querySelectorAll('[style*="background-color"]');
     expect(segments.length).toBe(1);
   });
 
@@ -61,14 +61,14 @@ describe('SegmentedBar', () => {
 
   it('shows tooltip on hover', () => {
     const { container } = render(<SegmentedBar items={sampleItems} />);
-    const firstSegment = container.querySelector('[style*="backgroundColor"]')!;
+    const firstSegment = container.querySelector('[style*="background-color"]')!;
     fireEvent.mouseEnter(firstSegment);
     expect(screen.getByText(/满意: 70/)).toBeInTheDocument();
   });
 
   it('hides tooltip on mouse leave', () => {
     const { container } = render(<SegmentedBar items={sampleItems} />);
-    const firstSegment = container.querySelector('[style*="backgroundColor"]')!;
+    const firstSegment = container.querySelector('[style*="background-color"]')!;
     fireEvent.mouseEnter(firstSegment);
     fireEvent.mouseLeave(firstSegment);
     expect(screen.queryByText(/满意: 70/)).not.toBeInTheDocument();

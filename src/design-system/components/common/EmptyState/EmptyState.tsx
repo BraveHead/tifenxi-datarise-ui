@@ -1,25 +1,29 @@
 import React from 'react';
 
-export type EmptyStateVariant = 'no-data' | 'no-result' | 'error';
+export type EmptyStateVariant = 'no-data' | 'no-result' | 'error' | 'compact';
 
 export interface EmptyStateProps extends React.HTMLAttributes<HTMLDivElement> {
   /** 场景变体 */
   variant?: EmptyStateVariant;
   /** 自定义图标插槽，覆盖默认图标 */
   icon?: React.ReactNode;
-  /** 标题 */
+  /** 标题（主文字） */
   title?: string;
-  /** 描述文字 */
+  /** AntD Empty description 兼容别名 — 等价于 title */
+  message?: string;
+  /** 描述文字（副文字） */
   description?: string;
   /** 操作按钮插槽 */
   action?: React.ReactNode;
+  /** 底部自定义内容（AntD Empty children 兼容） */
+  children?: React.ReactNode;
 }
 
 function cx(...cls: Array<string | false | undefined>) {
   return cls.filter(Boolean).join(' ');
 }
 
-const defaultConfig: Record<EmptyStateVariant, { title: string; description: string; illusBg: string }> = {
+const defaultConfig: Record<Exclude<EmptyStateVariant, 'compact'>, { title: string; description: string; illusBg: string }> = {
   'no-data': {
     title: '暂无数据',
     description: '当前时间段内没有相关记录，请调整筛选条件',
@@ -38,7 +42,7 @@ const defaultConfig: Record<EmptyStateVariant, { title: string; description: str
 };
 
 function DefaultIcon({ variant }: { variant: EmptyStateVariant }) {
-  const strokeColor = variant === 'error' ? '#DC2626' : variant === 'no-result' ? 'var(--brand-500)' : 'currentColor';
+  const strokeColor = variant === 'error' ? 'var(--danger-500)' : variant === 'no-result' ? 'var(--brand-500)' : 'currentColor';
   if (variant === 'no-data') {
     return (
       <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke={strokeColor} strokeWidth="1.5">
@@ -68,12 +72,28 @@ export function EmptyState({
   variant = 'no-data',
   icon,
   title,
+  message,
   description,
   action,
+  children,
   className,
   ...rest
 }: EmptyStateProps) {
+  // compact variant: minimal inline empty (e.g. Select dropdown)
+  if (variant === 'compact') {
+    return (
+      <div
+        className={cx('flex flex-col items-center justify-center py-sp-4 px-sp-4 text-center', className)}
+        {...rest}
+      >
+        <div className="text-fs-13 text-fg-secondary">{message || title || '暂无数据'}</div>
+        {(action || children) && <div className="mt-sp-2">{action || children}</div>}
+      </div>
+    );
+  }
+
   const config = defaultConfig[variant];
+  const resolvedTitle = message || title || config.title;
 
   return (
     <div
@@ -92,12 +112,12 @@ export function EmptyState({
         {icon || <DefaultIcon variant={variant} />}
       </div>
       <div className="text-[15px] font-semibold text-fg mb-sp-2">
-        {title || config.title}
+        {resolvedTitle}
       </div>
       <div className="text-fs-13 text-fg-secondary max-w-[280px] leading-relaxed mb-sp-5">
         {description || config.description}
       </div>
-      {action && <div>{action}</div>}
+      {(action || children) && <div>{action || children}</div>}
     </div>
   );
 }

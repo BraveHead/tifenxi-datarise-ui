@@ -5,8 +5,8 @@ import './styles.css';
 export { Button } from './components/common/Button/Button';
 export type { ButtonProps, ButtonVariant, ButtonSize } from './components/common/Button/Button';
 
-export { Input } from './components/common/Input/Input';
-export type { InputProps } from './components/common/Input/Input';
+export { Input, Checkbox, Calendar } from 'antd';
+export type { InputProps, CheckboxProps, CalendarProps } from 'antd';
 
 export { Tag } from './components/common/Tag/Tag';
 export type { TagProps, TagVariant } from './components/common/Tag/Tag';
@@ -60,7 +60,7 @@ export { Drawer } from './components/common/Drawer/Drawer';
 export type { DrawerProps } from './components/common/Drawer/Drawer';
 
 export { Modal } from './components/common/Modal/Modal';
-export type { ModalProps } from './components/common/Modal/Modal';
+export type { ModalProps, ModalConfirmConfig } from './components/common/Modal/Modal';
 
 export { toast } from './components/common/Toast/Toast';
 export type { ToastOptions } from './components/common/Toast/Toast';
@@ -96,8 +96,74 @@ export type {
 } from './components/charts/QuadrantScatterChart/QuadrantScatterChart';
 
 export { StackedBarChart } from './components/charts/StackedBarChart/StackedBarChart';
+
+export { DualTrendChart } from './components/charts/DualTrendChart/DualTrendChart';
+export type { DualTrendChartProps, DualTrendDataItem } from './components/charts/DualTrendChart/DualTrendChart';
 export type {
   StackedBarChartProps,
   BarColumn,
   BarSegment,
 } from './components/charts/StackedBarChart/StackedBarChart';
+
+export { Card } from './components/common/Card/Card';
+export type { CardProps } from './components/common/Card/Card';
+
+export { Badge } from './components/common/Badge/Badge';
+export type { BadgeProps } from './components/common/Badge/Badge';
+
+export { Avatar } from './components/common/Avatar/Avatar';
+export type { AvatarProps, AvatarSize } from './components/common/Avatar/Avatar';
+
+export { Popover } from './components/common/Popover/Popover';
+export type { PopoverProps } from './components/common/Popover/Popover';
+
+export { PeriodPicker } from './components/common/PeriodPicker/PeriodPicker';
+export type { PeriodPickerProps, TimeRange } from './components/common/PeriodPicker/PeriodPicker';
+
+export {
+  DateRangePreset,
+  parseTimeRange,
+  formatPeriodLabel,
+  getDefaultPeriodPresets,
+} from './components/common/PeriodPicker/periodUtils';
+export type {
+  TimePreset,
+  PeriodPreset,
+} from './components/common/PeriodPicker/periodUtils';
+
+// ─── Wrapped AntD Components ───
+
+export { Table } from './components/wrapped/Table/Table';
+export type { TableProps, ColumnsType, TablePaginationConfig } from './components/wrapped/Table/Table';
+
+export { Dropdown } from './components/wrapped/Dropdown/Dropdown';
+export type { DropdownProps, MenuProps, MenuItemType } from './components/wrapped/Dropdown/Dropdown';
+
+export { Form, FormItem, useForm } from './components/wrapped/Form/Form';
+export type { FormProps, FormItemProps, FormInstance } from './components/wrapped/Form/Form';
+
+export { Select } from './components/wrapped/Select/Select';
+export type { SelectProps } from './components/wrapped/Select/Select';
+
+export { DatePicker, RangePicker } from './components/wrapped/DatePicker/DatePicker';
+export type { DatePickerProps, RangePickerProps } from './components/wrapped/DatePicker/DatePicker';
+
+export { Progress } from './components/wrapped/Progress/Progress';
+export type { ProgressProps } from './components/wrapped/Progress/Progress';
+
+export { Menu } from './components/wrapped/Menu/Menu';
+
+export { Breadcrumb } from './components/wrapped/Breadcrumb/Breadcrumb';
+export type { BreadcrumbProps } from './components/wrapped/Breadcrumb/Breadcrumb';
+
+export { Segmented } from './components/wrapped/Segmented/Segmented';
+export type { SegmentedProps } from './components/wrapped/Segmented/Segmented';
+
+// ─── Provider ───
+
+export { TifenxiProvider } from './providers/ThemeProvider';
+export type { TifenxiProviderProps } from './providers/ThemeProvider';
+
+// ─── Icons (re-export from @ant-design/icons) ───
+
+export * from './icons';

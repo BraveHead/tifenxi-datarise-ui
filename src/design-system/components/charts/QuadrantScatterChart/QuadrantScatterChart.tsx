@@ -85,7 +85,7 @@ export function QuadrantScatterChart({
   height = 300,
   defaultPointSize = 8,
   colorMap = {},
-  defaultColor = 'var(--neutral-400, #9AA1AD)',
+  defaultColor = 'var(--neutral-400, #A5A9B1)',
   selectedId,
   onSelect,
   tooltipRender,
@@ -140,7 +140,7 @@ export function QuadrantScatterChart({
     }
   };
 
-  const refLineColor = 'var(--neutral-300, #C9CED6)';
+  const refLineColor = 'var(--neutral-300, #D7D9DD)';
 
   return (
     <div>
@@ -158,7 +158,7 @@ export function QuadrantScatterChart({
             paddingRight: 8,
             flexShrink: 0,
             fontSize: 'var(--fs-12, 12px)',
-            color: 'var(--fg-tertiary, #9AA1AD)',
+            color: 'var(--fg-tertiary, #A5A9B1)',
           }}
         >
           {[...yTicks].reverse().map((tick) => (
@@ -182,7 +182,7 @@ export function QuadrantScatterChart({
                   left: 0,
                   right: 0,
                   top: `${toYPercent(tick)}%`,
-                  borderTop: '1px solid var(--line, #EEF0F2)',
+                  borderTop: '1px solid var(--line, #F0F0F5)',
                 }}
               />
             ))}
@@ -236,7 +236,7 @@ export function QuadrantScatterChart({
                     transition: 'all 150ms',
                     boxShadow:
                       item.id === selectedId
-                        ? `0 0 0 2px var(--danger-500, #E5484D), 0 0 0 4px rgba(229, 72, 77, 0.3)`
+                        ? `0 0 0 2px var(--danger-500, #D63841), 0 0 0 4px rgba(229, 72, 77, 0.3)`
                         : isActive
                           ? '0 0 0 2px var(--surface, #FFFFFF)'
                           : 'none',
@@ -252,7 +252,7 @@ export function QuadrantScatterChart({
                 ? tooltipRender(item, color)
                 : (
                   <div>
-                    <div style={{ color: 'var(--fg-tertiary, #9AA1AD)', fontSize: 'var(--fs-12, 12px)', marginBottom: 6 }}>{item.name}</div>
+                    <div style={{ color: 'var(--fg-tertiary, #A5A9B1)', fontSize: 'var(--fs-12, 12px)', marginBottom: 6 }}>{item.name}</div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                       <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', backgroundColor: color, flexShrink: 0 }} />
                       <span style={{ color: 'var(--fg-body, #374151)', fontSize: 'var(--fs-12, 12px)' }}>{item.name}</span>
@@ -279,7 +279,7 @@ export function QuadrantScatterChart({
               display: 'flex',
               justifyContent: 'space-between',
               fontSize: 'var(--fs-12, 12px)',
-              color: 'var(--fg-tertiary, #9AA1AD)',
+              color: 'var(--fg-tertiary, #A5A9B1)',
               paddingTop: 4,
             }}
           >

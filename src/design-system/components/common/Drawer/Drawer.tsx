@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { DrawerShell, DrawerHeader, DrawerBody } from '../DrawerShell/DrawerShell';
+import { DrawerShell, DrawerHeader, DrawerBody, DrawerFooter } from '../DrawerShell/DrawerShell';
 
 export interface DrawerProps {
   /** Whether the drawer is visible */
@@ -19,8 +19,12 @@ export interface DrawerProps {
   maskClosable?: boolean;
   /** Fired after open/close transition completes */
   afterOpenChange?: (open: boolean) => void;
+  /** Footer content rendered inside DrawerFooter */
+  footer?: React.ReactNode;
   /** Extra class on the panel */
   className?: string;
+  /** Extra class on the DrawerBody */
+  bodyClassName?: string;
   children: React.ReactNode;
 }
 
@@ -49,7 +53,9 @@ export function Drawer({
   destroyOnClose = false,
   maskClosable = true,
   afterOpenChange,
+  footer,
   className,
+  bodyClassName,
   children,
 }: DrawerProps) {
   const [mounted, setMounted] = useState(false);
@@ -233,15 +239,16 @@ export function Drawer({
         <DrawerShell className={cx('w-full h-full rounded-none border-0', className)}>
           {title != null && (
             <DrawerHeader
-              title={typeof title === 'string' ? title : ''}
+              title={title}
               onClose={onClose}
-            >
-              {typeof title !== 'string' ? title : undefined}
-            </DrawerHeader>
+            />
           )}
-          <DrawerBody>
+          <DrawerBody className={bodyClassName}>
             {destroyOnClose && !open ? null : children}
           </DrawerBody>
+          {footer != null && (
+            <DrawerFooter>{footer}</DrawerFooter>
+          )}
         </DrawerShell>
       </div>
     </div>

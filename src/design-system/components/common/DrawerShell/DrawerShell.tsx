@@ -8,11 +8,11 @@ export interface DrawerShellProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
 }
 
-export interface DrawerHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** 主标题 */
-  title: string;
-  /** 副标题（可选） */
-  subtitle?: string;
+export interface DrawerHeaderProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'title'> {
+  /** 主标题（支持 string 或 ReactNode） */
+  title: React.ReactNode;
+  /** 副标题（可选，支持 string 或 ReactNode） */
+  subtitle?: React.ReactNode;
   /** 关闭回调 */
   onClose?: () => void;
 }

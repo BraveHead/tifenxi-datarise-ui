@@ -120,7 +120,7 @@ function arrowStyle(placement: TooltipPlacement): React.CSSProperties {
     position: 'absolute',
     width: size,
     height: size,
-    background: '#FFFFFF',
+    background: 'var(--surface, #FFFFFF)',
     transform: 'rotate(45deg)',
     boxShadow: '3px 3px 7px rgba(0,0,0,0.07)',
   };
@@ -265,7 +265,7 @@ export function Tooltip({
           onMouseLeave={hide}
           className={cx(
             'absolute px-sp-2 py-sp-1',
-            'bg-white text-black text-fs-12 leading-tight rounded-[2px]',
+            'bg-surface text-fg text-fs-12 leading-tight rounded-[2px]',
             'shadow-[0_6px_16px_0_rgba(0,0,0,0.08),0_3px_6px_-4px_rgba(0,0,0,0.12),0_9px_28px_8px_rgba(0,0,0,0.05)]',
             'transition-opacity duration-fast pointer-events-auto',
             'max-w-[280px] break-words',

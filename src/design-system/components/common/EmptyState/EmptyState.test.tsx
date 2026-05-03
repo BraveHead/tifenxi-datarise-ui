@@ -99,6 +99,55 @@ describe('EmptyState', () => {
     expect(container.firstElementChild?.className).toContain('my-custom');
   });
 
+  // ─── message 别名 ───
+
+  it('uses message prop as title alias', () => {
+    render(<EmptyState message="无匹配数据" />);
+    expect(screen.getByText('无匹配数据')).toBeInTheDocument();
+  });
+
+  it('message prop overrides default title', () => {
+    render(<EmptyState variant="error" message="服务不可用" />);
+    expect(screen.getByText('服务不可用')).toBeInTheDocument();
+    expect(screen.queryByText('数据加载失败')).not.toBeInTheDocument();
+  });
+
+  // ─── children 插槽 ───
+
+  it('renders children when provided', () => {
+    render(<EmptyState><button>添加数据</button></EmptyState>);
+    expect(screen.getByText('添加数据')).toBeInTheDocument();
+  });
+
+  it('action takes priority over children', () => {
+    render(
+      <EmptyState action={<button>重试</button>}>
+        <button>备用操作</button>
+      </EmptyState>,
+    );
+    expect(screen.getByText('重试')).toBeInTheDocument();
+    expect(screen.queryByText('备用操作')).not.toBeInTheDocument();
+  });
+
+  // ─── compact variant ───
+
+  it('renders compact variant with minimal layout', () => {
+    const { container } = render(<EmptyState variant="compact" />);
+    expect(screen.getByText('暂无数据')).toBeInTheDocument();
+    // compact has no icon circle
+    expect(container.querySelector('.rounded-full')).not.toBeInTheDocument();
+  });
+
+  it('compact variant uses message prop', () => {
+    render(<EmptyState variant="compact" message="无匹配" />);
+    expect(screen.getByText('无匹配')).toBeInTheDocument();
+  });
+
+  it('compact variant renders children', () => {
+    render(<EmptyState variant="compact"><span>操作</span></EmptyState>);
+    expect(screen.getByText('操作')).toBeInTheDocument();
+  });
+
   // ─── HTML 属性透传 ───
 
   it('passes through data-* attributes', () => {

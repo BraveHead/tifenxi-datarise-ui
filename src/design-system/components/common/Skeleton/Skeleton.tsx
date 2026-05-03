@@ -23,7 +23,7 @@ function cx(...cls: Array<string | false | undefined>) {
 }
 
 const shimmerStyle: React.CSSProperties = {
-  background: 'linear-gradient(90deg, transparent 25%, rgba(255,255,255,0.5) 50%, transparent 75%)',
+  background: 'linear-gradient(90deg, transparent 25%, var(--neutral-0, rgba(255,255,255,0.5)) 50%, transparent 75%)',
   backgroundSize: '200% 100%',
   animation: 'shimmer 1.5s infinite linear',
 };

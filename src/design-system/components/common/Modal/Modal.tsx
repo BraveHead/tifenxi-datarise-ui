@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useCallback, useState } from 'react';
 import { createPortal } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Button } from '../Button/Button';
 
 export interface ModalProps {
@@ -283,5 +284,83 @@ export function Modal({
 
   return createPortal(content, document.body);
 }
+
+// ─── Modal.confirm static method ───
+
+export interface ModalConfirmConfig {
+  title: string;
+  content?: React.ReactNode;
+  onOk?: () => void | Promise<void>;
+  onCancel?: () => void;
+  okText?: string;
+  cancelText?: string;
+  /** 确定按钮使用危险色 */
+  danger?: boolean;
+}
+
+function ConfirmModal({ config, afterClose }: { config: ModalConfirmConfig; afterClose: () => void }) {
+  const [open, setOpen] = useState(true);
+  const [loading, setLoading] = useState(false);
+
+  const handleCancel = useCallback(() => {
+    config.onCancel?.();
+    setOpen(false);
+    setTimeout(afterClose, TRANSITION_DURATION + 50);
+  }, [config, afterClose]);
+
+  const handleOk = useCallback(async () => {
+    if (!config.onOk) {
+      setOpen(false);
+      setTimeout(afterClose, TRANSITION_DURATION + 50);
+      return;
+    }
+    const result = config.onOk();
+    if (result && typeof (result as Promise<void>).then === 'function') {
+      setLoading(true);
+      try {
+        await result;
+        setOpen(false);
+        setTimeout(afterClose, TRANSITION_DURATION + 50);
+      } finally {
+        setLoading(false);
+      }
+    } else {
+      setOpen(false);
+      setTimeout(afterClose, TRANSITION_DURATION + 50);
+    }
+  }, [config, afterClose]);
+
+  return (
+    <Modal
+      open={open}
+      onCancel={handleCancel}
+      title={config.title}
+      width={420}
+      footer={
+        <>
+          <Button variant="default" onClick={handleCancel}>{config.cancelText || '取消'}</Button>
+          <Button variant={config.danger ? 'danger' : 'primary'} onClick={handleOk} loading={loading}>
+            {config.okText || '确定'}
+          </Button>
+        </>
+      }
+    >
+      {config.content}
+    </Modal>
+  );
+}
+
+Modal.confirm = function confirm(config: ModalConfirmConfig) {
+  const container = document.createElement('div');
+  document.body.appendChild(container);
+  const root = createRoot(container);
+
+  const destroy = () => {
+    root.unmount();
+    container.remove();
+  };
+
+  root.render(<ConfirmModal config={config} afterClose={destroy} />);
+};
 
 export default Modal;

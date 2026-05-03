@@ -85,6 +85,35 @@ export const Large: Story = {
   ),
 };
 
+export const ReactNodeTitle: Story = {
+  render: () => (
+    <div style={{ height: 400 }}>
+      <DrawerShell size="lg">
+        <DrawerHeader
+          title={
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+              <span>内分泌科</span>
+              <span style={{ fontSize: 12, padding: '2px 8px', borderRadius: 4, backgroundColor: '#FEF2F2', color: '#DC2626' }}>高风险</span>
+            </div>
+          }
+          subtitle={
+            <span>覆盖率 85% · 出诊日 18/22</span>
+          }
+          onClose={() => {}}
+        />
+        <DrawerBody>
+          <div style={{ fontSize: 13, color: 'var(--neutral-500)' }}>
+            支持 ReactNode 类型的标题，可以包含 badge、tag、icon 等复杂内容。
+          </div>
+        </DrawerBody>
+        <DrawerFooter>
+          <Button variant="default" size="sm">关闭</Button>
+        </DrawerFooter>
+      </DrawerShell>
+    </div>
+  ),
+};
+
 export const HeaderOnly: Story = {
   render: () => (
     <div style={{ height: 300 }}>

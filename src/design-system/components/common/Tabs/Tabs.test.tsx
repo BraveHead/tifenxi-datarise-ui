@@ -52,8 +52,8 @@ describe('SegTabs (capsule)', () => {
     expect(onChange).toHaveBeenCalledWith('c');
   });
 
-  it('active tab has white background class', () => {
+  it('active tab has surface background class', () => {
     render(<SegTabs items={items} activeKey="a" onChange={() => {}} />);
-    expect(screen.getByText('Tab A').className).toContain('bg-neutral-0');
+    expect(screen.getByText('Tab A').className).toContain('bg-surface');
   });
 });

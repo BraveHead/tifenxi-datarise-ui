@@ -41,7 +41,7 @@ describe('KpiCardGrid', () => {
     const { container } = render(<KpiCardGrid><div>card</div></KpiCardGrid>);
     const el = container.firstElementChild!;
     expect(el.className).toContain('grid');
-    expect(el.className).toContain('gap-sp-4');
+    expect(el.className).toContain('gap-4');
     expect(el.className).toContain('items-stretch');
   });
 

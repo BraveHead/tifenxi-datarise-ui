@@ -24,7 +24,11 @@ export default defineConfig({
       fileName: 'index',
     },
     rollupOptions: {
-      external: ['react', 'react-dom', 'react/jsx-runtime', 'framer-motion', '@antv/g2', 'dayjs'],
+      external: [
+        'react', 'react-dom', 'react/jsx-runtime',
+        'framer-motion', '@antv/g2', 'dayjs',
+        'antd', /^antd\//, '@ant-design/icons', /^@ant-design\//,
+      ],
     },
   },
   test: {

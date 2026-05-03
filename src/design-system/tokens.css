@@ -4,47 +4,56 @@
    ============================================================ */
 
 :root {
-  /* —— 品牌 / 主色 —— */
-  --brand-50:  #EFF6FF;
-  --brand-100: #DBEAFE;
-  --brand-200: #BFDBFE;
-  --brand-400: #60A5FA;
-  --brand-500: #3B82F6;   /* 主色 · 链接 · 选中态 */
-  --brand-600: #2563EB;
-  --brand-700: #1D4ED8;
+  /* —— 品牌 / 主色（GIO Design Primary 1-10） —— */
+  --brand-50:  #E8EFFF;   /* Primary-1  浅色/白底悬浮 */
+  --brand-100: #BFD5FF;   /* Primary-2  特殊场景 */
+  --brand-200: #9EC3FF;   /* Primary-3  禁用 */
+  --brand-300: #6BA1FF;   /* Primary-4  特殊场景 */
+  --brand-400: #3D81F5;   /* Primary-5 */
+  --brand-500: #1F61E8;   /* Primary-6  常规 · 链接 · 选中态 */
+  --brand-600: #1A55D6;   /* Primary-7  悬浮 */
+  --brand-700: #1347C1;   /* Primary-8  点击 */
+  --brand-800: #0A319A;   /* Primary-9 */
+  --brand-900: #041E73;   /* Primary-10 */
 
-  /* —— 中性色（背景 / 文字 / 描边） —— */
+  /* —— 中性色（GIO Design Neutral） —— */
   --neutral-0:   #FFFFFF;
-  --neutral-25:  #FAFBFC;  /* 页面底色 */
-  --neutral-50:  #F5F7FA;  /* 次级容器 */
-  --neutral-100: #EEF0F2;  /* 分隔线 · 描边 */
-  --neutral-200: #E1E4E8;  /* 输入描边 */
-  --neutral-300: #C9CED6;
-  --neutral-400: #9AA1AD;  /* 辅助文字 */
-  --neutral-500: #6B7280;  /* 次要文字 */
-  --neutral-700: #374151;  /* 正文 */
-  --neutral-900: #1F2328;  /* 标题 */
+  --neutral-25:  #F8F8F9;  /* fill-1 浅色背景 / 页面底色 */
+  --neutral-50:  #F3F3F5;  /* fill-2 组件背景 / 禁用 */
+  --neutral-100: #F0F0F5;  /* border-1 浅描边 / 分隔线 */
+  --neutral-200: #E4E5E8;  /* border-2 一般 / 输入描边 */
+  --neutral-300: #D7D9DD;  /* border-3 深 / 组件边框 */
+  --neutral-400: #A5A9B1;  /* border-4 重 */
+  --neutral-500: #6B7280;  /* 次要文字（保持不变，GIO text-3 等效值对比度不足） */
+  --neutral-700: #4E5357;  /* text-2 正文（rgba(2,8,19,0.70) 白底等效） */
+  --neutral-900: #191C22;  /* text-1 标题（rgba(2,6,14,0.90) 白底等效） */
 
-  /* —— 语义色（每色 4 阶：浅底 / 边 / 主 / 深文字） —— */
-  --success-bg:    #E8F6EF;
-  --success-border:#BCE3CD;
-  --success-500:   #2BA471;
-  --success-700:   #1B7A52;
+  /* —— 语义色（GIO Design Functional Colors） —— */
+  --success-bg:     #E3FDEE;  /* Success-1 浅色/白底 */
+  --success-border: #B1F0CD;  /* Success-2 特殊场景 */
+  --success-200:    #8AE5B5;  /* Success-3 禁用 */
+  --success-500:    #16A76A;  /* Success-6 常规 */
+  --success-600:    #10915E;  /* Success-7 悬浮 */
+  --success-700:    #0C8556;  /* Success-8 点击 */
 
-  --warning-bg:    #FEF5E7;
-  --warning-border:#F5D79A;
-  --warning-500:   #F5A623;
-  --warning-700:   #B5740F;
+  --warning-bg:     #FFF4E8;  /* Warning-1 浅色/白底 */
+  --warning-border: #FADBBC;  /* Warning-2 特殊场景 */
+  --warning-200:    #FAC394;  /* Warning-3 禁用 */
+  --warning-500:    #E8651B;  /* Warning-6 常规 */
+  --warning-600:    #D15817;  /* Warning-7 悬浮 */
+  --warning-700:    #C14C11;  /* Warning-8 点击 */
 
-  --danger-bg:     #FDECEC;
-  --danger-border: #F5B9BB;
-  --danger-500:    #E5484D;
-  --danger-700:    #AD1F24;
+  --danger-bg:      #FFEBE8;  /* Danger-1 浅色/白底 */
+  --danger-border:  #FFCBC7;  /* Danger-2 特殊场景 */
+  --danger-200:     #FFAAA5;  /* Danger-3 禁用 */
+  --danger-500:     #D63841;  /* Danger-6 常规 */
+  --danger-600:     #C22B35;  /* Danger-7 悬浮 */
+  --danger-700:     #B4232F;  /* Danger-8 点击 */
 
-  --info-bg:       #EAF3FE;   /* Callout 信息条底色 */
-  --info-border:   #BBD6F7;
-  --info-500:      #3B82F6;
-  --info-700:      #1F5EC0;
+  --info-bg:        #E8EFFF;  /* = brand-50 */
+  --info-border:    #BFD5FF;  /* = brand-100 */
+  --info-500:       #1F61E8;  /* = brand-500 */
+  --info-700:       #1347C1;  /* = brand-700 */
 
   /* 严重度（专用，略带橙调，与 warning 区分） */
   --severity-high-bg:     #FFF1E6;
@@ -57,39 +66,61 @@
   --chart-3: #C9CED6;   /* 4 分 */
   --chart-4: #5DB9A1;   /* 4.x 过渡 */
   --chart-5: #2BA471;   /* 5 分 */
-  /* 对比维度序列（折线 / 多条柱） */
-  --series-1: #3B82F6;
-  --series-2: #2BA471;
-  --series-3: #F5A623;
-  --series-4: #8B5CF6;
-  --series-5: #EC4899;
-  --series-6: #14B8A6;
+  /* 对比维度序列（GIO Design 12 色图表调色板） */
+  --series-1:  #FC5F3A;  /* GIO橙 */
+  --series-2:  #1F61E8;  /* 主色蓝 */
+  --series-3:  #2770EF;  /* 蓝 */
+  --series-4:  #F1683D;  /* GIO橙2 */
+  --series-5:  #09B982;  /* 绿 */
+  --series-6:  #FDC002;  /* 金 */
+  --series-7:  #2EABFA;  /* 天蓝 */
+  --series-8:  #7F39EE;  /* 紫 */
+  --series-9:  #E440A8;  /* 玫红 */
+  --series-10: #E33A3A;  /* 红 */
+  --series-11: #9FDB1D;  /* 黄绿 */
+  --series-12: #0FC6C2;  /* 青蓝 */
 
-  /* —— 字体 —— */
-  --font-sans: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
+  /* —— 字体（GIO Design: Nunito Sans for EN, PingFang SC for CN, D-DIN for Num） —— */
+  --font-sans: "Nunito Sans", -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", "Microsoft YaHei", sans-serif;
   --font-mono: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
-  --font-num:  "SF Pro Display", -apple-system, "Helvetica Neue", sans-serif;
+  --font-num:  "D-DIN", "Nunito Sans", -apple-system, "Helvetica Neue", sans-serif;
 
-  /* —— 字号层级 —— */
+  /* —— 字号层级（GIO Design Fonts Guide） —— */
   --fs-11: 11px;   /* 辅助 / 角标 */
-  --fs-12: 12px;   /* 图例 · 元信息 */
+  --fs-12: 12px;   /* 辅助文案 / 图例 · 元信息 */
   --fs-13: 13px;   /* 次要正文 */
   --fs-14: 14px;   /* 正文 · 按钮 */
-  --fs-16: 16px;   /* 小节标题 */
-  --fs-18: 18px;   /* 模块标题 */
-  --fs-20: 20px;   /* 页面标题 */
-  --fs-24: 24px;   /* 关键数字 */
+  --fs-16: 16px;   /* 标题-中 / 小节标题 */
+  --fs-18: 18px;   /* 标题-大 / 模块标题 */
+  --fs-20: 20px;   /* 运营标题-小 / 页面标题 */
+  --fs-24: 24px;   /* 运营标题-中 / 关键数字 */
   --fs-32: 32px;   /* 大指标 */
+  --fs-36: 36px;   /* 运营标题-大 */
+  --fs-48: 48px;   /* 特殊场景-小 */
+  --fs-56: 56px;   /* 特殊场景-大 */
 
-  /* 行高 */
+  /* 行高 — 比例（向后兼容） */
   --lh-tight: 1.25;
   --lh-base:  1.5;
   --lh-loose: 1.7;
+
+  /* 行高 — 按字号绑定的固定 px 值（GIO Design: fs + 8px 规律） */
+  --lh-12: 20px;
+  --lh-14: 22px;
+  --lh-16: 24px;
+  --lh-18: 26px;
+  --lh-20: 28px;
+  --lh-24: 32px;
+  --lh-32: 40px;
+  --lh-36: 44px;
+  --lh-48: 56px;
+  --lh-56: 64px;
 
   /* 字重 */
   --fw-regular: 400;
   --fw-medium:  500;
   --fw-semibold:600;
+  --fw-bold:    700;
 
   /* —— 间距（4px 基础单位） —— */
   --sp-0:  0;
@@ -112,11 +143,12 @@
   --radius-xl: 12px;  /* 弹层 */
   --radius-full: 999px;
 
-  /* —— 阴影（克制使用） —— */
-  --shadow-none: none;
-  --shadow-card: 0 1px 2px rgba(15, 23, 42, 0.04);
-  --shadow-pop:  0 6px 16px -4px rgba(15, 23, 42, 0.12), 0 2px 4px rgba(15, 23, 42, 0.06);
-  --shadow-modal:0 20px 48px -8px rgba(15, 23, 42, 0.18);
+  /* —— 阴影（GIO Design Shadow Guide: 统一 #000 + 0.1 opacity 三级体系） —— */
+  --shadow-none:  none;
+  --shadow-card:  0 2px 5px rgba(0, 0, 0, 0.1);    /* GIO shadow1 — hover/拖动 */
+  --shadow-pop:   0 4px 10px rgba(0, 0, 0, 0.1);   /* GIO shadow2 — 下拉/选择器 */
+  --shadow-modal: 0 8px 20px rgba(0, 0, 0, 0.1);   /* GIO shadow3 — 弹窗/通知 */
+  --shadow-focus: 0 0 0 2px var(--brand-100);       /* GIO out-shadow — 聚焦光环 */
 
   /* —— 描边 —— */
   --border-subtle: 1px solid var(--neutral-100);
@@ -166,42 +198,100 @@
    在根元素添加 class="dark" 即可切换
    ============================================================ */
 .dark {
-  /* —— 表面 / 背景 —— */
-  --surface:        #1A1D23;
-  --surface-page:   #0F1115;
-  --surface-muted:  #22262E;
-  --surface-invert: #F0F2F5;
+  /* ============================================================
+     暗黑主题 — 完整覆盖
+     色板算法：@arco-design/color palette-dark (GIO Design 参考 Arco 体系)
+     设计原则：暗底提亮主色，浅阶沉底，深阶提亮，确保对比度
+     ============================================================ */
 
-  /* —— 前景 / 文字 —— */
-  --fg:             #F0F2F5;
-  --fg-body:        #C9CED6;
-  --fg-secondary:   #9AA1AD;
-  --fg-tertiary:    #6B7280;
+  /* —— 中性色全阶翻转 —— */
+  --neutral-0:   #1A1D23;   /* 容器背景（light 白 → dark 深灰） */
+  --neutral-25:  #0F1115;   /* 页面底色 */
+  --neutral-50:  #22262E;   /* 次级容器 */
+  --neutral-100: #2A2F38;   /* 分隔线 */
+  --neutral-200: #353B45;   /* 输入描边 */
+  --neutral-300: #454B55;   /* 组件边框 */
+  --neutral-400: #656B75;   /* 重边框 */
+  --neutral-500: #9AA1AD;   /* 次要文字 */
+  --neutral-700: #C9CED6;   /* 正文 */
+  --neutral-900: #F0F2F5;   /* 标题 */
 
-  /* —— 线条 / 描边 —— */
-  --line:           #2A2F38;
-  --line-strong:    #353B45;
+  /* —— 品牌色全阶 (Arco dark palette, seed #1F61E8) —— */
+  --brand-50:  #000F4D;
+  --brand-100: #051F73;
+  --brand-200: #10359A;
+  --brand-300: #2050C1;
+  --brand-400: #346FE8;
+  --brand-500: #4382ED;    /* 暗底主色 — 提亮以保证对比度 */
+  --brand-600: #6BA1F1;    /* 暗底悬浮 */
+  --brand-700: #94BFF6;    /* 暗底点击 */
+  --brand-800: #BFDBFA;
+  --brand-900: #ECF6FF;
 
-  /* —— 语义色（深色背景版） —— */
-  --success-bg:     #0D2818;
-  --success-border: #1B4332;
-  --warning-bg:     #2A1F0E;
-  --warning-border: #4A3A1A;
-  --danger-bg:      #2A1215;
-  --danger-border:  #4A2228;
-  --info-bg:        #0F1A2E;
-  --info-border:    #1A3050;
-  --severity-high-bg:     #2A1A0E;
-  --severity-high-border: #4A3218;
+  /* —— 成功色 (Arco dark palette, seed #16A76A) —— */
+  --success-bg:     #004D37;
+  --success-border: #056346;
+  --success-200:    #0F7A54;
+  --success-500:    #3DB981;   /* 暗底提亮绿 */
+  --success-600:    #61CA98;
+  --success-700:    #8BDCB2;
 
-  /* —— 品牌色浅阶（深色模式下用于填充） —— */
-  --brand-50:  #172554;
-  --brand-100: #1E3A6E;
+  /* —— 提示色 (Arco dark palette, seed #E8651B) —— */
+  --warning-bg:     #4D1200;
+  --warning-border: #732103;
+  --warning-200:    #9A380D;
+  --warning-500:    #ED853F;   /* 暗底提亮橙 */
+  --warning-600:    #F1A469;
+  --warning-700:    #F6C295;
 
-  /* —— 阴影（深色模式需更强） —— */
-  --shadow-card:  0 1px 3px rgba(0, 0, 0, 0.3);
-  --shadow-pop:   0 6px 16px -4px rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
-  --shadow-modal: 0 20px 48px -8px rgba(0, 0, 0, 0.6);
+  /* —— 错误色 (Arco dark palette, seed #D63841) —— */
+  --danger-bg:      #4D000E;
+  --danger-border:  #6F0616;
+  --danger-200:     #911523;
+  --danger-500:     #DE5B5D;   /* 暗底提亮红 */
+  --danger-600:     #E67F7D;
+  --danger-700:     #EFA4A1;
+
+  /* —— Info 色（= Brand 暗色同源） —— */
+  --info-bg:        #000F4D;
+  --info-border:    #051F73;
+  --info-500:       #4382ED;
+  --info-700:       #94BFF6;
+
+  /* —— 严重度 —— */
+  --severity-high-bg:     #4D1200;
+  --severity-high-border: #732103;
+  --severity-high-text:   #F1A469;
+
+  /* —— 图表色 — Arco dark step-6 提亮，确保暗底可见 —— */
+  --chart-1: #E9635E;   /* 满意度 1-2 分（提亮红） */
+  --chart-2: #FDCF28;   /* 满意度 3 分（提亮黄） */
+  --chart-3: #656B75;   /* 满意度 4 分（暗底灰，原 #C9CED6 会隐形） */
+  --chart-4: #6ECAB0;   /* 满意度 4.x 过渡 */
+  --chart-5: #3DB981;   /* 满意度 5 分（= success-500 dark） */
+
+  /* —— Series 12 色 — Arco dark step-6 —— */
+  --series-1:  #FD8260;
+  --series-2:  #4382ED;
+  --series-3:  #4C8EF2;
+  --series-4:  #F48962;
+  --series-5:  #31C793;
+  --series-6:  #FDCF28;
+  --series-7:  #54C0FB;
+  --series-8:  #9B5EF1;
+  --series-9:  #E964B4;
+  --series-10: #E9635E;
+  --series-11: #B8E24B;
+  --series-12: #3AD1C9;
+
+  /* —— 前景上的白色文字不变 —— */
+  --fg-on-accent: #FFFFFF;
+
+  /* —— 阴影（暗底加深 opacity） —— */
+  --shadow-card:  0 2px 5px rgba(0, 0, 0, 0.25);
+  --shadow-pop:   0 4px 10px rgba(0, 0, 0, 0.3);
+  --shadow-modal: 0 8px 20px rgba(0, 0, 0, 0.4);
+  --shadow-focus: 0 0 0 2px var(--brand-100);
 }
 
 /* ============================================================

@@ -1,15 +1,22 @@
 import React from 'react';
 
-export type ButtonVariant = 'primary' | 'default' | 'ghost' | 'danger';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonVariant = 'primary' | 'default' | 'ghost' | 'danger' | 'link' | 'text';
+export type ButtonSize = 'sm' | 'md' | 'lg' | 'small' | 'middle' | 'large';
+type NativeButtonType = 'button' | 'submit' | 'reset';
 
 export interface ButtonProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'disabled'> {
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, 'disabled' | 'type'> {
   variant?: ButtonVariant;
+  /** AntD 兼容：type 用于视觉样式，htmlType 用于原生 button type */
+  type?: ButtonVariant | NativeButtonType;
+  htmlType?: NativeButtonType;
   size?: ButtonSize;
   block?: boolean;
   disabled?: boolean;
   loading?: boolean;
+  danger?: boolean;
+  ghost?: boolean;
+  icon?: React.ReactNode;
   iconLeft?: React.ReactNode;
   iconRight?: React.ReactNode;
   children?: React.ReactNode;
@@ -25,12 +32,19 @@ const variantClasses: Record<ButtonVariant, string> = {
     'bg-transparent text-brand-600 border-transparent hover:bg-brand-50 active:bg-brand-100',
   danger:
     'bg-danger-500 text-fg-on-accent hover:bg-danger-700 border-transparent',
+  link:
+    'bg-transparent text-brand-600 border-transparent hover:underline p-0 h-auto',
+  text:
+    'bg-transparent text-fg-body border-transparent hover:bg-surface-muted active:bg-neutral-100',
 };
 
 const sizeClasses: Record<ButtonSize, string> = {
   sm: 'h-7 text-fs-13 px-sp-3',
   md: 'h-8 text-fs-14 px-sp-4',
   lg: 'h-10 text-fs-14 px-sp-5',
+  small: 'h-7 text-fs-13 px-sp-3',
+  middle: 'h-8 text-fs-14 px-sp-4',
+  large: 'h-10 text-fs-14 px-sp-5',
 };
 
 function cx(...cls: Array<string | false | undefined>) {
@@ -40,24 +54,32 @@ function cx(...cls: Array<string | false | undefined>) {
 export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(
     {
-      variant = 'default',
+      variant,
       size = 'md',
       block = false,
       disabled = false,
       loading = false,
+      danger = false,
+      ghost = false,
+      icon,
       iconLeft,
       iconRight,
       className,
       children,
       type = 'button',
+      htmlType,
       ...rest
     },
     ref,
   ) {
+    const isNativeType = type === 'button' || type === 'submit' || type === 'reset';
+    const mappedVariant: ButtonVariant = variant ?? (danger ? 'danger' : ghost ? 'ghost' : isNativeType ? 'default' : (type as ButtonVariant));
+    const nativeType = htmlType ?? (isNativeType ? type : 'button');
+
     return (
       <button
         ref={ref}
-        type={type}
+        type={nativeType}
         disabled={disabled || loading}
         aria-busy={loading || undefined}
         className={cx(
@@ -68,13 +90,13 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           'disabled:opacity-50 disabled:cursor-not-allowed disabled:pointer-events-none',
           loading && 'cursor-progress',
           block && 'w-full',
-          variantClasses[variant],
+          variantClasses[mappedVariant],
           sizeClasses[size],
           className,
         )}
         {...rest}
       >
-        {loading ? <Spinner /> : iconLeft}
+        {loading ? <Spinner /> : iconLeft ?? icon}
         {children != null && <span className="inline-flex items-center">{children}</span>}
         {!loading && iconRight}
       </button>

@@ -53,6 +53,26 @@ describe('DrawerHeader', () => {
     expect(subtitleEl).not.toBeInTheDocument();
   });
 
+  it('renders ReactNode title', () => {
+    render(
+      <DrawerHeader
+        title={<div><span>科室名</span><span data-testid="badge">高风险</span></div>}
+      />
+    );
+    expect(screen.getByText('科室名')).toBeInTheDocument();
+    expect(screen.getByTestId('badge')).toHaveTextContent('高风险');
+  });
+
+  it('renders ReactNode subtitle', () => {
+    render(
+      <DrawerHeader
+        title="标题"
+        subtitle={<span data-testid="sub">自定义副标题</span>}
+      />
+    );
+    expect(screen.getByTestId('sub')).toHaveTextContent('自定义副标题');
+  });
+
   it('renders close button when onClose provided', () => {
     render(<DrawerHeader title="标题" onClose={() => {}} />);
     expect(screen.getByRole('button', { name: '关闭' })).toBeInTheDocument();

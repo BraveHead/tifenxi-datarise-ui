@@ -38,7 +38,7 @@ describe('ActionCard', () => {
   it('low priority badge uses neutral colors', () => {
     render(<ActionCard priority="low" title="t" />);
     const badge = screen.getByText('低优先');
-    expect(badge.className).toContain('text-neutral-500');
+    expect(badge.className).toContain('text-fg-secondary');
   });
 
   // ─── description ───
@@ -90,7 +90,7 @@ describe('ActionCard', () => {
   it('verification area has secondary background', () => {
     render(<ActionCard priority="high" title="t" verification="验证" />);
     const verEl = screen.getByText('验证');
-    expect(verEl.className).toContain('bg-neutral-50');
+    expect(verEl.className).toContain('bg-surface-muted');
   });
 
   // ─── actions 插槽 ───

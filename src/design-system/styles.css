@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,400;0,6..12,500;0,6..12,600;0,6..12,700;1,6..12,400;1,6..12,500&display=swap');
 @import "tailwindcss";
 @import "./tokens.css";
 
@@ -31,10 +32,13 @@
   --color-brand-50:  var(--brand-50);
   --color-brand-100: var(--brand-100);
   --color-brand-200: var(--brand-200);
+  --color-brand-300: var(--brand-300);
   --color-brand-400: var(--brand-400);
   --color-brand-500: var(--brand-500);
   --color-brand-600: var(--brand-600);
   --color-brand-700: var(--brand-700);
+  --color-brand-800: var(--brand-800);
+  --color-brand-900: var(--brand-900);
 
   /* —— Neutral —— */
   --color-neutral-0:   var(--neutral-0);
@@ -51,19 +55,25 @@
   /* —— Success —— */
   --color-success-bg:  var(--success-bg);
   --color-success-border: var(--success-border);
+  --color-success-200: var(--success-200);
   --color-success-500: var(--success-500);
+  --color-success-600: var(--success-600);
   --color-success-700: var(--success-700);
 
   /* —— Warning —— */
   --color-warning-bg:  var(--warning-bg);
   --color-warning-border: var(--warning-border);
+  --color-warning-200: var(--warning-200);
   --color-warning-500: var(--warning-500);
+  --color-warning-600: var(--warning-600);
   --color-warning-700: var(--warning-700);
 
   /* —— Danger —— */
   --color-danger-bg:     var(--danger-bg);
   --color-danger-border: var(--danger-border);
+  --color-danger-200:    var(--danger-200);
   --color-danger-500:    var(--danger-500);
+  --color-danger-600:    var(--danger-600);
   --color-danger-700:    var(--danger-700);
 
   /* —— Info —— */
@@ -84,13 +94,19 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
 
-  /* —— Series 对比序列 —— */
-  --color-series-1: var(--series-1);
-  --color-series-2: var(--series-2);
-  --color-series-3: var(--series-3);
-  --color-series-4: var(--series-4);
-  --color-series-5: var(--series-5);
-  --color-series-6: var(--series-6);
+  /* —— Series 对比序列（12 色） —— */
+  --color-series-1:  var(--series-1);
+  --color-series-2:  var(--series-2);
+  --color-series-3:  var(--series-3);
+  --color-series-4:  var(--series-4);
+  --color-series-5:  var(--series-5);
+  --color-series-6:  var(--series-6);
+  --color-series-7:  var(--series-7);
+  --color-series-8:  var(--series-8);
+  --color-series-9:  var(--series-9);
+  --color-series-10: var(--series-10);
+  --color-series-11: var(--series-11);
+  --color-series-12: var(--series-12);
 
   /* —— Font —— */
   --font-sans: var(--font-sans);
@@ -101,6 +117,7 @@
   --shadow-card:  var(--shadow-card);
   --shadow-pop:   var(--shadow-pop);
   --shadow-modal: var(--shadow-modal);
+  --shadow-focus: var(--shadow-focus);
 
   /* —— Radius —— */
   --radius-xs:   var(--radius-xs);
@@ -120,16 +137,32 @@
   --text-fs-20: var(--fs-20);
   --text-fs-24: var(--fs-24);
   --text-fs-32: var(--fs-32);
+  --text-fs-36: var(--fs-36);
+  --text-fs-48: var(--fs-48);
+  --text-fs-56: var(--fs-56);
 
-  /* —— Leading / Line Height（用法：leading-tight） —— */
+  /* —— Leading / Line Height — 比例（用法：leading-tight，向后兼容） —— */
   --leading-tight: var(--lh-tight);
   --leading-base:  var(--lh-base);
   --leading-loose: var(--lh-loose);
 
-  /* —— Font Weight（用法：font-regular / font-medium / font-semibold） —— */
+  /* —— Leading / Line Height — 按字号绑定（用法：leading-14 → 22px） —— */
+  --leading-12: var(--lh-12);
+  --leading-14: var(--lh-14);
+  --leading-16: var(--lh-16);
+  --leading-18: var(--lh-18);
+  --leading-20: var(--lh-20);
+  --leading-24: var(--lh-24);
+  --leading-32: var(--lh-32);
+  --leading-36: var(--lh-36);
+  --leading-48: var(--lh-48);
+  --leading-56: var(--lh-56);
+
+  /* —— Font Weight（用法：font-regular / font-medium / font-semibold / font-bold） —— */
   --font-weight-regular:  var(--fw-regular);
   --font-weight-medium:   var(--fw-medium);
   --font-weight-semibold: var(--fw-semibold);
+  --font-weight-bold:     var(--fw-bold);
 
   /* —— Spacing（用法：p-sp-4、gap-sp-2） —— */
   --spacing-sp-0:  var(--sp-0);

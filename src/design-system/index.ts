@@ -96,6 +96,9 @@ export type {
 } from './components/charts/QuadrantScatterChart/QuadrantScatterChart';
 
 export { StackedBarChart } from './components/charts/StackedBarChart/StackedBarChart';
+
+export { DualTrendChart } from './components/charts/DualTrendChart/DualTrendChart';
+export type { DualTrendChartProps, DualTrendDataItem } from './components/charts/DualTrendChart/DualTrendChart';
 export type {
   StackedBarChartProps,
   BarColumn,
